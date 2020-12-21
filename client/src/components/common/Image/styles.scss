@@ -1,0 +1,16 @@
+.img-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+
+    &.img-product {
+        height: 300px;
+        padding: 20px;
+        box-sizing: border-box;
+    }
+
+    img {
+        max-width: 100%;
+        object-fit: contain;
+    }
+}
