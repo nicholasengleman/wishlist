@@ -1,19 +1,37 @@
 import React from 'react';
-import Menu from '../Menu';
+import styled from 'styled-components';
+import SearchInput from '../Search';
+import Avatar from '../Avatar';
+import { RowFlexEnd } from '../Row';
 
-const Header = ({ logoutHandler }) => (
-  <div className="header-nav">
-    <Menu>
-      <button type="button" onClick={logoutHandler}>
-        Logout
-      </button>
-    </Menu>
-    <Menu type="red">
-      <button type="button" onClick={logoutHandler}>
-        Logout
-      </button>
-    </Menu>
-  </div>
+const HeaderContainer = styled.div`
+  width: 100%;
+  background-color: lightblue;
+`;
+
+const HeaderContent = styled.div`
+  max-width: 1440px;
+  padding: 20px 50px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+`;
+
+const HeaderAvatar = styled(Avatar)`
+  border: 3px solid white;
+  margin: 0 20px;
+`;
+
+const Header = () => (
+  <HeaderContainer>
+    <HeaderContent>
+      <SearchInput />
+      <RowFlexEnd>
+        <HeaderAvatar size="2" />
+        <p>Hello, Nicholas</p>
+      </RowFlexEnd>
+    </HeaderContent>
+  </HeaderContainer>
 );
 
 export default Header;
