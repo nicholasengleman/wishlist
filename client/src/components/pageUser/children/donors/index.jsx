@@ -29,7 +29,7 @@ const Donors = () => {
   return (
     <DonarsContainer>
       {Array.from(Array(subsTotal)).map(() => (
-        <DonorAvatar size="0" />
+        <DonorAvatar size="0" key={Math.random} />
       ))}
       <div className="subsRemaining">+{subsTotal * 2}</div>
     </DonarsContainer>

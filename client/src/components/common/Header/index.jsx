@@ -3,6 +3,7 @@ import styled from 'styled-components';
 import SearchInput from '../Search';
 import Avatar from '../Avatar';
 import { RowFlexEnd } from '../Row';
+import { MenuContainer, MenuButton, MenuList, MenuItem } from '../Menu';
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -19,7 +20,7 @@ const HeaderContent = styled.div`
 
 const HeaderAvatar = styled(Avatar)`
   border: 3px solid white;
-  margin: 0 20px;
+  margin-right: 10px;
 `;
 
 const Header = () => (
@@ -27,8 +28,17 @@ const Header = () => (
     <HeaderContent>
       <SearchInput />
       <RowFlexEnd>
-        <HeaderAvatar size="2" />
-        <p>Hello, Nicholas</p>
+        <MenuContainer>
+          <MenuButton>
+            <HeaderAvatar size="0" />
+            <p>Hello, Nicsdsds</p>
+          </MenuButton>
+          <MenuList>
+            <MenuItem>Item 1</MenuItem>
+            <MenuItem>Item 2</MenuItem>
+            <MenuItem>Item 3</MenuItem>
+          </MenuList>
+        </MenuContainer>
       </RowFlexEnd>
     </HeaderContent>
   </HeaderContainer>

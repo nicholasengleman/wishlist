@@ -13,7 +13,10 @@ const BaseAvatar = styled.img`
 const Avatar = ({ className, url, size = 2 }) => {
   const [demoImg, setDemoImg] = useState();
 
+  console.log('component rendered');
+
   useEffect(() => {
+    console.log('useEffect Called');
     axios
       .get('https://randomuser.me/api/?results=1')
       .then((response) => {

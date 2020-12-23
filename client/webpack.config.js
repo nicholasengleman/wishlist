@@ -1,22 +1,21 @@
-const HtmlWebPackPlugin = require('html-webpack-plugin');
-const webpack = require('webpack');
 const path = require('path');
+const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const isDevelopment = process.env.NODE_ENV !== 'production';
 
 module.exports = {
-  context: __dirname,
-  entry: './src/index.js',
+  mode: isDevelopment ? 'development' : 'production',
+  entry: {
+    main: './src/index.js',
+  },
   output: {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/',
   },
   devServer: {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': 'GET, POST, PUT, DELETE, PATCH, OPTIONS',
-      'Access-Control-Allow-Headers':
-        'X-Requested-With, content-type, Authorization',
-    },
+    headers: { 'Access-Control-Allow-Origin': '*' },
     historyApiFallback: true,
     port: 3000,
     hot: true,
@@ -51,14 +50,14 @@ module.exports = {
       },
     ],
   },
-  resolve: {
-    extensions: ['*', '.js', '.jsx'],
-  },
   plugins: [
-    new webpack.HotModuleReplacementPlugin(),
-    new HtmlWebPackPlugin({
-      template: path.resolve(__dirname, 'public/index.html'),
-      filename: 'index.html',
+    isDevelopment && new ReactRefreshPlugin(),
+    new HtmlWebpackPlugin({
+      filename: './index.html',
+      template: './public/index.html',
     }),
-  ],
+  ].filter(Boolean),
+  resolve: {
+    extensions: ['.js', '.jsx'],
+  },
 };
