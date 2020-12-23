@@ -15,10 +15,13 @@ module.exports = {
     publicPath: '/',
   },
   devServer: {
-    headers: { 'Access-Control-Allow-Origin': '*' },
+    headers: {
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Methods': '*',
+      'Access-Control-Allow-Headers': '*',
+    },
     historyApiFallback: true,
     port: 3000,
-    hot: true,
   },
   module: {
     rules: [

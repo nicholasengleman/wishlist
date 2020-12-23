@@ -19,7 +19,7 @@ const ProductList = () => {
     <div className={styles.productList}>
       {data.products.map((el) => (
         //  <Link to={`product/${el.id}`}>
-        <div className={styles.product} key={Math.random().toString()}>
+        <div className={styles.product} key={`${Math.random()}`}>
           <div className={styles.image} />
           <div className={styles.content}>
             <div className={styles.row}>

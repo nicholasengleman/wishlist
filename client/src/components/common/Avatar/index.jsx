@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const AvatarSizes = ['40px', '60px', '80px'];
+const AvatarSizes = ['25px', '40px', '60px'];
 
 const BaseAvatar = styled.img`
   height: ${(props) => AvatarSizes[props.size]};

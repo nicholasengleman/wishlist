@@ -1,13 +1,18 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchInput from '../Search';
-import Avatar from '../Avatar';
 import { RowFlexEnd } from '../Row';
-import { MenuContainer, MenuButton, MenuList, MenuItem } from '../Menu';
+import {
+  MenuContainer,
+  MenuButton,
+  MenuList,
+  MenuItem,
+  MenuItemCategory,
+} from '../Menu';
 
 const HeaderContainer = styled.div`
   width: 100%;
-  background-color: lightblue;
+  background-color: #f7f8fb;
 `;
 
 const HeaderContent = styled.div`
@@ -16,11 +21,15 @@ const HeaderContent = styled.div`
   display: flex;
   justify-content: space-between;
   align-items: center;
-`;
 
-const HeaderAvatar = styled(Avatar)`
-  border: 3px solid white;
-  margin-right: 10px;
+  .fas {
+    color: blue;
+    margin-right: 10px;
+  }
+
+  .fas.fa-angle-down {
+    color: #c3cad6;
+  }
 `;
 
 const Header = () => (
@@ -30,13 +39,20 @@ const Header = () => (
       <RowFlexEnd>
         <MenuContainer>
           <MenuButton>
-            <HeaderAvatar size="0" />
-            <p>Hello, Nicsdsds</p>
+            <i className="fas fa-cog" />
+            <p>Manage</p>
+            <i className="fas fa-angle-down" />
           </MenuButton>
           <MenuList>
-            <MenuItem>Item 1</MenuItem>
-            <MenuItem>Item 2</MenuItem>
-            <MenuItem>Item 3</MenuItem>
+            <MenuItemCategory>Account</MenuItemCategory>
+            <MenuItem>
+              <i className="fas fa-sign-in-alt" />
+              Log In...
+            </MenuItem>
+            <MenuItem>
+              <i className="fas fa-sign-out-alt" />
+              Log Out...
+            </MenuItem>
           </MenuList>
         </MenuContainer>
       </RowFlexEnd>

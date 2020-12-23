@@ -54,7 +54,7 @@ const Profile = (props) => {
         </button>
         {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
-            <div className="category" key={Math.random().toString()}>
+            <div className="category" key={`${Math.random()}`}>
               <div className="header">
                 <div className="header-row">
                   <i
@@ -77,7 +77,7 @@ const Profile = (props) => {
               <div className="wishes">
                 {category.wishes &&
                   category.wishes.map((wish, wishIndex) => (
-                    <div className="wish" key={Math.random().toString()}>
+                    <div className="wish" key={`${Math.random()}`}>
                       <i
                         className="far fa-edit"
                         onClick={() =>

@@ -7,7 +7,7 @@ const SearchInput = styled.input`
   border-radius: 50px;
   transition: all 0.3s;
   padding: ${(props) => (props.status ? '16px' : '16px 40px')};
-  background-color: rgb(240, 242, 245);
+  background-color: white;
   border: none;
   outline: none;
   letter-spacing: 1px;
