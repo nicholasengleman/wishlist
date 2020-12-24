@@ -15,8 +15,6 @@ const StyledMenuButton = styled.li`
   color: black;
   font-weight: 400;
   cursor: pointer;
-  border: 1px solid #c3cad6;
-  background-color: white;
   padding: 10px 30px 10px 20px;
   border-radius: 3px;
   .fas.fa-angle-down {

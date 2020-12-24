@@ -1,68 +1,48 @@
-import React, { Component } from 'react';
+import React from 'react';
+import styled from 'styled-components';
+import { Row } from '../../../common/Flex';
 
-import StyledCategory from './categoryStyles';
-import Menu from '../menu/menu.jsx';
+const StyledCategory = styled.div`
+  margin-bottom: 50px;
+`;
 
-class Category extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      uuid: this.props.uuid,
-      name: this.props.name,
-      editMode: false,
-    };
-  }
+const Header = styled.div`
+  margin-bottom: 15px;
+`;
 
-  componentDidMount() {
-    document.addEventListener('mousedown', this.handleClickOutside);
-  }
+const CategoryName = styled.div`
+  font-size: 30px;
+  margin-left: 10px;
+`;
 
-  componentWillUnmount() {
-    document.removeEventListener('mousedown', this.handleClickOutside);
-  }
+const Tags = styled.div`
+  font-size: 30px;
+  font-weight: 600;
+`;
 
-  setWrapperRef = (node) => {
-    this.wrapperRef = node;
-  };
-
-  handleClickOutside = (event) => {
-    if (
-      this.state.editMode &&
-      this.wrapperRef &&
-      !this.wrapperRef.contains(event.target)
-    ) {
-      this.setState({ editMode: false });
-    }
-  };
-
-  toggleEditMode = () => {
-    this.setState({ editMode: !this.state.editMode });
-  };
-
-  handleChange = ({ target }) => {
-    this.setState({
-      [target.name]: target.value,
-    });
-  };
-
-  render() {
-    return (
-      <StyledCategory>
-        <div className="c-category-header">
-          <Menu toggleEditMode={this.toggleEditMode} />
-          <input
-            type="text"
-            className={`name ${this.state.editMode ? 'editMode' : ''}`}
-            value={this.state.name}
-            onChange={this.handleChange}
-            name="name"
-            ref={this.setWrapperRef}
-          />
-        </div>
-        <div className="c-category-body">{this.props.children}</div>
-      </StyledCategory>
-    );
-  }
-}
+const Category = ({ children, category /* catIndex */ }) => (
+  <StyledCategory key={`${Math.random()}`}>
+    <Header>
+      <Row alignItems="center">
+        <i
+          className="far fa-edit"
+          // onClick={() =>
+          //   setCatModalVisibility({
+          //     mode: 'edit',
+          //     catIndex,
+          //   })
+          // }
+        />
+        <CategoryName>{category.name}</CategoryName>
+      </Row>
+      <Row>
+        <Tags>
+          {/* <div className='tags'>{category.tags.map((tag) => tag)}</div> */}
+        </Tags>
+      </Row>
+    </Header>
+    {children}
+  </StyledCategory>
+);
 
 export default Category;

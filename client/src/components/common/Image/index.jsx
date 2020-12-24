@@ -1,5 +1,19 @@
 import React from 'react';
-import './styles.scss';
+import styled from 'styled-components';
+
+const StyledImage = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  box-sizing: border-box;
+  height: 300px;
+  padding: 20px;
+  border-radius: 15px;
+  img {
+    max-width: 100%;
+    object-fit: contain;
+  }
+`;
 
 const Image = ({ imageUrl, type }) => {
   let placeholderUrl = '';
@@ -13,9 +27,9 @@ const Image = ({ imageUrl, type }) => {
   }
 
   return (
-    <div className={`img-container ${imageUrl ? `img-${type}` : ''}`}>
+    <StyledImage>
       <img src={imageUrl || placeholderUrl} alt="" />
-    </div>
+    </StyledImage>
   );
 };
 

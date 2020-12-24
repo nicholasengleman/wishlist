@@ -7,6 +7,7 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
+import GlobalStyles from './globalStyles/globalStyles';
 
 import Header from './components/common/Header';
 import pageHome from './components/pageHome';
@@ -43,6 +44,7 @@ const App = () => {
 
   return (
     <ApolloProvider client={client}>
+      <GlobalStyles />
       <Header />
       <Switch>
         <Route path="/" exact component={pageHome} />

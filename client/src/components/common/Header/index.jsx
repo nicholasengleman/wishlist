@@ -1,6 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchInput from '../Search';
+import width from '../../../globalStyles/mixins';
+
 import { RowFlexEnd } from '../Row';
 import {
   MenuContainer,
@@ -16,8 +18,7 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderContent = styled.div`
-  max-width: 1440px;
-  padding: 20px 50px;
+  ${width};
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -40,7 +41,7 @@ const Header = () => (
         <MenuContainer>
           <MenuButton>
             <i className="fas fa-cog" />
-            <p>Manage</p>
+            <p>Hi, Nicholas</p>
             <i className="fas fa-angle-down" />
           </MenuButton>
           <MenuList>
