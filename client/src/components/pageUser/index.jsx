@@ -1,17 +1,27 @@
-import React, { useState } from 'react';
+import React from 'react';
+import Styled from 'styled-components';
 import { useQuery } from '@apollo/client';
-import WishModal from './children/modals/wish';
-import CategoryModal from './children/modals/category';
-import Category from './children/category';
+import { useDispatch } from 'react-redux';
+import WishModal from './children/modals/Wish';
+import CategoryModal from './children/modals/Category';
+import Category from './children/Category';
 import { FlexContainer } from '../common/Flex';
 import Wish from './children/Wish';
+import width from '../../globalStyles/mixins';
+import { LightButton } from '../common/Button';
+import {
+  displayCategoryModal,
+  displayWishModal,
+} from '../../redux/actions/modals';
 
 import GET_USER_WISHES from '../../queries/getUserWishes';
-import './styles.scss';
+
+const WishContainer = Styled(FlexContainer)`
+  ${width};
+`;
 
 const Profile = (props) => {
-  const [wishModalVisibility, setWishModalVisibility] = useState(null);
-  const [catModalVisibility, setCatModalVisibility] = useState(null);
+  const dispatch = useDispatch();
   const userId = props?.match?.params?.userId;
 
   const { loading, data } = useQuery(GET_USER_WISHES, {
@@ -26,30 +36,14 @@ const Profile = (props) => {
 
   return (
     <>
-      {wishModalVisibility && (
-        <WishModal
-          setModalVisibility={setWishModalVisibility}
-          modalVisibility={wishModalVisibility}
-          data={wishData}
-          userId={userId}
-        />
-      )}
-      {catModalVisibility && (
-        <CategoryModal
-          setModalVisibility={setCatModalVisibility}
-          modalVisibility={catModalVisibility}
-          data={wishData}
-          userId={userId}
-        />
-      )}
-      <div className="wishesContainer">
-        <button
-          className="btn btn-addCategory"
-          type="button"
-          onClick={() => setCatModalVisibility({ mode: 'add' })}
+      <WishModal data={wishData} userId={userId} />
+      <CategoryModal data={wishData} userId={userId} />
+      <WishContainer>
+        <LightButton
+          onClick={() => dispatch(displayCategoryModal({ mode: 'add' }))}
         >
           Add Category
-        </button>
+        </LightButton>
         {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
             <Category
@@ -63,22 +57,21 @@ const Profile = (props) => {
                     <Wish
                       wish={wish}
                       wishIndex={wishIndex}
+                      catIndex={catIndex}
                       key={`${Math.random()}`}
                     />
                   ))}
-                <button
-                  className="btn"
-                  type="button"
+                <LightButton
                   onClick={() =>
-                    setWishModalVisibility({ mode: 'add', catIndex })
+                    dispatch(displayWishModal({ mode: 'add', catIndex }))
                   }
                 >
                   Add Wish
-                </button>
+                </LightButton>
               </FlexContainer>
             </Category>
           ))}
-      </div>
+      </WishContainer>
     </>
   );
 };

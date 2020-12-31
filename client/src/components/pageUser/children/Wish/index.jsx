@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import Styled from 'styled-components';
+import { displayWishModal } from '../../../../redux/actions/modals';
 import Card from '../../../common/Card';
 import Image from '../../../common/Image';
 import Box from '../../../common/Box';
@@ -42,39 +44,39 @@ const WishTitle = Styled.div`
   margin-bottom: 1rem;
 `;
 
-const Wish = ({ wish, className }) => (
-  <StyledWish className={className}>
-    <i
-      className="far fa-edit"
-      //   onClick={() =>
-      //     setWishModalVisibility({
-      //       mode: 'edit',
-      //       catIndex,
-      //       wishIndex,
-      //     })
-      // }
-    />
-    <Column>
-      <Image imageUrl={wish.image} type="product" />
-      <Box padding="10px 15px">
-        <WishTitle>{wish.name}</WishTitle>
-        <Row alignItems="center" marginSize="1">
-          <Price>{wish.price}</Price>
-          <Store>at {wish.store}</Store>
-        </Row>
-        <Row marginSize="1">{wish.description}</Row>
-        <Row marginSize="1">
-          <Donors max={5} />
-        </Row>
-        <Row marginSize="1">
-          <Donations />
-        </Row>
-        <Row marginSize="1">
-          <DonationBar />
-        </Row>
-      </Box>
-    </Column>
-  </StyledWish>
-);
+const Wish = ({ wish, wishIndex, catIndex, className }) => {
+  const dispatch = useDispatch();
+
+  return (
+    <StyledWish className={className}>
+      <i
+        className="far fa-edit"
+        onClick={() =>
+          dispatch(displayWishModal({ mode: 'edit', catIndex, wishIndex }))
+        }
+      />
+      <Column>
+        <Image imageUrl={wish.image} type="product" />
+        <Box padding="10px 15px">
+          <WishTitle>{wish.name}</WishTitle>
+          <Row alignItems="center" marginSize="1">
+            <Price>{wish.price}</Price>
+            <Store>at {wish.store}</Store>
+          </Row>
+          <Row marginSize="1">{wish.description}</Row>
+          <Row marginSize="1">
+            <Donors max={5} />
+          </Row>
+          <Row marginSize="1">
+            <Donations />
+          </Row>
+          <Row marginSize="1">
+            <DonationBar />
+          </Row>
+        </Box>
+      </Column>
+    </StyledWish>
+  );
+};
 
 export default Wish;

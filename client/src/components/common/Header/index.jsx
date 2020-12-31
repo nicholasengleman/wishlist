@@ -2,8 +2,8 @@ import React from 'react';
 import styled from 'styled-components';
 import SearchInput from '../Search';
 import width from '../../../globalStyles/mixins';
+import { Row } from '../Flex';
 
-import { RowFlexEnd } from '../Row';
 import {
   MenuContainer,
   MenuButton,
@@ -37,7 +37,7 @@ const Header = () => (
   <HeaderContainer>
     <HeaderContent>
       <SearchInput />
-      <RowFlexEnd>
+      <Row>
         <MenuContainer>
           <MenuButton>
             <i className="fas fa-cog" />
@@ -56,7 +56,7 @@ const Header = () => (
             </MenuItem>
           </MenuList>
         </MenuContainer>
-      </RowFlexEnd>
+      </Row>
     </HeaderContent>
   </HeaderContainer>
 );

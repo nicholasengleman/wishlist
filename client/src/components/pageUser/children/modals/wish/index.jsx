@@ -1,24 +1,29 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useMutation } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
 import GET_USER_WISHES from '../../../../../queries/getUserWishes';
+import { hideWishModal } from '../../../../../redux/actions/modals';
 import DeleteModal from '../../../../common/modalDelete';
 import Image from '../../../../common/Image';
 import uploadImage from '../../../../helperFunctions/uploadImage';
 import '../styles.scss';
 import './styles.scss';
 
-const WishModal = ({ setModalVisibility, modalVisibility, data, userId }) => {
+const WishModal = ({ data, userId }) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
-  const { mode, catIndex, wishIndex } = modalVisibility;
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
+  const { status, mode, catIndex, wishIndex } = useSelector(
+    (state) => state.modals.wishModal,
+  );
 
   const onSubmit = async (updatedWish) => {
     const newData = _.cloneDeep(data);
@@ -58,7 +63,7 @@ const WishModal = ({ setModalVisibility, modalVisibility, data, userId }) => {
       refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
     });
 
-    setModalVisibility(false);
+    dispatch(hideWishModal());
   };
 
   const onPrefillSubmit = ({ url }) => {
@@ -94,7 +99,7 @@ const WishModal = ({ setModalVisibility, modalVisibility, data, userId }) => {
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });
-    setModalVisibility(false);
+    dispatch(hideWishModal());
   };
 
   useEffect(() => {
@@ -103,6 +108,10 @@ const WishModal = ({ setModalVisibility, modalVisibility, data, userId }) => {
     }
   }, [mode, data, catIndex, wishIndex]);
 
+  if (!status) {
+    return null;
+  }
+
   return (
     <>
       <DeleteModal
@@ -110,12 +119,12 @@ const WishModal = ({ setModalVisibility, modalVisibility, data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <div className="modal-overlay" onClick={() => setModalVisibility(false)}>
+      <div className="modal-overlay" onClick={() => dispatch(hideWishModal())}>
         <div className="modal" onClick={(e) => e.stopPropagation()}>
           <div className="header">
             <i
               className="far fa-times-circle"
-              onClick={() => setModalVisibility(false)}
+              onClick={() => dispatch(hideWishModal())}
             />
             <button
               className="btn"

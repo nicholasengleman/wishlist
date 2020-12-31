@@ -1,19 +1,24 @@
 import React, { useState, useEffect } from 'react';
 import { useMutation } from '@apollo/client';
+import { useSelector, useDispatch } from 'react-redux';
 import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { useForm } from 'react-hook-form';
+import { hideCategoryModal } from '../../../../../redux/actions/modals';
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
 import GET_USER_WISHES from '../../../../../queries/getUserWishes';
 import DeleteModal from '../../../../common/modalDelete';
 
 import '../styles.scss';
 
-const ModalEdit = ({ setModalVisibility, modalVisibility, data, userId }) => {
+const ModalEdit = ({ data, userId }) => {
+  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
-  const { mode, catIndex } = modalVisibility;
+  const { status, mode, catIndex } = useSelector(
+    (state) => state.modals.categoryModal,
+  );
 
   const onSubmit = (category) => {
     let newData = _.cloneDeep(data);
@@ -48,7 +53,7 @@ const ModalEdit = ({ setModalVisibility, modalVisibility, data, userId }) => {
       },
       refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
     });
-    setModalVisibility(false);
+    dispatch(hideCategoryModal());
   };
 
   const onDelete = () => {
@@ -64,7 +69,7 @@ const ModalEdit = ({ setModalVisibility, modalVisibility, data, userId }) => {
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });
-    setModalVisibility(false);
+    dispatch(hideCategoryModal());
   };
 
   const [catData, setCatData] = useState({});
@@ -75,6 +80,10 @@ const ModalEdit = ({ setModalVisibility, modalVisibility, data, userId }) => {
     }
   }, [mode, data, catIndex]);
 
+  if (!status) {
+    return null;
+  }
+
   return (
     <>
       <DeleteModal
@@ -82,12 +91,15 @@ const ModalEdit = ({ setModalVisibility, modalVisibility, data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <div className="modal-overlay" onClick={() => setModalVisibility(false)}>
+      <div
+        className="modal-overlay"
+        onClick={() => dispatch(hideCategoryModal())}
+      >
         <div className="modal" onClick={(e) => e.stopPropagation()}>
           <div className="header">
             <i
               className="far fa-times-circle"
-              onClick={() => setModalVisibility(false)}
+              onClick={() => dispatch(hideCategoryModal())}
             />
             <button
               type="button"
