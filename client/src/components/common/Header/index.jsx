@@ -1,36 +1,24 @@
 import React from 'react';
 import styled from 'styled-components';
 import SearchInput from '../Search';
-import width from '../../../globalStyles/mixins';
+import { pageWidth } from '../../../globalStyles/mixins';
 import { Row } from '../Flex';
+import ProfileLink from '../ProfileLink';
+import { AlarmButton, MenuButton } from '../IconButtons';
 
-import {
-  MenuContainer,
-  MenuButton,
-  MenuList,
-  MenuItem,
-  MenuItemCategory,
-} from '../Menu';
+import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
 
 const HeaderContainer = styled.div`
   width: 100%;
-  background-color: #f7f8fb;
+  background-color: #c5c6c9;
+  padding: 5px 0;
 `;
 
 const HeaderContent = styled.div`
-  ${width};
+  ${pageWidth};
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  .fas {
-    color: blue;
-    margin-right: 10px;
-  }
-
-  .fas.fa-angle-down {
-    color: #c3cad6;
-  }
 `;
 
 const Header = () => (
@@ -38,21 +26,20 @@ const Header = () => (
     <HeaderContent>
       <SearchInput />
       <Row>
+        <AlarmButton />
+        <ProfileLink />
         <MenuContainer>
-          <MenuButton>
-            <i className="fas fa-cog" />
-            <p>Hi, Nicholas</p>
-            <i className="fas fa-angle-down" />
-          </MenuButton>
+          <MenuHeader>
+            <MenuButton />
+          </MenuHeader>
           <MenuList>
-            <MenuItemCategory>Account</MenuItemCategory>
             <MenuItem>
               <i className="fas fa-sign-in-alt" />
-              Log In...
+              <p>Log In</p>
             </MenuItem>
             <MenuItem>
               <i className="fas fa-sign-out-alt" />
-              Log Out...
+              <p>Log Out</p>
             </MenuItem>
           </MenuList>
         </MenuContainer>

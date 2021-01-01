@@ -16,7 +16,7 @@ const ProductList = () => {
   }
 
   return (
-    <div className={styles.productList}>
+    <>
       {data.products.map((el) => (
         //  <Link to={`product/${el.id}`}>
         <div className={styles.product} key={`${Math.random()}`}>
@@ -40,7 +40,7 @@ const ProductList = () => {
         </div>
         // </Link>
       ))}
-    </div>
+    </>
   );
 };
 

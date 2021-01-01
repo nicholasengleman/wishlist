@@ -1,11 +1,19 @@
 import React from 'react';
-import styles from './styles.module.scss';
+import Styled from 'styled-components';
+import { FlexContainer } from '../common/Flex';
+import { pageWidth } from '../../globalStyles/mixins';
 import ProductList from './children/ProductList';
 
+const HomeContainer = Styled(FlexContainer)`
+  ${pageWidth};
+  margin-top: 40px;
+  margin-bottom: 40px;
+`;
+
 const pageHome = () => (
-  <div className={styles.pageContainer}>
+  <HomeContainer>
     <ProductList />
-  </div>
+  </HomeContainer>
 );
 
 export default pageHome;

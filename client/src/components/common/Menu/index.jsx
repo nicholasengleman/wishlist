@@ -8,26 +8,15 @@ const StyledMenuContainer = styled.ul`
   padding: 0;
 `;
 
-const StyledMenuButton = styled.li`
+const StyledMenuHeader = styled.li`
   display: flex;
   align-items: center;
-  font-size: 18px;
-  color: black;
-  font-weight: 400;
-  cursor: pointer;
-  padding: 10px 30px 10px 20px;
-  border-radius: 3px;
-  .fas.fa-angle-down {
-    position: absolute;
-    right: 5px;
-    transition: all 0.2s;
-    transform: ${(props) => (props.menuStatus ? 'rotate(180deg)' : '')};
+  button {
+    margin: 0;
   }
   .fas {
-    margin-right: 15px;
-  }
-  p {
-    margin: 0 30px 0 0;
+    transition: all 0.2s;
+    transform: ${(props) => (props.menuStatus ? 'rotate(180deg)' : '')};
   }
 `;
 
@@ -39,22 +28,28 @@ const StyledMenuList = styled.ul`
   transform: ${(props) => (props.menuStatus ? 'scaleY(1)' : 'scaleY(0)')};
   position: absolute;
   box-sizing: border-box;
-  top: 50px;
+  top: 40px;
+  right: 0;
   list-style: none;
   background-color: white;
-  padding: 12px;
   width: 100%;
   box-shadow: 0 1px 8px 0 rgba(0, 0, 0, 0.08);
   color: #333;
-  border-radius: 3px;
+  border-radius: 5px;
+  min-width: 200px;
+  padding: 3px 0;
 `;
 
 const StyledMenuItem = styled.li`
-  padding: 8px 10px;
-  font-weight: 600;
-  font-size: 16px;
-  border-radius: 3px;
+  padding: 10px 15px;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
   cursor: pointer;
+  i {
+    font-size: 14px;
+    margin-right: 10px;
+  }
   &:hover {
     background-color: lightgray;
   }
@@ -76,15 +71,15 @@ export const MenuContainer = ({ children }) => {
   );
 };
 
-export const MenuButton = ({ children }) => {
+export const MenuHeader = ({ children }) => {
   const { menuStatus, toggleMenuStatus } = useContext(MenuContext);
   return (
-    <StyledMenuButton
+    <StyledMenuHeader
       menuStatus={menuStatus}
       onClick={() => toggleMenuStatus(!menuStatus)}
     >
       {children}
-    </StyledMenuButton>
+    </StyledMenuHeader>
   );
 };
 

@@ -2,12 +2,13 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const AvatarSizes = ['25px', '40px', '60px'];
+const AvatarSizes = ['35px', '45px', '55px'];
 
 const BaseAvatar = styled.img`
   height: ${(props) => AvatarSizes[props.size]};
   width: ${(props) => AvatarSizes[props.size]};
   border-radius: 50%;
+  border: ${(props) => `${1 + Number(props.size)}px solid white`};
 `;
 
 const Avatar = ({ className, url, size = 2 }) => {

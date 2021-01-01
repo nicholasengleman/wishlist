@@ -7,7 +7,7 @@ import CategoryModal from './children/modals/Category';
 import Category from './children/Category';
 import { FlexContainer } from '../common/Flex';
 import Wish from './children/Wish';
-import width from '../../globalStyles/mixins';
+import { pageWidth } from '../../globalStyles/mixins';
 import { LightButton } from '../common/Button';
 import {
   displayCategoryModal,
@@ -17,7 +17,7 @@ import {
 import GET_USER_WISHES from '../../queries/getUserWishes';
 
 const WishContainer = Styled(FlexContainer)`
-  ${width};
+  ${pageWidth};
 `;
 
 const Profile = (props) => {
