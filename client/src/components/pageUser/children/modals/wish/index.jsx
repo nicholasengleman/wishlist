@@ -1,17 +1,22 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import _ from 'lodash';
 import { useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
-import _ from 'lodash';
 import { useForm } from 'react-hook-form';
+
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
 import GET_USER_WISHES from '../../../../../queries/getUserWishes';
 import { hideWishModal } from '../../../../../redux/actions/modals';
-import DeleteModal from '../../../../common/modalDelete';
+
+import Modal from '../Modal';
 import Image from '../../../../common/Image';
 import uploadImage from '../../../../helperFunctions/uploadImage';
-import '../styles.scss';
-import './styles.scss';
+import DeleteModal from '../../../../common/modalDelete';
+import { CloseButton } from '../../../../common/IconButtons';
+import { LightButton } from '../../../../common/Button';
+import { Row, Column } from '../../../../common/Flex';
+import { Input, Textarea } from '../../../../common/Inputs';
 
 const WishModal = ({ data, userId }) => {
   const dispatch = useDispatch();
@@ -119,104 +124,90 @@ const WishModal = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <div className="modal-overlay" onClick={() => dispatch(hideWishModal())}>
-        <div className="modal" onClick={(e) => e.stopPropagation()}>
-          <div className="header">
-            <i
-              className="far fa-times-circle"
-              onClick={() => dispatch(hideWishModal())}
-            />
-            <button
-              className="btn"
-              type="button"
-              onClick={() =>
-                setModalStatus({ ...modalStatus, modalDelete: true })
-              }
-            >
-              Delete Wish
-            </button>
-          </div>
-          <form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
-            <input
-              name="url"
-              id="url"
-              className="input"
-              type="text"
-              defaultValue="Enter Product URL to Prefill Info"
-              ref={register2}
-            />
-            <input className="submit" type="submit" />
-          </form>
-          <form className="body" onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="column column-photo">
-                <Image
-                  imageUrl={prefillData.image || wishData.image}
-                  type="product"
-                />
-              </div>
-              <div className="column">
-                <div className="row">
-                  <div className="column">
-                    <label htmlFor="name">Goal Name</label>
-                    <input
-                      name="name"
-                      id="name"
-                      className="input"
-                      type="text"
-                      defaultValue={prefillData.name || wishData.name}
-                      ref={register}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <label htmlFor="price">Price</label>
-                    <input
-                      name="price"
-                      id="price"
-                      className="input"
-                      type="text"
-                      defaultValue={prefillData.price || wishData.price}
-                      ref={register}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <label htmlFor="store">Store</label>
-                    <input
-                      name="store"
-                      id="store"
-                      className="input"
-                      type="text"
-                      defaultValue={prefillData.store || wishData.store}
-                      ref={register}
-                    />
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="column">
-                    <label htmlFor="description">Description</label>
-                    <textarea
-                      name="description"
-                      id="description"
-                      className="input"
-                      defaultValue={
-                        prefillData.description || wishData.description
-                      }
-                      ref={register}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <input className="submit" type="submit" />
-            </div>
-          </form>
-        </div>
-      </div>
+      <Modal close={() => dispatch(hideWishModal())}>
+        <Row justifyContent="space-between">
+          <CloseButton click={() => dispatch(hideWishModal())} />
+          <LightButton
+            onClick={() =>
+              setModalStatus({ ...modalStatus, modalDelete: true })
+            }
+          >
+            Delete Wish
+          </LightButton>
+        </Row>
+        <form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
+          <Input
+            name="url"
+            id="url"
+            type="text"
+            defaultValue="Enter Product URL to Prefill Info"
+            ref={register2}
+          />
+          <Input type="submit" />
+        </form>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Row>
+            <Column>
+              <Image
+                imageUrl={prefillData.image || wishData.image}
+                type="product"
+              />
+            </Column>
+            <Column>
+              <Row>
+                <Column>
+                  <label htmlFor="name">Goal Name</label>
+                  <Input
+                    name="name"
+                    id="name"
+                    type="text"
+                    defaultValue={prefillData.name || wishData.name}
+                    ref={register}
+                  />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <label htmlFor="name">Price</label>
+                  <Input
+                    name="price"
+                    id="price"
+                    type="text"
+                    defaultValue={prefillData.price || wishData.price}
+                    ref={register}
+                  />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <label htmlFor="name">Store</label>
+                  <Input
+                    name="store"
+                    id="store"
+                    type="text"
+                    defaultValue={prefillData.store || wishData.store}
+                    ref={register}
+                  />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <label htmlFor="name">Description</label>
+                  <Textarea
+                    name="description"
+                    id="description"
+                    className="input"
+                    defaultValue={
+                      prefillData.description || wishData.description
+                    }
+                  />
+                </Column>
+              </Row>
+            </Column>
+          </Row>
+          <Input type="submit" />
+        </form>
+      </Modal>
     </>
   );
 };

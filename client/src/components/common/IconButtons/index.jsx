@@ -30,3 +30,9 @@ export const MenuButton = () => (
     <i className="fas fa-angle-down" />
   </Icon>
 );
+
+export const CloseButton = ({ click }) => (
+  <Icon>
+    <i className="far fa-times-circle" onClick={click} />
+  </Icon>
+);

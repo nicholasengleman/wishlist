@@ -2,6 +2,7 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
+import ProfileHeader from './children/ProfileHeader';
 import WishModal from './children/modals/Wish';
 import CategoryModal from './children/modals/Category';
 import Category from './children/Category';
@@ -38,6 +39,7 @@ const Profile = (props) => {
     <>
       <WishModal data={wishData} userId={userId} />
       <CategoryModal data={wishData} userId={userId} />
+      <ProfileHeader />
       <WishContainer>
         <LightButton
           onClick={() => dispatch(displayCategoryModal({ mode: 'add' }))}

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import styled from 'styled-components';
 
-const AvatarSizes = ['35px', '45px', '55px'];
+const AvatarSizes = ['35px', '45px', '175px'];
 
 const BaseAvatar = styled.img`
   height: ${(props) => AvatarSizes[props.size]};
@@ -18,7 +18,7 @@ const Avatar = ({ className, url, size = 2 }) => {
     axios
       .get('https://randomuser.me/api/?results=1')
       .then((response) => {
-        setDemoImg(response.data.results[0].picture.medium);
+        setDemoImg(response.data.results[0].picture.large);
       })
       .catch((error) => {
         throw new Error(error);

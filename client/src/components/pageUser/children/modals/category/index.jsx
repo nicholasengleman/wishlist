@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
-import { useMutation } from '@apollo/client';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
 import { useForm } from 'react-hook-form';
-import { hideCategoryModal } from '../../../../../redux/actions/modals';
-import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER_WISHES from '../../../../../queries/getUserWishes';
-import DeleteModal from '../../../../common/modalDelete';
+import { useMutation } from '@apollo/client';
+import { v4 as uuidv4 } from 'uuid';
 
-import '../styles.scss';
+import GET_USER_WISHES from '../../../../../queries/getUserWishes';
+import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
+import { hideCategoryModal } from '../../../../../redux/actions/modals';
+
+import Modal from '../Modal';
+import DeleteModal from '../../../../common/modalDelete';
+import { CloseButton } from '../../../../common/IconButtons';
+import { LightButton } from '../../../../common/Button';
+import { Row, Column } from '../../../../common/Flex';
+import { Input } from '../../../../common/Inputs';
 
 const ModalEdit = ({ data, userId }) => {
   const dispatch = useDispatch();
@@ -91,50 +96,35 @@ const ModalEdit = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <div
-        className="modal-overlay"
-        onClick={() => dispatch(hideCategoryModal())}
-      >
-        <div className="modal" onClick={(e) => e.stopPropagation()}>
-          <div className="header">
-            <i
-              className="far fa-times-circle"
-              onClick={() => dispatch(hideCategoryModal())}
-            />
-            <button
-              type="button"
-              className="btn"
-              onClick={() =>
-                setModalStatus({ ...modalStatus, modalDelete: true })
-              }
-            >
-              Delete Category
-            </button>
-          </div>
-          <form className="body" onSubmit={handleSubmit(onSubmit)}>
-            <div className="row">
-              <div className="column">
-                <div className="row">
-                  <div className="column">
-                    <label htmlFor="name">Category Name</label>
-                    <input
-                      name="name"
-                      id="name"
-                      className="input"
-                      type="text"
-                      defaultValue={catData.name}
-                      ref={register}
-                    />
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="row">
-              <input className="submit" type="submit" />
-            </div>
-          </form>
-        </div>
-      </div>
+      <Modal close={() => dispatch(hideCategoryModal())}>
+        <Row justifyContent="space-between">
+          <CloseButton click={() => dispatch(hideCategoryModal())} />
+          <LightButton
+            onClick={() =>
+              setModalStatus({ ...modalStatus, modalDelete: true })
+            }
+          >
+            Delete Category
+          </LightButton>
+        </Row>
+        <form onSubmit={handleSubmit(onSubmit)}>
+          <Row>
+            <Column>
+              <label htmlFor="name">Category Name</label>
+              <Input
+                name="name"
+                id="name"
+                type="text"
+                defaultValue={catData.name}
+                ref={register}
+              />
+            </Column>
+          </Row>
+          <Row>
+            <Input type="submit" />
+          </Row>
+        </form>
+      </Modal>
     </>
   );
 };

@@ -11,7 +11,9 @@ import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
 const HeaderContainer = styled.div`
   width: 100%;
   background-color: #c5c6c9;
-  padding: 5px 0;
+  padding: 7px 0;
+  position: relative;
+  z-index: 10;
 `;
 
 const HeaderContent = styled.div`
