@@ -5,8 +5,8 @@ import { displayWishModal } from '../../../../redux/actions/modals';
 import Card from '../../../common/Card';
 import Image from '../../../common/Image';
 import Box from '../../../common/Box';
-import Donors from '../Donors';
-import DonationBar from '../DonateBtn';
+import Donors from '../Donors/index.jsx';
+import DonationBar from '../DonateBtn/index.jsx';
 import { Row, Column } from '../../../common/Flex';
 import Donations from '../Donations';
 
