@@ -6,16 +6,16 @@ import { useDispatch } from 'react-redux';
 import {
   displayCategoryModal,
   displayWishModal,
-} from '../../redux/actions/modals';
-import GET_USER_WISHES from '../../queries/getUserWishes';
+} from '../../redux/actions/modals.js';
+import GET_USER_WISHES from '../../queries/getUserWishes.js';
 
 import { pageWidth } from '../../globalStyles/mixins';
-import { FlexContainer } from '../common/Flex';
-import { LightButton } from '../common/Button';
-import ProfileHeader from './children/ProfileHeader';
-import WishModal from './children/modals/Wish';
-import CategoryModal from './children/modals/Category';
-import EditProfileModal from './children/modals/EditProfile';
+import { FlexContainer } from '../common/Flex/index.jsx';
+import { LightButton } from '../common/Button/index.jsx';
+import ProfileHeader from './children/ProfileHeader/index.jsx';
+import WishModal from './children/modals/Wish/index.jsx';
+import CategoryModal from './children/modals/Category/index.jsx';
+import EditProfileModal from './children/modals/EditProfile/index.jsx';
 import Category from './children/Category/index.jsx';
 import Wish from './children/Wish/index.jsx';
 
