@@ -1,4 +1,5 @@
 import React from 'react';
+import { withAuthenticator, AmplifySignOut } from '@aws-amplify/ui-react';
 import { BrowserRouter as Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -28,24 +29,9 @@ const httpLink = createHttpLink({
   uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
 });
 
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = false;
-  // return the headers to the context so httpLink can read them
-  if (token) {
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${token}`,
-      },
-    };
-  }
-  return headers;
-});
-
 const createApolloClient = () =>
   new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: httpLink,
     cache: new InMemoryCache(),
   });
 
@@ -67,4 +53,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default withAuthenticator(App);
