@@ -3,10 +3,12 @@ import {
   HIDE_CATEGORY_MODAL,
   DISPLAY_WISH_MODAL,
   HIDE_WISH_MODAL,
+  DISPLAY_EDIT_PROFILE_MODAL,
+  HIDE_EDIT_PROFILE_MODAL,
 } from '../actions/modals';
 
 export default function modals(
-  state = { categoryModal: {}, wishModal: {} },
+  state = { categoryModal: {}, wishModal: {}, editProfileModal: {} },
   action,
 ) {
   switch (action.type) {
@@ -46,6 +48,20 @@ export default function modals(
           mode: '',
           wishIndex: '',
           catIndex: '',
+        },
+      };
+    case DISPLAY_EDIT_PROFILE_MODAL:
+      return {
+        ...state,
+        editProfileModal: {
+          status: true,
+        },
+      };
+    case HIDE_EDIT_PROFILE_MODAL:
+      return {
+        ...state,
+        editProfileModal: {
+          status: false,
         },
       };
     default:

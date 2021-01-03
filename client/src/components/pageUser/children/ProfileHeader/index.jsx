@@ -1,10 +1,14 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { useDispatch } from 'react-redux';
+
+import { displayEditProfileModal } from '../../../../redux/actions/modals';
+
 import { pageWidth } from '../../../../globalStyles/mixins';
+import device from '../../../../globalStyles/breakpoints';
 import { Row, Column } from '../../../common/Flex';
 import { H1, Paragraph } from '../../../common/Text';
 import Avatar from '../../../common/Avatar';
-import device from '../../../../globalStyles/breakpoints';
 import { LightButton } from '../../../common/Button';
 
 const HeaderContainer = Styled.div`
@@ -54,29 +58,35 @@ const EditProfileBtn = Styled(LightButton)`
     bottom: 15px;
 `;
 
-const ProfileHeader = () => (
-  <HeaderContainer>
-    <Cover>
-      <EditProfileBtn>Edit Profile</EditProfileBtn>
-    </Cover>
-    <ProfileInfo>
-      <LeftColumn>
-        <Avatar size="2" />
-        <Column>
-          <H1>Nicholas Engleman</H1>
-          <Paragraph>Web Developer</Paragraph>
-        </Column>
-      </LeftColumn>
-      <RightColumn>
-        <p>
-          Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-          eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad
-          minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-          aliquip ex ea commodo consequat.
-        </p>
-      </RightColumn>
-    </ProfileInfo>
-  </HeaderContainer>
-);
+const ProfileHeader = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <HeaderContainer>
+      <Cover>
+        <EditProfileBtn onClick={() => dispatch(displayEditProfileModal())}>
+          Edit Profile
+        </EditProfileBtn>
+      </Cover>
+      <ProfileInfo>
+        <LeftColumn>
+          <Avatar size="2" />
+          <Column>
+            <H1>Nicholas Engleman</H1>
+            <Paragraph>Web Developer</Paragraph>
+          </Column>
+        </LeftColumn>
+        <RightColumn>
+          <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
+            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
+            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
+            aliquip ex ea commodo consequat.
+          </p>
+        </RightColumn>
+      </ProfileInfo>
+    </HeaderContainer>
+  );
+};
 
 export default ProfileHeader;

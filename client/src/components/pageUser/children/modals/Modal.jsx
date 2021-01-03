@@ -23,8 +23,8 @@ const StyledModal = Styled.div`
     border-radius: 20px;
 `;
 
-const Modal = ({ children, close }) => (
-  <ModalOverlay onClick={close}>
+const Modal = ({ children, overlayClick }) => (
+  <ModalOverlay onClick={overlayClick}>
     <StyledModal onClick={(e) => e.stopPropagation()}>{children}</StyledModal>
   </ModalOverlay>
 );

@@ -124,7 +124,7 @@ const WishModal = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <Modal close={() => dispatch(hideWishModal())}>
+      <Modal overlayClick={() => dispatch(hideWishModal())}>
         <Row justifyContent="space-between">
           <CloseButton click={() => dispatch(hideWishModal())} />
           <LightButton

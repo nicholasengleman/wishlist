@@ -2,20 +2,22 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
-import ProfileHeader from './children/ProfileHeader';
-import WishModal from './children/modals/Wish';
-import CategoryModal from './children/modals/Category';
-import Category from './children/Category';
-import { FlexContainer } from '../common/Flex';
-import Wish from './children/Wish';
-import { pageWidth } from '../../globalStyles/mixins';
-import { LightButton } from '../common/Button';
+
 import {
   displayCategoryModal,
   displayWishModal,
 } from '../../redux/actions/modals';
-
 import GET_USER_WISHES from '../../queries/getUserWishes';
+
+import { pageWidth } from '../../globalStyles/mixins';
+import { FlexContainer } from '../common/Flex';
+import { LightButton } from '../common/Button';
+import ProfileHeader from './children/ProfileHeader';
+import WishModal from './children/modals/Wish';
+import CategoryModal from './children/modals/Category';
+import EditProfileModal from './children/modals/EditProfile';
+import Category from './children/Category';
+import Wish from './children/Wish';
 
 const WishContainer = Styled(FlexContainer)`
   ${pageWidth};
@@ -39,6 +41,7 @@ const Profile = (props) => {
     <>
       <WishModal data={wishData} userId={userId} />
       <CategoryModal data={wishData} userId={userId} />
+      <EditProfileModal userId={userId} />
       <ProfileHeader />
       <WishContainer>
         <LightButton

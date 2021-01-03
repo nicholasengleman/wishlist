@@ -1,11 +1,7 @@
 const path = require('path');
-const ReactRefreshPlugin = require('@pmmmwh/react-refresh-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 
-const isDevelopment = process.env.NODE_ENV !== 'production';
-
 module.exports = {
-  mode: isDevelopment ? 'development' : 'production',
   entry: {
     main: './src/index.js',
   },
@@ -13,15 +9,6 @@ module.exports = {
     path: path.resolve(__dirname, 'public'),
     filename: 'bundle.js',
     publicPath: '/',
-  },
-  devServer: {
-    headers: {
-      'Access-Control-Allow-Origin': '*',
-      'Access-Control-Allow-Methods': '*',
-      'Access-Control-Allow-Headers': '*',
-    },
-    historyApiFallback: true,
-    port: 3000,
   },
   module: {
     rules: [
@@ -54,7 +41,6 @@ module.exports = {
     ],
   },
   plugins: [
-    isDevelopment && new ReactRefreshPlugin(),
     new HtmlWebpackPlugin({
       filename: './index.html',
       template: './public/index.html',

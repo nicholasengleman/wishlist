@@ -96,7 +96,7 @@ const ModalEdit = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <Modal close={() => dispatch(hideCategoryModal())}>
+      <Modal overlayClick={() => dispatch(hideCategoryModal())}>
         <Row justifyContent="space-between">
           <CloseButton click={() => dispatch(hideCategoryModal())} />
           <LightButton
