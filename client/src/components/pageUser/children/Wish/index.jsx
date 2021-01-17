@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import Styled from 'styled-components';
-import { displayWishModal } from '../../../../redux/actions/modals';
+import { toggleWishModal } from '../../../../redux/actions/modals';
 import Card from '../../../common/Card';
 import Image from '../../../common/Image';
 import Box from '../../../common/Box';
@@ -52,7 +52,7 @@ const Wish = ({ wish, wishIndex, catIndex, className }) => {
       <i
         className="far fa-edit"
         onClick={() =>
-          dispatch(displayWishModal({ mode: 'edit', catIndex, wishIndex }))
+          dispatch(toggleWishModal({ mode: 'edit', catIndex, wishIndex }))
         }
       />
       <Column>

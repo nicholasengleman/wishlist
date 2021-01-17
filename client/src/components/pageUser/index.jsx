@@ -3,7 +3,10 @@ import Styled from 'styled-components';
 import { useQuery } from '@apollo/client';
 import { useDispatch } from 'react-redux';
 
-import { displayCategoryModal, displayWishModal } from '../../redux/actions/modals';
+import {
+  toggleCategoryModal,
+  toggleWishModal,
+} from '../../redux/actions/modals';
 import GET_USER_WISHES from '../../queries/getUserWishes';
 
 import { pageWidth } from '../../globalStyles/mixins';
@@ -21,42 +24,61 @@ const WishContainer = Styled(FlexContainer)`
 `;
 
 const Profile = (props) => {
-    const dispatch = useDispatch();
-    const userId = props?.match?.params?.userId;
+  const dispatch = useDispatch();
+  const userId = props?.match?.params?.userId;
 
-    const { loading, data } = useQuery(GET_USER_WISHES, {
-        variables: { userId },
-    });
+  const { loading, data } = useQuery(GET_USER_WISHES, {
+    variables: { userId },
+  });
 
-    if (loading || !data) {
-        return <h1>loading...</h1>;
-    }
+  if (loading || !data) {
+    return <h1>loading...</h1>;
+  }
 
-    const wishData = JSON.parse(data.users_by_pk.wishData);
+  const wishData = JSON.parse(data.users_by_pk.wishData);
 
-    return (
-        <>
-            <WishModal data={wishData} userId={userId} />
-            <CategoryModal data={wishData} userId={userId} />
-            <EditProfileModal userId={userId} />
-            <ProfileHeader />
-            <WishContainer>
-                <LightButton onClick={() => dispatch(displayCategoryModal({ mode: 'add' }))}>Add Category</LightButton>
-                {Array.isArray(wishData) &&
-                    wishData.map((category, catIndex) => (
-                        <Category category={category} cateIndex={catIndex} key={`${Math.random()}`}>
-                            <FlexContainer>
-                                {category.wishes &&
-                                    category.wishes.map((wish, wishIndex) => (
-                                        <Wish wish={wish} wishIndex={wishIndex} catIndex={catIndex} key={`${Math.random()}`} />
-                                    ))}
-                                <LightButton onClick={() => dispatch(displayWishModal({ mode: 'add', catIndex }))}>Add Wish</LightButton>
-                            </FlexContainer>
-                        </Category>
-                    ))}
-            </WishContainer>
-        </>
-    );
+  return (
+    <>
+      <WishModal data={wishData} userId={userId} />
+      <CategoryModal data={wishData} userId={userId} />
+      <EditProfileModal userId={userId} />
+      <ProfileHeader />
+      <WishContainer>
+        <LightButton
+          onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
+        >
+          Add Category
+        </LightButton>
+        {Array.isArray(wishData) &&
+          wishData.map((category, catIndex) => (
+            <Category
+              category={category}
+              cateIndex={catIndex}
+              key={`${Math.random()}`}
+            >
+              <FlexContainer>
+                {category.wishes &&
+                  category.wishes.map((wish, wishIndex) => (
+                    <Wish
+                      wish={wish}
+                      wishIndex={wishIndex}
+                      catIndex={catIndex}
+                      key={`${Math.random()}`}
+                    />
+                  ))}
+                <LightButton
+                  onClick={() =>
+                    dispatch(toggleWishModal({ mode: 'add', catIndex }))
+                  }
+                >
+                  Add Wish
+                </LightButton>
+              </FlexContainer>
+            </Category>
+          ))}
+      </WishContainer>
+    </>
+  );
 };
 
 export default Profile;

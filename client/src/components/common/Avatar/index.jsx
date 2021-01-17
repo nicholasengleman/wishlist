@@ -14,16 +14,16 @@ const BaseAvatar = styled.img`
 const Avatar = ({ className, url, size = 2 }) => {
   const [demoImg, setDemoImg] = useState();
 
-  useEffect(() => {
-    axios
-      .get('https://randomuser.me/api/?results=1')
-      .then((response) => {
-        setDemoImg(response.data.results[0].picture.large);
-      })
-      .catch((error) => {
-        throw new Error(error);
-      });
-  }, []);
+  // useEffect(() => {
+  //   axios
+  //     .get('https://randomuser.me/api/?results=1')
+  //     .then((response) => {
+  //       setDemoImg(response.data.results[0].picture.large);
+  //     })
+  //     .catch((error) => {
+  //       throw new Error(error);
+  //     });
+  // }, []);
 
   return <BaseAvatar className={className} src={url || demoImg} size={size} />;
 };

@@ -1,12 +1,16 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
+
+import { toggleSignUpModal } from '../../../redux/actions/modals';
+
 import SearchInput from '../Search';
 import { pageWidth } from '../../../globalStyles/mixins';
 import { Row } from '../Flex';
 import ProfileLink from '../ProfileLink';
 import { AlarmButton, MenuButton } from '../IconButtons';
-
 import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
+import SignUpModal from '../auth/SignUp/index';
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -23,12 +27,21 @@ const HeaderContent = styled.div`
   align-items: center;
 `;
 
-const Header = () => (
-  <HeaderContainer>
-    <HeaderContent>
-      <SearchInput />
-      <Row>
-        <AlarmButton />
+const Header = () => {
+  const dispatch = useDispatch();
+
+  return (
+    <>
+      <SignUpModal />
+      <HeaderContainer>
+        <HeaderContent>
+          <SearchInput />
+          <Row>
+            <button onClick={() => dispatch(toggleSignUpModal())}>
+              Sign Up
+            </button>
+
+            {/* <AlarmButton />
         <ProfileLink />
         <MenuContainer>
           <MenuHeader>
@@ -44,10 +57,12 @@ const Header = () => (
               <p>Log Out</p>
             </MenuItem>
           </MenuList>
-        </MenuContainer>
-      </Row>
-    </HeaderContent>
-  </HeaderContainer>
-);
+        </MenuContainer> */}
+          </Row>
+        </HeaderContent>
+      </HeaderContainer>
+    </>
+  );
+};
 
 export default Header;

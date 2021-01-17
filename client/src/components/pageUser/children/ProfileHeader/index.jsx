@@ -2,7 +2,7 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import { displayEditProfileModal } from '../../../../redux/actions/modals';
+import { toggleEditProfileModal } from '../../../../redux/actions/modals';
 
 import { pageWidth } from '../../../../globalStyles/mixins';
 import device from '../../../../globalStyles/breakpoints';
@@ -64,7 +64,7 @@ const ProfileHeader = () => {
   return (
     <HeaderContainer>
       <Cover>
-        <EditProfileBtn onClick={() => dispatch(displayEditProfileModal())}>
+        <EditProfileBtn onClick={() => dispatch(toggleEditProfileModal())}>
           Edit Profile
         </EditProfileBtn>
       </Cover>

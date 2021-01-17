@@ -7,13 +7,12 @@ import { useForm } from 'react-hook-form';
 
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
 import GET_USER_WISHES from '../../../../../queries/getUserWishes';
-import { hideWishModal } from '../../../../../redux/actions/modals';
+import { toggleWishModal } from '../../../../../redux/actions/modals';
 
-import Modal from '../Modal';
+import Modal from '../../../../common/Modal';
 import Image from '../../../../common/Image';
 import uploadImage from '../../../../helperFunctions/uploadImage';
 import DeleteModal from '../../../../common/modalDelete';
-import { CloseButton } from '../../../../common/IconButtons';
 import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
 import { Input, Textarea } from '../../../../common/Inputs';
@@ -26,7 +25,7 @@ const WishModal = ({ data, userId }) => {
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
-  const { status, mode, catIndex, wishIndex } = useSelector(
+  const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
   );
 
@@ -68,7 +67,7 @@ const WishModal = ({ data, userId }) => {
       refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
     });
 
-    dispatch(hideWishModal());
+    dispatch(toggleWishModal());
   };
 
   const onPrefillSubmit = ({ url }) => {
@@ -104,7 +103,7 @@ const WishModal = ({ data, userId }) => {
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });
-    dispatch(hideWishModal());
+    dispatch(toggleWishModal());
   };
 
   useEffect(() => {
@@ -113,10 +112,6 @@ const WishModal = ({ data, userId }) => {
     }
   }, [mode, data, catIndex, wishIndex]);
 
-  if (!status) {
-    return null;
-  }
-
   return (
     <>
       <DeleteModal
@@ -124,9 +119,8 @@ const WishModal = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <Modal overlayClick={() => dispatch(hideWishModal())}>
+      <Modal modalName="wishModal" onOverlayClick={toggleWishModal()}>
         <Row justifyContent="space-between">
-          <CloseButton click={() => dispatch(hideWishModal())} />
           <LightButton
             onClick={() =>
               setModalStatus({ ...modalStatus, modalDelete: true })

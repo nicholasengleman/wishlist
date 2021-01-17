@@ -8,7 +8,6 @@ import {
   InMemoryCache,
   createHttpLink,
 } from '@apollo/client';
-import { setContext } from '@apollo/client/link/context';
 import reducer from './redux/reducers';
 import GlobalStyles from './globalStyles/globalStyles';
 
@@ -26,26 +25,12 @@ const store = createStore(
 
 const httpLink = createHttpLink({
   uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
-});
-
-const authLink = setContext((_, { headers }) => {
-  // get the authentication token from local storage if it exists
-  const token = false;
-  // return the headers to the context so httpLink can read them
-  if (token) {
-    return {
-      headers: {
-        ...headers,
-        authorization: `Bearer ${token}`,
-      },
-    };
-  }
-  return headers;
+  headers: {},
 });
 
 const createApolloClient = () =>
   new ApolloClient({
-    link: authLink.concat(httpLink),
+    link: httpLink,
     cache: new InMemoryCache(),
   });
 

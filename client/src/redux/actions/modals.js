@@ -1,46 +1,30 @@
-export const DISPLAY_CATEGORY_MODAL = 'DISPLAY_CATEGORY_MODAL';
-export const HIDE_CATEGORY_MODAL = 'HIDE_CATEGORY_MODAL';
+export const TOGGLE_CATEGORY_MODAL = 'TOGGLE_CATEGORY_MODAL';
+export const TOGGLE_WISH_MODAL = 'TOGGLE_WISH_MODAL';
+export const TOGGLE_EDIT_PROFILE_MODAL = 'TOGGLE_EDIT_PROFILE_MODAL';
+export const TOGGLE_SIGN_UP_MODAL = 'TOGGLE_SIGN_UP_MODAL';
 
-export const DISPLAY_WISH_MODAL = 'DISPLAY_WISH_MODAL';
-export const HIDE_WISH_MODAL = 'HIDE_WISH_MODAL';
-
-export const DISPLAY_EDIT_PROFILE_MODAL = 'DISPLAY_EDIT_PROFILE_MODAL';
-export const HIDE_EDIT_PROFILE_MODAL = 'HIDE_EDIT_PROFILE_MODAL';
-
-export function displayCategoryModal(payload) {
+export function toggleCategoryModal(payload) {
   return {
-    type: DISPLAY_CATEGORY_MODAL,
+    type: TOGGLE_CATEGORY_MODAL,
     payload,
   };
 }
 
-export function hideCategoryModal() {
+export function toggleWishModal(payload) {
   return {
-    type: HIDE_CATEGORY_MODAL,
-  };
-}
-
-export function displayWishModal(payload) {
-  return {
-    type: DISPLAY_WISH_MODAL,
+    type: TOGGLE_WISH_MODAL,
     payload,
   };
 }
 
-export function hideWishModal() {
+export function toggleEditProfileModal() {
   return {
-    type: HIDE_WISH_MODAL,
+    type: TOGGLE_EDIT_PROFILE_MODAL,
   };
 }
 
-export function displayEditProfileModal() {
+export function toggleSignUpModal() {
   return {
-    type: DISPLAY_EDIT_PROFILE_MODAL,
-  };
-}
-
-export function hideEditProfileModal() {
-  return {
-    type: HIDE_EDIT_PROFILE_MODAL,
+    type: TOGGLE_SIGN_UP_MODAL,
   };
 }

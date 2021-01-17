@@ -7,11 +7,10 @@ import { v4 as uuidv4 } from 'uuid';
 
 import GET_USER_WISHES from '../../../../../queries/getUserWishes';
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import { hideCategoryModal } from '../../../../../redux/actions/modals';
+import { toggleCategoryModal } from '../../../../../redux/actions/modals';
 
-import Modal from '../Modal';
+import Modal from '../../../../common/Modal';
 import DeleteModal from '../../../../common/modalDelete';
-import { CloseButton } from '../../../../common/IconButtons';
 import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
 import { Input } from '../../../../common/Inputs';
@@ -21,9 +20,7 @@ const ModalEdit = ({ data, userId }) => {
   const { register, handleSubmit } = useForm();
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
-  const { status, mode, catIndex } = useSelector(
-    (state) => state.modals.categoryModal,
-  );
+  const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
 
   const onSubmit = (category) => {
     let newData = _.cloneDeep(data);
@@ -58,7 +55,7 @@ const ModalEdit = ({ data, userId }) => {
       },
       refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
     });
-    dispatch(hideCategoryModal());
+    dispatch(toggleCategoryModal());
   };
 
   const onDelete = () => {
@@ -74,7 +71,7 @@ const ModalEdit = ({ data, userId }) => {
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });
-    dispatch(hideCategoryModal());
+    dispatch(toggleCategoryModal());
   };
 
   const [catData, setCatData] = useState({});
@@ -85,10 +82,6 @@ const ModalEdit = ({ data, userId }) => {
     }
   }, [mode, data, catIndex]);
 
-  if (!status) {
-    return null;
-  }
-
   return (
     <>
       <DeleteModal
@@ -96,9 +89,8 @@ const ModalEdit = ({ data, userId }) => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <Modal overlayClick={() => dispatch(hideCategoryModal())}>
+      <Modal modalName="categoryModal" onOverlayClick={toggleCategoryModal()}>
         <Row justifyContent="space-between">
-          <CloseButton click={() => dispatch(hideCategoryModal())} />
           <LightButton
             onClick={() =>
               setModalStatus({ ...modalStatus, modalDelete: true })
