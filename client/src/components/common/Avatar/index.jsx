@@ -1,5 +1,4 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import React from 'react';
 import styled from 'styled-components';
 
 const AvatarSizes = ['35px', '45px', '175px'];
@@ -12,20 +11,7 @@ const BaseAvatar = styled.img`
 `;
 
 const Avatar = ({ className, url, size = 2 }) => {
-  const [demoImg, setDemoImg] = useState();
-
-  // useEffect(() => {
-  //   axios
-  //     .get('https://randomuser.me/api/?results=1')
-  //     .then((response) => {
-  //       setDemoImg(response.data.results[0].picture.large);
-  //     })
-  //     .catch((error) => {
-  //       throw new Error(error);
-  //     });
-  // }, []);
-
-  return <BaseAvatar className={className} src={url || demoImg} size={size} />;
+  return <BaseAvatar className={className} src={url} size={size} />;
 };
 
 export default Avatar;

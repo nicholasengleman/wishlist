@@ -1,4 +1,5 @@
 import React from 'react';
+import Firebase, { FirebaseContext } from './components/firebase';
 import { BrowserRouter as Switch, Route } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
@@ -38,17 +39,19 @@ const App = () => {
   const client = createApolloClient();
 
   return (
-    <ApolloProvider client={client}>
-      <Provider store={store}>
-        <GlobalStyles />
-        <Header />
-        <Switch>
-          <Route path="/" exact component={pageHome} />
-          <Route path="/product/:id" component={pageProduct} />
-          <Route path="/user/:userId" component={pageUser} />
-        </Switch>
-      </Provider>
-    </ApolloProvider>
+    <FirebaseContext.Provider value={new Firebase()}>
+      <ApolloProvider client={client}>
+        <Provider store={store}>
+          <GlobalStyles />
+          <Header />
+          <Switch>
+            <Route path="/" exact component={pageHome} />
+            <Route path="/product/:id" component={pageProduct} />
+            <Route path="/user/:userId" component={pageUser} />
+          </Switch>
+        </Provider>
+      </ApolloProvider>
+    </FirebaseContext.Provider>
   );
 };
 

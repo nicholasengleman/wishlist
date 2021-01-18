@@ -1,10 +1,110 @@
-import React from 'react';
+import React, { useContext } from 'react';
+import { useDispatch } from 'react-redux';
+import { useForm } from 'react-hook-form';
+import { joiResolver } from '@hookform/resolvers/joi';
+import Joi from 'joi';
+
+import { FirebaseContext } from '../../../firebase';
+
 import Modal from '../../Modal';
 import { toggleSignUpModal } from '../../../../redux/actions/modals';
+import { Row, Column } from '../../Flex';
+import { Input } from '../../Inputs';
+import { H1, H3 } from '../../Text';
+import ErrorMessage from '../../ErrorMessage';
+import { SubmitButton } from '../../Button';
+
+const schema = Joi.object({
+  email: Joi.string()
+    .email({ tlds: { allow: false } })
+    .required(),
+  password: Joi.string().min(8).required(),
+  passwordConfirm: Joi.any().equal(Joi.ref('password')).required(),
+});
 
 const SignUpModal = () => {
+  const dispatch = useDispatch();
+  const { register, handleSubmit, formState } = useForm({
+    resolver: joiResolver(schema),
+  });
+
+  const emailError = formState?.errors?.email?.message;
+  const passwordError = formState?.errors?.password?.message;
+  const passwordConfirmError = formState?.errors?.passwordConfirm?.message;
+
+  const firebase = useContext(FirebaseContext);
+
+  const onSubmit = ({ email, password }) => {
+    firebase
+      .doCreateUserWithEmailAndPassword(email, password)
+      .then((authUser) => {
+        console.log(authUser);
+        dispatch(toggleSignUpModal());
+      })
+      .catch((error) => console.log(error));
+  };
+
   return (
-    <Modal modalName="signUpModal" onOverlayClick={toggleSignUpModal()}></Modal>
+    <Modal modalName="signUpModal" onOverlayClick={toggleSignUpModal()}>
+      <Row justifyContent="center" marginSize={1}>
+        <H1>Create an Account</H1>
+      </Row>
+      <Row justifyContent="center" marginSize={2}>
+        <H3>Already have an account? Sign In</H3>
+      </Row>
+
+      <form onSubmit={handleSubmit(onSubmit)}>
+        <Row marginSize={1}>
+          <Column>
+            <Input
+              name="email"
+              type="text"
+              ref={register}
+              placeholder="Email"
+            />
+          </Column>
+        </Row>
+
+        <Row>
+          <Column>
+            <ErrorMessage message={emailError} />
+          </Column>
+        </Row>
+
+        <Row marginSize={1} justifyContent="space-between">
+          <Column>
+            <Input
+              name="password"
+              type="text"
+              ref={register}
+              placeholder="Password"
+            />
+          </Column>
+          <Column>
+            <Input
+              name="passwordConfirm"
+              type="text"
+              ref={register}
+              placeholder="Password Confirm"
+            />
+          </Column>
+        </Row>
+        <Row>
+          <Column>
+            <ErrorMessage message={passwordError} />
+            <ErrorMessage message={passwordConfirmError} />
+          </Column>
+        </Row>
+
+        <Row>
+          <Column>
+            <SubmitButton type="submit">
+              Submit<i class="fas fa-arrow-right"></i>
+            </SubmitButton>
+          </Column>
+        </Row>
+      </form>
+    </Modal>
   );
 };
 

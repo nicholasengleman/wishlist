@@ -19,9 +19,9 @@ const ModalOverlay = Styled.div`
 `;
 
 const StyledModal = Styled.div`
- width: 50vw;
+    width: 30%;
     background-color: white;
-    padding: 20px;
+    padding: 1.5rem 1rem;
     box-sizing: content-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     border-radius: 20px;
@@ -36,7 +36,7 @@ const Modal = ({ children, modalName, onOverlayClick }) => {
   }
 
   return (
-    <ModalOverlay onClick={() => dispatch(onOverlayClick)}>
+    <ModalOverlay>
       <StyledModal onClick={(e) => e.stopPropagation()}>
         <Row justifyContent="flex-start">
           <CloseButton click={() => dispatch(onOverlayClick)} />
