@@ -3,6 +3,7 @@ import {
   TOGGLE_WISH_MODAL,
   TOGGLE_EDIT_PROFILE_MODAL,
   TOGGLE_SIGN_UP_MODAL,
+  TOGGLE_SIGN_IN_MODAL,
 } from '../actions/modals';
 
 export default function modals(
@@ -11,6 +12,7 @@ export default function modals(
     wishModal: {},
     editProfileModal: {},
     signUpModal: {},
+    signInModal: {},
   },
   action,
 ) {
@@ -70,6 +72,13 @@ export default function modals(
         ...state,
         signUpModal: {
           status: !state.signUpModal.status,
+        },
+      };
+    case TOGGLE_SIGN_IN_MODAL:
+      return {
+        ...state,
+        signInModal: {
+          status: !state.signInModal.status,
         },
       };
     default:

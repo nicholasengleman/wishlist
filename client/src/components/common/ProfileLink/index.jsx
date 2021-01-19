@@ -1,5 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { useSelector } from 'react-redux';
+
 import Avatar from '../Avatar';
 import { buttonColor } from '../../../globalStyles/mixins';
 
@@ -20,11 +22,14 @@ const StyledProfileLink = Styled.button`
     }
 `;
 
-const ProfileLink = () => (
-  <StyledProfileLink>
-    <Avatar size="0" />
-    <span>Hi, Nicholas</span>
-  </StyledProfileLink>
-);
+const ProfileLink = () => {
+  const { uid } = useSelector((state) => state.authUser);
+  return (
+    <StyledProfileLink>
+      <Avatar size="0" />
+      <span>Hi, {uid}</span>
+    </StyledProfileLink>
+  );
+};
 
 export default ProfileLink;

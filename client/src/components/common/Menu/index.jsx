@@ -88,8 +88,8 @@ export const MenuList = ({ children }) => {
   return <StyledMenuList menuStatus={menuStatus}>{children}</StyledMenuList>;
 };
 
-export const MenuItem = ({ children }) => (
-  <StyledMenuItem>{children}</StyledMenuItem>
+export const MenuItem = ({ children, onClick }) => (
+  <StyledMenuItem onClick={onClick}>{children}</StyledMenuItem>
 );
 
 export const MenuItemCategory = ({ children }) => (
