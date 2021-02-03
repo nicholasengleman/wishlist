@@ -1,17 +1,17 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { useQuery } from '@apollo/client';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
 import {
   toggleCategoryModal,
   toggleWishModal,
 } from '../../redux/actions/modals';
-import GET_USER_WISHES from '../../queries/getUserWishes';
+import GET_USER_WISHES from '../../queries/getUser';
 
 import { pageWidth } from '../../globalStyles/mixins';
 import { FlexContainer } from '../common/Flex';
-import { LightButton } from '../common/Button';
+import { EditButton } from '../common/Button';
 import ProfileHeader from './children/ProfileHeader';
 import WishModal from './children/modals/Wish';
 import CategoryModal from './children/modals/Category';
@@ -25,17 +25,19 @@ const WishContainer = Styled(FlexContainer)`
 
 const Profile = (props) => {
   const dispatch = useDispatch();
-  const userId = props?.match?.params?.userId;
+  const { uid: userId } = useSelector((state) => state.user.auth);
+  console.log(userId);
 
   const { loading, data } = useQuery(GET_USER_WISHES, {
-    variables: { userId },
+    variables: { user_id: userId },
   });
 
   if (loading || !data) {
     return <h1>loading...</h1>;
   }
 
-  const wishData = JSON.parse(data.users_by_pk.wishData);
+  const wishData =
+    data?.users_by_pk?.wishData && JSON.parse(data?.users_by_pk?.wishData);
 
   return (
     <>
@@ -44,11 +46,11 @@ const Profile = (props) => {
       <EditProfileModal userId={userId} />
       <ProfileHeader />
       <WishContainer>
-        <LightButton
+        <EditButton
           onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
         >
           Add Category
-        </LightButton>
+        </EditButton>
         {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
             <Category
@@ -66,13 +68,11 @@ const Profile = (props) => {
                       key={`${Math.random()}`}
                     />
                   ))}
-                <LightButton
+                <EditButton
                   onClick={() =>
                     dispatch(toggleWishModal({ mode: 'add', catIndex }))
                   }
-                >
-                  Add Wish
-                </LightButton>
+                ></EditButton>
               </FlexContainer>
             </Category>
           ))}

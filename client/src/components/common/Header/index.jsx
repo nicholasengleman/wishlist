@@ -1,11 +1,15 @@
 import React, { useContext } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import GET_USER from '../../../queries/getUser';
+import { useQuery } from '@apollo/client';
+import _ from 'lodash';
 
 import {
   toggleSignUpModal,
   toggleSignInModal,
 } from '../../../redux/actions/modals';
+import { setGeneralData } from '../../../redux/actions/user';
 import { FirebaseContext } from '../../firebase';
 
 import SearchInput from '../Search';
@@ -35,8 +39,29 @@ const HeaderContent = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch();
-  const authUser = useSelector((state) => state.authUser);
+  const userUid = useSelector((state) => state.user?.auth.uid);
+  const localGeneralData = useSelector((state) => state.user?.general);
   const firebase = useContext(FirebaseContext);
+
+  const { loading, data } = useQuery(GET_USER, {
+    variables: { user_id: userUid },
+  });
+
+  if (data) {
+    const hasuraGeneralData = data?.users_by_pk;
+    if (!_.isEqual(localGeneralData, hasuraGeneralData)) {
+      dispatch(
+        setGeneralData({
+          ...hasuraGeneralData,
+        }),
+      );
+    }
+  }
+
+  const handleSignOut = () => {
+    firebase.doSignOut();
+    dispatch(setGeneralData({}));
+  };
 
   return (
     <>
@@ -46,7 +71,7 @@ const Header = () => {
         <HeaderContent>
           <SearchInput />
           <Row>
-            {authUser.uid ? (
+            {userUid ? (
               <>
                 <AlarmButton />
                 <ProfileLink />
@@ -55,7 +80,7 @@ const Header = () => {
                     <MenuButton />
                   </MenuHeader>
                   <MenuList>
-                    <MenuItem onClick={() => firebase.doSignOut()}>
+                    <MenuItem onClick={() => handleSignOut()}>
                       <i className="fas fa-sign-out-alt" />
                       <p>Log Out</p>
                     </MenuItem>

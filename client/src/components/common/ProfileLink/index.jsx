@@ -23,11 +23,11 @@ const StyledProfileLink = Styled.button`
 `;
 
 const ProfileLink = () => {
-  const { uid } = useSelector((state) => state.authUser);
+  const username = useSelector((state) => state.user?.general?.username);
   return (
     <StyledProfileLink>
       <Avatar size="0" />
-      <span>Hi, {uid}</span>
+      <span>Hi, {username}</span>
     </StyledProfileLink>
   );
 };

@@ -3,13 +3,12 @@ import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
 import { toggleEditProfileModal } from '../../../../redux/actions/modals';
-
 import { pageWidth } from '../../../../globalStyles/mixins';
 import device from '../../../../globalStyles/breakpoints';
 import { Row, Column } from '../../../common/Flex';
 import { H1, Paragraph } from '../../../common/Text';
 import Avatar from '../../../common/Avatar';
-import { LightButton } from '../../../common/Button';
+import { EditButton } from '../../../common/Button';
 
 const HeaderContainer = Styled.div`
    ${pageWidth};
@@ -52,7 +51,7 @@ const RightColumn = Styled(Row)`
     }
 `;
 
-const EditProfileBtn = Styled(LightButton)`
+const EditProfileBtn = Styled(EditButton)`
     position: absolute;
     right: 15px;
     bottom: 15px;
@@ -64,9 +63,9 @@ const ProfileHeader = () => {
   return (
     <HeaderContainer>
       <Cover>
-        <EditProfileBtn onClick={() => dispatch(toggleEditProfileModal())}>
+        <EditButton onClick={() => dispatch(toggleEditProfileModal())}>
           Edit Profile
-        </EditProfileBtn>
+        </EditButton>
       </Cover>
       <ProfileInfo>
         <LeftColumn>

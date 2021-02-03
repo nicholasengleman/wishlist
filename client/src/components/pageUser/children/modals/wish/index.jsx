@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER_WISHES from '../../../../../queries/getUserWishes';
+import GET_USER_WISHES from '../../../../../queries/getUser';
 import { toggleWishModal } from '../../../../../redux/actions/modals';
 
 import Modal from '../../../../common/Modal';

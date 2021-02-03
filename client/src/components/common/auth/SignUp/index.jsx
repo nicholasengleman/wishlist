@@ -2,9 +2,11 @@ import React, { useContext } from 'react';
 import { useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { joiResolver } from '@hookform/resolvers/joi';
+import { useMutation } from '@apollo/client';
 import Joi from 'joi';
 
 import { FirebaseContext } from '../../../firebase';
+import INSERT_USER from '../../../../queries/insertUser';
 
 import Modal from '../../Modal';
 import { toggleSignUpModal } from '../../../../redux/actions/modals';
@@ -18,11 +20,13 @@ const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
     .required(),
+  username: Joi.string().min(4).required(),
   password: Joi.string().min(8).required(),
   passwordConfirm: Joi.any().equal(Joi.ref('password')).required(),
 });
 
 const SignUpModal = () => {
+  const [insertUser] = useMutation(INSERT_USER);
   const dispatch = useDispatch();
   const { register, handleSubmit, formState } = useForm({
     resolver: joiResolver(schema),
@@ -34,17 +38,23 @@ const SignUpModal = () => {
 
   const firebase = useContext(FirebaseContext);
 
-  const onSubmit = ({ email, password }) => {
+  const onSubmit = ({ email, password, username }) => {
     firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then((authUser) => {
+        insertUser({
+          variables: {
+            id: authUser.user.uid,
+            username,
+          },
+        });
         dispatch(toggleSignUpModal());
       })
       .catch((error) => console.log(error));
   };
 
   return (
-    <Modal modalName="signUpModal" onOverlayClick={toggleSignUpModal()}>
+    <Modal modalName="signUpModal" onOverlayClick={() => toggleSignUpModal()}>
       <Row justifyContent="center" marginSize={1}>
         <H1>Create an Account</H1>
       </Row>
@@ -57,9 +67,17 @@ const SignUpModal = () => {
           <Column>
             <Input
               name="email"
-              type="text"
+              type="email"
               ref={register}
               placeholder="Email"
+            />
+          </Column>
+          <Column>
+            <Input
+              name="username"
+              type="text"
+              ref={register}
+              placeholder="username"
             />
           </Column>
         </Row>

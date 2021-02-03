@@ -1,3 +1,5 @@
+import React from 'react';
+import { useSelector } from 'react-redux';
 import Styled from 'styled-components';
 import { darken } from 'polished';
 
@@ -35,3 +37,21 @@ export const SubmitButton = Styled(Base)`
     background-color: ${darken(0.1, '#0183FF')};
   }
 `;
+
+const StyledEditButton = Styled(Base)`
+ background-color: #ff0000;
+ color: yellow;
+  &:hover {
+    background-color: ${darken(0.1, '#ff0000')};
+  }
+`;
+
+export const EditButton = ({ children, onClick }) => {
+  const { uid } = useSelector((state) => state.user.auth);
+
+  if (!uid) {
+    return null;
+  }
+
+  return <StyledEditButton onClick={onClick}>{children}</StyledEditButton>;
+};

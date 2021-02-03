@@ -1,12 +1,12 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation updateUserWishes($userId: uuid!, $wishData: json!) {
+  mutation updateUserWishes($user_id: String!, $wishData: json!) {
     update_users_by_pk(
-      pk_columns: { userId: $userId }
+      pk_columns: { user_id: $user_id }
       _set: { wishData: $wishData }
     ) {
-      userId
+      user_id
       wishData
     }
   }
