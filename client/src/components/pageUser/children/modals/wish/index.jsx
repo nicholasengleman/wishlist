@@ -6,7 +6,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER_WISHES from '../../../../../queries/getUser';
+import GET_USER from '../../../../../queries/getUser';
 import { toggleWishModal } from '../../../../../redux/actions/modals';
 
 import Modal from '../../../../common/Modal';
@@ -16,15 +16,18 @@ import DeleteModal from '../../../../common/modalDelete';
 import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
 import { Input, Textarea } from '../../../../common/Inputs';
+import useGetUser from '../../../../../hooks/useGetUser';
 
-const WishModal = ({ data, userId }) => {
+const WishModal = () => {
   const dispatch = useDispatch();
+  const { uid: user_id } = useSelector((state) => state.user);
   const { register, handleSubmit } = useForm();
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
+  const data = useGetUser('wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
   );
@@ -46,7 +49,7 @@ const WishModal = ({ data, userId }) => {
     if (!prefillData.image) {
       wishWithUpdatedImage = {
         ...updatedWish,
-        image: newData[catIndex].wishes[wishIndex].image,
+        image: newData[catIndex]?.wishes[wishIndex]?.image || '',
       };
     }
 
@@ -55,16 +58,16 @@ const WishModal = ({ data, userId }) => {
     }
 
     if (mode === 'add') {
-      newData[catIndex].wishes.push(wishWithUpdatedImage);
+      newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
     updateWish({
       variables: {
-        userId,
+        user_id,
         wishData: JSON.stringify(newData),
       },
       awaitRefetchQueries: true,
-      refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
+      refetchQueries: [{ query: GET_USER, variables: { user_id } }],
     });
 
     dispatch(toggleWishModal());
@@ -96,10 +99,10 @@ const WishModal = ({ data, userId }) => {
 
     updateWish({
       variables: {
-        userId,
+        user_id,
         wishData: JSON.stringify(newData),
       },
-      refetchQueries: [{ query: GET_USER_WISHES, variables: { userId } }],
+      refetchQueries: [{ query: GET_USER, variables: { user_id } }],
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });

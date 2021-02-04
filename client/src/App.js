@@ -21,13 +21,11 @@ import {
 const App = () => {
   const firebase = useContext(FirebaseContext);
   const dispatch = useDispatch();
-  const authData = useSelector((state) => state.user.auth);
+  const user = useSelector((state) => state.user);
 
   const httpLink = createHttpLink({
     uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
-    headers: authData.token
-      ? { Authorization: `Bearer ${authData.token}` }
-      : {},
+    headers: user.token ? { Authorization: `Bearer ${user.token}` } : {},
   });
 
   const client = new ApolloClient({

@@ -1,9 +1,8 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { useSelector } from 'react-redux';
-
 import Avatar from '../Avatar';
 import { buttonColor } from '../../../globalStyles/mixins';
+import useGetUserData from '../../../hooks/useGetUser';
 
 const StyledProfileLink = Styled.button`
     ${buttonColor}
@@ -23,7 +22,8 @@ const StyledProfileLink = Styled.button`
 `;
 
 const ProfileLink = () => {
-  const username = useSelector((state) => state.user?.general?.username);
+  const username = useGetUserData('username');
+
   return (
     <StyledProfileLink>
       <Avatar size="0" />

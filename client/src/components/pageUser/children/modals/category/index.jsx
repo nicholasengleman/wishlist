@@ -5,9 +5,10 @@ import { useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
 
-import GET_USER_WISHES from '../../../../../queries/getUser';
 import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
+import GET_USER from '../../../../../queries/getUser';
 import { toggleCategoryModal } from '../../../../../redux/actions/modals';
+import useGetUser from '../../../../../hooks/useGetUser';
 
 import Modal from '../../../../common/Modal';
 import DeleteModal from '../../../../common/modalDelete';
@@ -15,27 +16,26 @@ import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
 import { Input } from '../../../../common/Inputs';
 
-const ModalEdit = ({ data }) => {
-  const { uid } = useSelector((state) => state.user.auth);
+const ModalEdit = () => {
+  const { uid } = useSelector((state) => state.user);
   const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
+  const data = useGetUser('wishData');
 
   const onSubmit = (category) => {
     let newData = _.cloneDeep(data);
     if (mode === 'add') {
       if (!newData) {
-        newData = {
-          categories: [
-            {
-              id: uuidv4(),
-              name: category.name,
-              wishes: [],
-            },
-          ],
-        };
+        newData = [
+          {
+            id: uuidv4(),
+            name: category.name,
+            wishes: [],
+          },
+        ];
       } else {
         newData.push({ id: uuidv4(), name: category.name, wishes: [] });
       }
@@ -54,7 +54,7 @@ const ModalEdit = ({ data }) => {
         user_id: uid,
         wishData: JSON.stringify(newData),
       },
-      refetchQueries: [{ query: GET_USER_WISHES, variables: { user_id: uid } }],
+      refetchQueries: [{ query: GET_USER, variables: { user_id: uid } }],
     });
     dispatch(toggleCategoryModal());
   };
@@ -68,7 +68,7 @@ const ModalEdit = ({ data }) => {
         user_id: uid,
         wishData: JSON.stringify(newData),
       },
-      refetchQueries: [{ query: GET_USER_WISHES, variables: { user_id: uid } }],
+      refetchQueries: [{ query: GET_USER, variables: { user_id: uid } }],
     });
 
     setModalStatus({ ...modalStatus, modalDelete: false });

@@ -1,13 +1,12 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { useQuery } from '@apollo/client';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import useGetUser from '../../hooks/useGetUser';
 
 import {
   toggleCategoryModal,
   toggleWishModal,
 } from '../../redux/actions/modals';
-import GET_USER_WISHES from '../../queries/getUser';
 
 import { pageWidth } from '../../globalStyles/mixins';
 import { FlexContainer } from '../common/Flex';
@@ -23,27 +22,17 @@ const WishContainer = Styled(FlexContainer)`
   ${pageWidth};
 `;
 
-const Profile = (props) => {
+const Profile = () => {
   const dispatch = useDispatch();
-  const { uid: userId } = useSelector((state) => state.user.auth);
-  console.log(userId);
+  const wishData = useGetUser('wishData');
 
-  const { loading, data } = useQuery(GET_USER_WISHES, {
-    variables: { user_id: userId },
-  });
-
-  if (loading || !data) {
-    return <h1>loading...</h1>;
-  }
-
-  const wishData =
-    data?.users_by_pk?.wishData && JSON.parse(data?.users_by_pk?.wishData);
+  console.log(wishData);
 
   return (
     <>
-      <WishModal data={wishData} userId={userId} />
-      <CategoryModal data={wishData} userId={userId} />
-      <EditProfileModal userId={userId} />
+      <WishModal />
+      <CategoryModal />
+      <EditProfileModal />
       <ProfileHeader />
       <WishContainer>
         <EditButton
@@ -70,9 +59,17 @@ const Profile = (props) => {
                   ))}
                 <EditButton
                   onClick={() =>
-                    dispatch(toggleWishModal({ mode: 'add', catIndex }))
+                    dispatch(
+                      toggleWishModal({
+                        mode: 'add',
+                        catIndex,
+                        wishIndex: category.wishes.length,
+                      }),
+                    )
                   }
-                ></EditButton>
+                >
+                  Add Wish
+                </EditButton>
               </FlexContainer>
             </Category>
           ))}

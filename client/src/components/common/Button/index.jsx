@@ -47,7 +47,7 @@ const StyledEditButton = Styled(Base)`
 `;
 
 export const EditButton = ({ children, onClick }) => {
-  const { uid } = useSelector((state) => state.user.auth);
+  const { uid } = useSelector((state) => state.user);
 
   if (!uid) {
     return null;
