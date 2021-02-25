@@ -118,11 +118,11 @@ const WishModal = () => {
 
   return (
     <>
-      <DeleteModal
+      {/* <DeleteModal
         onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
         onConfirm={() => onDelete()}
         status={modalStatus}
-      />
+      /> */}
       <Modal
         modalName="wishModal"
         onOverlayClick={toggleWishModal()}

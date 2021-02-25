@@ -7,4 +7,5 @@ export default Styled.div`
   border-radius: 10px;
   width: 300px;
   box-sizing: border-box;
+  height: fit-content;
 `;

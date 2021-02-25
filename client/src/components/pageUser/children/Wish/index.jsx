@@ -7,10 +7,12 @@ import Image from '../../../common/Image';
 import Box from '../../../common/Box';
 import Donors from '../Donors/index.jsx';
 import DonationBar from '../DonateBtn/index.jsx';
-import { Row, Column } from '../../../common/Flex';
+import { Row } from '../../../common/Flex';
 import Donations from '../Donations';
 
 const StyledWish = Styled(Card)`
+  border-top-left-radius: 15px;
+  border-top-right-radius: 15px;
     .fa-edit {
     position: absolute;
     top: 15px;
@@ -44,37 +46,35 @@ const WishTitle = Styled.div`
   margin-bottom: 1rem;
 `;
 
-const Wish = ({ wish, wishIndex, catIndex, className }) => {
+const Wish = ({ wish, wishIndex, catIndex }) => {
   const dispatch = useDispatch();
 
   return (
-    <StyledWish className={className}>
+    <StyledWish>
       <i
         className="far fa-edit"
         onClick={() =>
           dispatch(toggleWishModal({ mode: 'edit', catIndex, wishIndex }))
         }
       />
-      <Column>
-        <Image imageUrl={wish.image} type="product" />
-        <Box padding="10px 15px">
-          <WishTitle>{wish.name}</WishTitle>
-          <Row alignItems="center" marginSize="1">
-            <Price>{wish.price}</Price>
-            <Store>at {wish.store}</Store>
-          </Row>
-          <Row marginSize="1">{wish.description}</Row>
-          <Row marginSize="1">
-            <Donors max={5} />
-          </Row>
-          <Row marginSize="1">
-            <Donations />
-          </Row>
-          <Row marginSize="1">
-            <DonationBar />
-          </Row>
-        </Box>
-      </Column>
+      <Image imageUrl={wish.image} type="product" />
+      <Box padding="10px 15px">
+        <WishTitle>{wish.name}</WishTitle>
+        <Row alignItems="center" marginSize="1">
+          <Price>{wish.price}</Price>
+          <Store>at {wish.store}</Store>
+        </Row>
+        <Row marginSize="1">{wish.description}</Row>
+        <Row marginSize="1">
+          <Donors max={5} />
+        </Row>
+        <Row marginSize="1">
+          <Donations />
+        </Row>
+        <Row marginSize="1">
+          <DonationBar />
+        </Row>
+      </Box>
     </StyledWish>
   );
 };

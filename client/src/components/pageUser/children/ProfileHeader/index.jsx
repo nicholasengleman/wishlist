@@ -16,13 +16,6 @@ const HeaderContainer = Styled.div`
     margin-bottom: 2rem;
 `;
 
-const Cover = Styled.div`
-    background-color: brown;
-    height: 300px;
-    width: 100%;
-    position: relative;
-`;
-
 const ProfileInfo = Styled.div`
     margin: -50px 30px 0 30px;
     width: 100%;
@@ -62,11 +55,6 @@ const ProfileHeader = () => {
 
   return (
     <HeaderContainer>
-      <Cover>
-        <EditButton onClick={() => dispatch(toggleEditProfileModal())}>
-          Edit Profile
-        </EditButton>
-      </Cover>
       <ProfileInfo>
         <LeftColumn>
           <Avatar size="2" />
@@ -76,12 +64,9 @@ const ProfileHeader = () => {
           </Column>
         </LeftColumn>
         <RightColumn>
-          <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
-            eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim
-            ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut
-            aliquip ex ea commodo consequat.
-          </p>
+          <EditButton onClick={() => dispatch(toggleEditProfileModal())}>
+            Edit Profile
+          </EditButton>
         </RightColumn>
       </ProfileInfo>
     </HeaderContainer>

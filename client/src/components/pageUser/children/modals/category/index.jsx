@@ -13,8 +13,8 @@ import GET_USER from '../../../../../queries/getUser';
 
 import Modal from '../../../../common/Modal';
 import DeleteModal from '../../../../common/modalDelete';
-import { LightButton, SubmitButton } from '../../../../common/Button';
-import { Row, Column } from '../../../../common/Flex';
+import { LightButton } from '../../../../common/Button';
+import { Row } from '../../../../common/Flex';
 import { Input, Label } from '../../../../common/Inputs';
 
 const CategoryModal = () => {
