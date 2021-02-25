@@ -31,9 +31,13 @@ export const Textarea = Styled.textarea`
    ${InputBase};
 `;
 
+export const Form = Styled.form`
+    width: 100%;
+`;
+
 export const Label = Styled.label`
  color: grey;
- margin: 10px 0;
+ margin-bottom: 5px;
  font-size: 14px;
  display: inline-box;
 `;

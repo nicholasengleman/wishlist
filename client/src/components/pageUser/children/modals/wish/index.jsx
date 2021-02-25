@@ -15,7 +15,7 @@ import uploadImage from '../../../../helperFunctions/uploadImage';
 import DeleteModal from '../../../../common/modalDelete';
 import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
-import { Input, Textarea } from '../../../../common/Inputs';
+import { Input, Textarea, Form, Label } from '../../../../common/Inputs';
 import useGetUser from '../../../../../hooks/useGetUser';
 
 const WishModal = () => {
@@ -123,9 +123,14 @@ const WishModal = () => {
         onConfirm={() => onDelete()}
         status={modalStatus}
       />
-      <Modal modalName="wishModal" onOverlayClick={toggleWishModal()}>
-        <Row justifyContent="space-between">
+      <Modal
+        modalName="wishModal"
+        onOverlayClick={toggleWishModal()}
+        onCall={handleSubmit(onSubmit)}
+      >
+        <Row justifyContent="flex-end" marginSize={3}>
           <LightButton
+            small={true}
             onClick={() =>
               setModalStatus({ ...modalStatus, modalDelete: true })
             }
@@ -133,78 +138,86 @@ const WishModal = () => {
             Delete Wish
           </LightButton>
         </Row>
-        <form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
-          <Input
-            name="url"
-            id="url"
-            type="text"
-            defaultValue="Enter Product URL to Prefill Info"
-            ref={register2}
-          />
-          <Input type="submit" />
-        </form>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Row>
-            <Column>
-              <Image
-                imageUrl={prefillData.image || wishData.image}
-                type="product"
+
+        <Row marginSize={3}>
+          <Form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
+            <Row>
+              <Input
+                name="url"
+                id="url"
+                type="text"
+                placeholder="Enter Product URL to Prefill Info"
+                ref={register2}
               />
-            </Column>
-            <Column>
-              <Row>
-                <Column>
-                  <label htmlFor="name">Goal Name</label>
-                  <Input
-                    name="name"
-                    id="name"
-                    type="text"
-                    defaultValue={prefillData.name || wishData.name}
-                    ref={register}
-                  />
-                </Column>
-              </Row>
-              <Row>
-                <Column>
-                  <label htmlFor="name">Price</label>
-                  <Input
-                    name="price"
-                    id="price"
-                    type="text"
-                    defaultValue={prefillData.price || wishData.price}
-                    ref={register}
-                  />
-                </Column>
-              </Row>
-              <Row>
-                <Column>
-                  <label htmlFor="name">Store</label>
-                  <Input
-                    name="store"
-                    id="store"
-                    type="text"
-                    defaultValue={prefillData.store || wishData.store}
-                    ref={register}
-                  />
-                </Column>
-              </Row>
-              <Row>
-                <Column>
-                  <label htmlFor="name">Description</label>
-                  <Textarea
-                    name="description"
-                    id="description"
-                    className="input"
-                    defaultValue={
-                      prefillData.description || wishData.description
-                    }
-                  />
-                </Column>
-              </Row>
-            </Column>
-          </Row>
-          <Input type="submit" />
-        </form>
+            </Row>
+
+            <LightButton center={true}>Get Info</LightButton>
+          </Form>
+        </Row>
+
+        <Row>
+          <form onSubmit={handleSubmit(onSubmit)}>
+            <Row>
+              <Column>
+                <Image
+                  imageUrl={prefillData.image || wishData.image}
+                  type="product"
+                />
+              </Column>
+              <Column>
+                <Row>
+                  <Column>
+                    <Label htmlFor="name">Goal Name</Label>
+                    <Input
+                      name="name"
+                      id="name"
+                      type="text"
+                      defaultValue={prefillData.name || wishData.name}
+                      ref={register}
+                    />
+                  </Column>
+                </Row>
+                <Row>
+                  <Column>
+                    <Label htmlFor="name">Price</Label>
+                    <Input
+                      name="price"
+                      id="price"
+                      type="text"
+                      defaultValue={prefillData.price || wishData.price}
+                      ref={register}
+                    />
+                  </Column>
+                </Row>
+                <Row>
+                  <Column>
+                    <Label htmlFor="name">Store</Label>
+                    <Input
+                      name="store"
+                      id="store"
+                      type="text"
+                      defaultValue={prefillData.store || wishData.store}
+                      ref={register}
+                    />
+                  </Column>
+                </Row>
+                <Row>
+                  <Column>
+                    <Label htmlFor="name">Description</Label>
+                    <Textarea
+                      name="description"
+                      id="description"
+                      className="input"
+                      defaultValue={
+                        prefillData.description || wishData.description
+                      }
+                    />
+                  </Column>
+                </Row>
+              </Column>
+            </Row>
+          </form>
+        </Row>
       </Modal>
     </>
   );

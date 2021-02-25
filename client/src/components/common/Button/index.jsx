@@ -17,6 +17,8 @@ export const Base = Styled.button`
   padding: ${({ small }) => (small === true ? '0.5rem 1rem' : '0.5rem 2rem')};
   width: fit-content;
   border-radius: ${({ borderRadius }) => borderRadius || '10px'};
+  margin-left: ${({ center }) => (center ? 'auto' : '')};
+  margin-right: ${({ center }) => (center ? 'auto' : '')};
 `;
 
 export const LightButton = Styled(Base)`
@@ -29,8 +31,6 @@ export const LightButton = Styled(Base)`
 export const SubmitButton = Styled(Base)`
  background-color: #0183FF;
  color: white;
- margin-left: ${({ center }) => (center ? 'auto' : '')};
- margin-right: ${({ center }) => (center ? 'auto' : '')};
  padding:
  i {
    position: absolute;

@@ -21,6 +21,8 @@ const ModalOverlay = Styled.div`
 
 const StyledModal = Styled.div`
     width: 30%;
+    min-width: 600px;
+    max-width: 95%;
     background-color: white;
     padding: 1.5rem 1rem;
     box-sizing: content-box;
@@ -42,10 +44,12 @@ const Modal = ({ children, modalName, onOverlayClick, onCall }) => {
         <Row justifyContent="flex-start">
           <CloseButton click={() => dispatch(onOverlayClick)} />
         </Row>
-        <Row marginSize={2}>{children}</Row>
+        <Row marginSize={2}>
+          <Column>{children}</Column>
+        </Row>
         <Row>
           <Column>
-            <SubmitButton center={true} onClick={() => onCall()}>
+            <SubmitButton center={true} onClick={() => onCall && onCall()}>
               Submit
             </SubmitButton>
           </Column>

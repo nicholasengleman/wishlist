@@ -3,11 +3,10 @@ import styled from 'styled-components';
 const margin = ['0.5rem', '1rem', '2rem', '3rem'];
 
 export const Row = styled.div`
-  margin: 0.25rem 0.5rem;
+  margin-bottom: 1rem;
   display: flex;
   align-items: center;
   margin-bottom: ${({ marginSize }) => margin[marginSize]};
-  margin-top: ${({ marginSize }) => margin[marginSize - 1]};
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
 `;

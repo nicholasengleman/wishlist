@@ -84,25 +84,23 @@ const CategoryModal = () => {
         onOverlayClick={toggleCategoryModal()}
         onCall={handleSubmit(onSubmit)}
       >
-        <Column>
-          <Row justifyContent="flex-end">
-            <LightButton small={true} onClick={() => onDelete()}>
-              Delete
-            </LightButton>
-          </Row>
-          <form>
-            <Label htmlFor="name">Category Name</Label>
-            <Input
-              name="name"
-              id="name"
-              type="text"
-              defaultValue={
-                catData && catData[catIndex] && catData[catIndex].name
-              }
-              ref={register}
-            />
-          </form>
-        </Column>
+        <Row justifyContent="flex-end">
+          <LightButton small={true} onClick={() => onDelete()}>
+            Delete
+          </LightButton>
+        </Row>
+        <form>
+          <Label htmlFor="name">Category Name</Label>
+          <Input
+            name="name"
+            id="name"
+            type="text"
+            defaultValue={
+              catData && catData[catIndex] && catData[catIndex].name
+            }
+            ref={register}
+          />
+        </form>
       </Modal>
     </>
   );

@@ -7,7 +7,6 @@ const StyledImage = styled.div`
   justify-content: center;
   box-sizing: border-box;
   height: 300px;
-  padding: 20px;
   border-radius: 15px;
   img {
     max-width: 100%;
