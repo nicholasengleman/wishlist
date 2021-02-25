@@ -113,7 +113,8 @@ const WishModal = () => {
     if (mode === 'edit') {
       setWishData(data[catIndex].wishes[wishIndex]);
     }
-  }, [mode, data, catIndex, wishIndex]);
+    // eslint-disable-next-line
+  }, []);
 
   return (
     <>

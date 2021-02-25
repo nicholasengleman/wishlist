@@ -1,7 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import useGetUser from '../../hooks/useGetUser';
+import getUser from '../../hooks/useGetUser';
 
 import {
   toggleCategoryModal,
@@ -9,7 +9,7 @@ import {
 } from '../../redux/actions/modals';
 
 import { pageWidth } from '../../globalStyles/mixins';
-import { FlexContainer } from '../common/Flex';
+import { FlexContainer, Row } from '../common/Flex';
 import { EditButton } from '../common/Button';
 import ProfileHeader from './children/ProfileHeader';
 import WishModal from './children/modals/Wish';
@@ -19,14 +19,14 @@ import Category from './children/Category';
 import Wish from './children/Wish';
 
 const WishContainer = Styled(FlexContainer)`
+  display: flex;
+  flex-direction: column;
   ${pageWidth};
 `;
 
 const Profile = () => {
   const dispatch = useDispatch();
-  const wishData = useGetUser('wishData');
-
-  console.log(wishData);
+  const wishData = getUser('wishData');
 
   return (
     <>
@@ -35,19 +35,22 @@ const Profile = () => {
       <EditProfileModal />
       <ProfileHeader />
       <WishContainer>
-        <EditButton
-          onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
-        >
-          Add Category
-        </EditButton>
+        <Row>
+          <EditButton
+            onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
+          >
+            Add Category
+          </EditButton>
+        </Row>
+
         {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
             <Category
               category={category}
-              cateIndex={catIndex}
+              catIndex={catIndex}
               key={`${Math.random()}`}
             >
-              <FlexContainer>
+              <FlexContainer marginSize={2}>
                 {category.wishes &&
                   category.wishes.map((wish, wishIndex) => (
                     <Wish

@@ -51,11 +51,11 @@ const RightColumn = Styled(Row)`
     }
 `;
 
-const EditProfileBtn = Styled(EditButton)`
-    position: absolute;
-    right: 15px;
-    bottom: 15px;
-`;
+// const EditProfileBtn = Styled(EditButton)`
+//     position: absolute;
+//     right: 15px;
+//     bottom: 15px;
+// `;
 
 const ProfileHeader = () => {
   const dispatch = useDispatch();

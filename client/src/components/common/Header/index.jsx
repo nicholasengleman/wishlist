@@ -1,9 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-
-import _ from 'lodash';
-
 import {
   toggleSignUpModal,
   toggleSignInModal,
@@ -41,6 +39,7 @@ const Header = () => {
   const userUid = useSelector((state) => state.user?.uid);
 
   const handleSignOut = () => {
+    console.log('clicked');
     firebase.doSignOut();
   };
 
@@ -50,7 +49,10 @@ const Header = () => {
       <SignInModal />
       <HeaderContainer>
         <HeaderContent>
-          <SearchInput />
+          <Row>
+            <SearchInput />
+            <Link to="/">Home</Link>
+          </Row>
           <Row>
             {userUid ? (
               <>

@@ -2,8 +2,9 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
-import { Row } from './../Flex';
+import { Row, Column } from './../Flex';
 import { CloseButton } from '../IconButtons';
+import { SubmitButton } from '../Button';
 
 const ModalOverlay = Styled.div`
    background-color: rgba(0, 0, 0, 0.7);
@@ -27,7 +28,7 @@ const StyledModal = Styled.div`
     border-radius: 20px;
 `;
 
-const Modal = ({ children, modalName, onOverlayClick }) => {
+const Modal = ({ children, modalName, onOverlayClick, onCall }) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals[modalName]);
 
@@ -41,7 +42,14 @@ const Modal = ({ children, modalName, onOverlayClick }) => {
         <Row justifyContent="flex-start">
           <CloseButton click={() => dispatch(onOverlayClick)} />
         </Row>
-        {children}
+        <Row marginSize={2}>{children}</Row>
+        <Row>
+          <Column>
+            <SubmitButton center={true} onClick={() => onCall()}>
+              Submit
+            </SubmitButton>
+          </Column>
+        </Row>
       </StyledModal>
     </ModalOverlay>
   );

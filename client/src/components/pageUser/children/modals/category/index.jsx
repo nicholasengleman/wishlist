@@ -2,31 +2,41 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
-import { useMutation } from '@apollo/client';
 import { v4 as uuidv4 } from 'uuid';
+import { useMutation } from '@apollo/client';
 
-import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER from '../../../../../queries/getUser';
 import { toggleCategoryModal } from '../../../../../redux/actions/modals';
 import useGetUser from '../../../../../hooks/useGetUser';
+import updateUser from '../../../../../hooks/updateUser';
+import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
+import GET_USER from '../../../../../queries/getUser';
 
 import Modal from '../../../../common/Modal';
 import DeleteModal from '../../../../common/modalDelete';
-import { LightButton } from '../../../../common/Button';
+import { LightButton, SubmitButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
-import { Input } from '../../../../common/Inputs';
+import { Input, Label } from '../../../../common/Inputs';
 
-const ModalEdit = () => {
+const CategoryModal = () => {
   const { uid } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
-  const [modalStatus, setModalStatus] = useState({});
   const [updateWish] = useMutation(UPDATE_USER_WISHES);
+  const { register, handleSubmit } = useForm();
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
-  const data = useGetUser('wishData');
+  const [catData, setCatData] = useState(null);
+  const userData = useGetUser('wishData');
+
+  useEffect(() => {
+    if (mode === 'edit') {
+      if (!catData && userData) {
+        setCatData(userData);
+      }
+    }
+  }, [mode, catData, userData]);
 
   const onSubmit = (category) => {
-    let newData = _.cloneDeep(data);
+    let newData = _.cloneDeep(catData);
+
     if (mode === 'add') {
       if (!newData) {
         newData = [
@@ -49,77 +59,53 @@ const ModalEdit = () => {
       };
     }
 
-    updateWish({
-      variables: {
-        user_id: uid,
-        wishData: JSON.stringify(newData),
-      },
-      refetchQueries: [{ query: GET_USER, variables: { user_id: uid } }],
-    });
+    updateUser(updateWish, GET_USER, uid, newData);
     dispatch(toggleCategoryModal());
   };
 
   const onDelete = () => {
-    const newData = _.cloneDeep(data);
+    const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    updateWish({
-      variables: {
-        user_id: uid,
-        wishData: JSON.stringify(newData),
-      },
-      refetchQueries: [{ query: GET_USER, variables: { user_id: uid } }],
-    });
-
-    setModalStatus({ ...modalStatus, modalDelete: false });
+    updateUser(updateWish, GET_USER, uid, newData);
+    // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };
 
-  const [catData, setCatData] = useState({});
-
-  useEffect(() => {
-    if (mode === 'edit') {
-      setCatData(data[catIndex]);
-    }
-  }, [mode, data, catIndex]);
-
   return (
     <>
-      <DeleteModal
+      {/* <DeleteModal
         onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
         onConfirm={() => onDelete()}
         status={modalStatus}
-      />
-      <Modal modalName="categoryModal" onOverlayClick={toggleCategoryModal()}>
-        <Row justifyContent="space-between">
-          <LightButton
-            onClick={() =>
-              setModalStatus({ ...modalStatus, modalDelete: true })
-            }
-          >
-            Delete Category
-          </LightButton>
-        </Row>
-        <form onSubmit={handleSubmit(onSubmit)}>
-          <Row>
-            <Column>
-              <label htmlFor="name">Category Name</label>
-              <Input
-                name="name"
-                id="name"
-                type="text"
-                defaultValue={catData.name}
-                ref={register}
-              />
-            </Column>
+      /> */}
+      <Modal
+        modalName="categoryModal"
+        onOverlayClick={toggleCategoryModal()}
+        onCall={handleSubmit(onSubmit)}
+      >
+        <Column>
+          <Row justifyContent="flex-end">
+            <LightButton small={true} onClick={() => onDelete()}>
+              Delete
+            </LightButton>
           </Row>
-          <Row>
-            <Input type="submit" />
-          </Row>
-        </form>
+          <form>
+            <Label htmlFor="name">Category Name</Label>
+            <Input
+              name="name"
+              id="name"
+              type="text"
+              defaultValue={
+                catData && catData[catIndex] && catData[catIndex].name
+              }
+              ref={register}
+            />
+          </form>
+        </Column>
       </Modal>
     </>
   );
 };
 
-export default ModalEdit;
+export default CategoryModal;

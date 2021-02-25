@@ -81,8 +81,8 @@ const App = () => {
   return (
     <ApolloProvider client={client}>
       <GlobalStyles />
-      <Header />
       <Switch>
+        <Header />
         <Route path="/" exact component={pageHome} />
         <Route path="/product/:id" component={pageProduct} />
         <Route path="/user/:userId" component={pageUser} />

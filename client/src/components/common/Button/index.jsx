@@ -4,19 +4,19 @@ import Styled from 'styled-components';
 import { darken } from 'polished';
 
 export const Base = Styled.button`
-  height: 45px;
-  font-size: 1rem;
+  font-size: ${({ small }) => (small === true ? '0.75rem' : '1rem')};
   border: none;
   font-weight: 600;
   letter-spacing: 1px;
   cursor: pointer;
-  transition: all 0.1s;
+  transition: all 0.2s ease-in-out;
   display: flex;
   justify-content: center;
   align-items: center;
   position: relative;
-  padding: ${({ padding }) => padding || '18px'};
-  border-radius: ${({ borderRadius }) => borderRadius || '12px'};
+  padding: ${({ small }) => (small === true ? '0.5rem 1rem' : '0.5rem 2rem')};
+  width: fit-content;
+  border-radius: ${({ borderRadius }) => borderRadius || '10px'};
 `;
 
 export const LightButton = Styled(Base)`
@@ -29,6 +29,9 @@ export const LightButton = Styled(Base)`
 export const SubmitButton = Styled(Base)`
  background-color: #0183FF;
  color: white;
+ margin-left: ${({ center }) => (center ? 'auto' : '')};
+ margin-right: ${({ center }) => (center ? 'auto' : '')};
+ padding:
  i {
    position: absolute;
    right: 30px;
@@ -39,10 +42,10 @@ export const SubmitButton = Styled(Base)`
 `;
 
 const StyledEditButton = Styled(Base)`
- background-color: #ff0000;
- color: yellow;
+ background-color: #2ACA9A;
+ color: white;
   &:hover {
-    background-color: ${darken(0.1, '#ff0000')};
+    background-color: ${darken(0.1, '#2ACA9A')};
   }
 `;
 
