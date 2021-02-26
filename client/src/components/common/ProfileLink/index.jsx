@@ -4,6 +4,7 @@ import Styled from 'styled-components';
 import { useSelector } from 'react-redux';
 import Avatar from '../Avatar';
 import { buttonColor } from '../../../globalStyles/mixins';
+import useGetUser from '../../../hooks/useGetUser';
 
 const StyledProfileLink = Styled.button`
     ${buttonColor}
@@ -30,11 +31,12 @@ const StyledProfileLink = Styled.button`
 
 const ProfileLink = () => {
   const { uid } = useSelector((state) => state.user);
+  const username = useGetUser('username');
 
   return (
     <StyledProfileLink>
       <Avatar size="0" />
-      <Link to={`user/${uid}`}>My Profile</Link>
+      <Link to={`user/${uid}`}>{username}</Link>
     </StyledProfileLink>
   );
 };

@@ -5,8 +5,7 @@ import { useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER from '../../../../../queries/getUser';
+import UPDATE_USER from '../../../../../queries/updateUser';
 import { toggleWishModal } from '../../../../../redux/actions/modals';
 
 import Modal from '../../../../common/Modal';
@@ -17,16 +16,16 @@ import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';
 import { Input, Textarea, Form, Label } from '../../../../common/Inputs';
 import useGetUser from '../../../../../hooks/useGetUser';
+import updateUser from '../../../../../hooks/updateUser';
 
 const WishModal = () => {
   const dispatch = useDispatch();
-  const { uid: user_id } = useSelector((state) => state.user);
   const { register, handleSubmit } = useForm();
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
-  const [updateWish] = useMutation(UPDATE_USER_WISHES);
+  const [update] = useMutation(UPDATE_USER);
   const data = useGetUser('wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
@@ -61,15 +60,7 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    updateWish({
-      variables: {
-        user_id,
-        wishData: JSON.stringify(newData),
-      },
-      awaitRefetchQueries: true,
-      refetchQueries: [{ query: GET_USER, variables: { user_id } }],
-    });
-
+    updateUser(update, 'wishData', newData);
     dispatch(toggleWishModal());
   };
 
@@ -97,14 +88,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    updateWish({
-      variables: {
-        user_id,
-        wishData: JSON.stringify(newData),
-      },
-      refetchQueries: [{ query: GET_USER, variables: { user_id } }],
-    });
-
+    updateUser(update, 'wishData', newData);
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };

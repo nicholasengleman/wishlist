@@ -88,9 +88,14 @@ export const MenuList = ({ children }) => {
   return <StyledMenuList menuStatus={menuStatus}>{children}</StyledMenuList>;
 };
 
-export const MenuItem = ({ children, onClick }) => (
-  <StyledMenuItem onClick={onClick}>{children}</StyledMenuItem>
-);
+export const MenuItem = ({ children, onClick }) => {
+  const { toggleMenuStatus } = useContext(MenuContext);
+  const handleClick = () => {
+    toggleMenuStatus();
+    onClick();
+  };
+  return <StyledMenuItem onClick={handleClick}>{children}</StyledMenuItem>;
+};
 
 export const MenuItemCategory = ({ children }) => (
   <StyledMenuItemCategory>{children}</StyledMenuItemCategory>

@@ -41,7 +41,7 @@ export const CloseButton = ({ click }) => (
 export const HomeButton = () => (
   <Link to="/">
     <Icon>
-      <i class="fas fa-home"></i>
+      <i className="fas fa-home"></i>
     </Icon>
   </Link>
 );

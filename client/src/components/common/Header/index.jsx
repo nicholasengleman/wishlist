@@ -39,7 +39,6 @@ const Header = () => {
   const userUid = useSelector((state) => state.user?.uid);
 
   const handleSignOut = () => {
-    console.log('clicked');
     firebase.doSignOut();
   };
 

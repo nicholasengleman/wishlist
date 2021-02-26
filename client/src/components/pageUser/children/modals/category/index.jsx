@@ -8,8 +8,7 @@ import { useMutation } from '@apollo/client';
 import { toggleCategoryModal } from '../../../../../redux/actions/modals';
 import useGetUser from '../../../../../hooks/useGetUser';
 import updateUser from '../../../../../hooks/updateUser';
-import UPDATE_USER_WISHES from '../../../../../queries/updateUserWishes';
-import GET_USER from '../../../../../queries/getUser';
+import UPDATE_USER from '../../../../../queries/updateUser';
 
 import Modal from '../../../../common/Modal';
 import DeleteModal from '../../../../common/modalDelete';
@@ -18,9 +17,8 @@ import { Row } from '../../../../common/Flex';
 import { Input, Label } from '../../../../common/Inputs';
 
 const CategoryModal = () => {
-  const { uid } = useSelector((state) => state.user);
   const dispatch = useDispatch();
-  const [updateWish] = useMutation(UPDATE_USER_WISHES);
+  const [update] = useMutation(UPDATE_USER);
   const { register, handleSubmit } = useForm();
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
   const [catData, setCatData] = useState(null);
@@ -59,7 +57,7 @@ const CategoryModal = () => {
       };
     }
 
-    updateUser(updateWish, GET_USER, uid, newData);
+    updateUser(update, 'wishData', newData);
     dispatch(toggleCategoryModal());
   };
 
@@ -67,7 +65,7 @@ const CategoryModal = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    updateUser(updateWish, GET_USER, uid, newData);
+    updateUser(update, 'wishData', newData);
     // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };
