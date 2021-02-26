@@ -3,6 +3,8 @@ import Firebase, { FirebaseContext } from './components/firebase';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import reducer from './redux/reducers';
+import { ThemeProvider } from 'styled-components';
+import theme from './globalStyles/theme';
 
 /* eslint-disable no-underscore-dangle, no-undef */
 const store = createStore(
@@ -14,7 +16,9 @@ const store = createStore(
 const Providers = ({ children }) => {
   return (
     <FirebaseContext.Provider value={new Firebase()}>
-      <Provider store={store}>{children}</Provider>
+      <Provider store={store}>
+        <ThemeProvider theme={theme}>{children}</ThemeProvider>
+      </Provider>
     </FirebaseContext.Provider>
   );
 };

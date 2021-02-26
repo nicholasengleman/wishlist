@@ -17,8 +17,14 @@ const StyledProfileLink = Styled.button`
     margin-right: 10px;
     a {
         margin-left: 5px;
-        color: blue;
+        color: ${(props) => props.theme.headerText};
         font-size: 1rem;
+        font-weight: 600;
+    }
+    &:hover {
+      a {
+        color: #2f2f2f;
+      }
     }
 `;
 

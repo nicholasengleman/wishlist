@@ -7,7 +7,7 @@ const InputBase = `
     border: 1px solid lightblue;
     color: #444;
     height: 45px;
-    background-color: whitesmoke;
+    background-color: #F7F8FB;
     outline: none;
     transition: all 0.2s;
     box-sizing: border-box;

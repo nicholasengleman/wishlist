@@ -1,10 +1,10 @@
 import React, { useContext } from 'react';
-import { Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
   toggleSignUpModal,
   toggleSignInModal,
+  toggleEditProfileModal,
 } from '../../../redux/actions/modals';
 import { FirebaseContext } from '../../firebase';
 
@@ -12,7 +12,7 @@ import SearchInput from '../Search';
 import { pageWidth } from '../../../globalStyles/mixins';
 import { Row } from '../Flex';
 import ProfileLink from '../ProfileLink';
-import { AlarmButton, MenuButton } from '../IconButtons';
+import { AlarmButton, MenuButton, HomeButton } from '../IconButtons';
 import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
 import SignUpModal from '../auth/SignUp/index';
 import SignInModal from '../auth/SignIn/index';
@@ -20,7 +20,7 @@ import { LightButton } from '../Button';
 
 const HeaderContainer = styled.div`
   width: 100%;
-  background-color: #c5c6c9;
+  background-color: white;
   padding: 7px 0;
   position: relative;
   z-index: 10;
@@ -49,11 +49,11 @@ const Header = () => {
       <SignInModal />
       <HeaderContainer>
         <HeaderContent>
-          <Row>
+          <Row marginSize={0}>
+            <HomeButton />
             <SearchInput />
-            <Link to="/">Home</Link>
           </Row>
-          <Row>
+          <Row marginSize={0}>
             {userUid ? (
               <>
                 <AlarmButton />
@@ -63,6 +63,12 @@ const Header = () => {
                     <MenuButton />
                   </MenuHeader>
                   <MenuList>
+                    <MenuItem
+                      onClick={() => dispatch(toggleEditProfileModal())}
+                    >
+                      <i className="fas fa-sign-out-alt" />
+                      <p>Edit Profile</p>
+                    </MenuItem>
                     <MenuItem onClick={() => handleSignOut()}>
                       <i className="fas fa-sign-out-alt" />
                       <p>Log Out</p>

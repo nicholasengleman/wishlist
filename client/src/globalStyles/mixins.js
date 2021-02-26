@@ -1,4 +1,3 @@
-import { lighten } from 'polished';
 import device from './breakpoints';
 
 export const pageWidth = () => `
@@ -13,9 +12,9 @@ export const pageWidth = () => `
 `;
 
 export const buttonColor = () => `
-    background-color:#dedfe0;
-    transition: all 0.2s;
+    transition: all 0.2s ease-in-out;
     &:hover {
-       background-color: ${lighten(0.15, '#dedfe0')}
+       color: #2f2f2f;
+       background-color: #DCE7F9;
     }
 `;

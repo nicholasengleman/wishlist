@@ -51,7 +51,7 @@ const SignInModal = () => {
       </Row>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row marginSize={1}>
+        <Row marginSize={2}>
           <Column>
             <Input
               name="email"
@@ -68,7 +68,7 @@ const SignInModal = () => {
           </Column>
         </Row>
 
-        <Row marginSize={1} justifyContent="space-between">
+        <Row marginSize={2} justifyContent="space-between">
           <Column>
             <Input
               name="password"

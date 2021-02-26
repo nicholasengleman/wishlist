@@ -55,15 +55,15 @@ const SignUpModal = () => {
 
   return (
     <Modal modalName="signUpModal" onOverlayClick={() => toggleSignUpModal()}>
-      <Row justifyContent="center" marginSize={1}>
+      <Row justifyContent="center" marginSize={2}>
         <H1>Create an Account</H1>
       </Row>
-      <Row justifyContent="center" marginSize={2}>
+      <Row justifyContent="center" marginSize={3}>
         <H3>Already have an account? Sign In</H3>
       </Row>
 
       <form onSubmit={handleSubmit(onSubmit)}>
-        <Row marginSize={1}>
+        <Row marginSize={2}>
           <Column>
             <Input
               name="email"
@@ -88,7 +88,7 @@ const SignUpModal = () => {
           </Column>
         </Row>
 
-        <Row marginSize={1} justifyContent="space-between">
+        <Row marginSize={2} justifyContent="space-between">
           <Column>
             <Input
               name="password"

@@ -128,7 +128,7 @@ const WishModal = () => {
         onOverlayClick={toggleWishModal()}
         onCall={handleSubmit(onSubmit)}
       >
-        <Row justifyContent="flex-end" marginSize={3}>
+        <Row justifyContent="flex-end" marginSize={4}>
           <LightButton
             small={true}
             onClick={() =>
@@ -139,7 +139,7 @@ const WishModal = () => {
           </LightButton>
         </Row>
 
-        <Row marginSize={3}>
+        <Row marginSize={4}>
           <Form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
             <Row>
               <Input

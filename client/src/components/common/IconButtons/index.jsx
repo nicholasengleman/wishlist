@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { Link } from 'react-router-dom';
 import { buttonColor } from '../../../globalStyles/mixins';
 
 const Icon = Styled.button`
@@ -12,7 +13,7 @@ const Icon = Styled.button`
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: blue;
+  color: ${(props) => props.theme.headerText};
   font-size: 22px;
   border-radius: 50%;
   margin-right: 10px;
@@ -35,4 +36,12 @@ export const CloseButton = ({ click }) => (
   <Icon>
     <i className="far fa-times-circle" onClick={click} />
   </Icon>
+);
+
+export const HomeButton = () => (
+  <Link to="/">
+    <Icon>
+      <i class="fas fa-home"></i>
+    </Icon>
+  </Link>
 );

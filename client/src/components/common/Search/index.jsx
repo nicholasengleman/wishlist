@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
-import { buttonColor } from '../../../globalStyles/mixins';
 
 const FormWithIcon = styled.form`
   position: relative;
@@ -8,23 +7,34 @@ const FormWithIcon = styled.form`
   transition: all 0.3s;
   transform-origin: center left;
   .fas {
+    transition: all 0.2s ease-in-out;
     position: absolute;
-    top: 8px;
-    left: 10px;
+    top: 11px;
+    left: 13px;
+    color: ${(props) => props.theme.headerText};
+  }
+  &:hover {
+    .fas {
+      color: #2f2f2f;
+    }
   }
 `;
 
 const SearchInput = styled.input`
-  ${buttonColor}
+  background-color: #edeef4;
   height: 38px;
   width: ${(props) => (props.status ? '400px' : '240px')};
-  border-radius: 5px;
+  border-radius: 10px;
   transition: all 0.3s;
-  padding: 16px 40px;
+  padding: 0 40px;
   border: none;
   outline: none;
   letter-spacing: 1px;
   font-size: 16px;
+  &::placeholder {
+    color: ${(props) => props.theme.headerText};
+    font-weight: 600;
+  }
 `;
 
 export default function SearchBox() {

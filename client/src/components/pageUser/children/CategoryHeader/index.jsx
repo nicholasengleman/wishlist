@@ -24,7 +24,7 @@ const CategoryHeader = ({ category, catIndex }) => {
 
   return (
     <StyledCategory key={`${Math.random()}`}>
-      <Row alignItems="center" marginSize={0}>
+      <Row alignItems="center" marginSize={1}>
         <CategoryName>{category.name}</CategoryName>
         <i
           className="far fa-edit"

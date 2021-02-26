@@ -44,7 +44,7 @@ const Modal = ({ children, modalName, onOverlayClick, onCall }) => {
         <Row justifyContent="flex-start">
           <CloseButton click={() => dispatch(onOverlayClick)} />
         </Row>
-        <Row marginSize={2}>
+        <Row marginSize={3}>
           <Column>{children}</Column>
         </Row>
         <Row>
