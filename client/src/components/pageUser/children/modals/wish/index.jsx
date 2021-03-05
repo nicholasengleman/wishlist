@@ -17,6 +17,7 @@ import { Row, Column } from '../../../../common/Flex';
 import { Input, Textarea, Form, Label } from '../../../../common/Inputs';
 import useGetUser from '../../../../../hooks/useGetUser';
 import updateUser from '../../../../../hooks/updateUser';
+import { SubmitButton } from '../../../../common/Button';
 
 const WishModal = () => {
   const dispatch = useDispatch();
@@ -139,7 +140,7 @@ const WishModal = () => {
           </Form>
         </Row>
 
-        <Row>
+        <Row marginSize={4}>
           <form onSubmit={handleSubmit(onSubmit)}>
             <Row>
               <Column>
@@ -201,6 +202,11 @@ const WishModal = () => {
               </Column>
             </Row>
           </form>
+        </Row>
+        <Row>
+          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
+            Submit
+          </SubmitButton>
         </Row>
       </Modal>
     </>

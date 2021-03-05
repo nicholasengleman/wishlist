@@ -46,7 +46,7 @@ const SignInModal = () => {
       <Row justifyContent="center" marginSize={1}>
         <H1>Sign In</H1>
       </Row>
-      <Row justifyContent="center" marginSize={2}>
+      <Row justifyContent="center" marginSize={4}>
         <H3>Don't have an account?</H3>
       </Row>
 
@@ -68,7 +68,7 @@ const SignInModal = () => {
           </Column>
         </Row>
 
-        <Row marginSize={2} justifyContent="space-between">
+        <Row marginSize={3} justifyContent="space-between">
           <Column>
             <Input
               name="password"
@@ -84,12 +84,10 @@ const SignInModal = () => {
           </Column>
         </Row>
 
-        <Row>
-          <Column>
-            <SubmitButton type="submit">
-              Sign In<i className="fas fa-arrow-right"></i>
-            </SubmitButton>
-          </Column>
+        <Row justifyContent="center">
+          <SubmitButton type="submit">
+            Sign In<i className="fas fa-arrow-right"></i>
+          </SubmitButton>
         </Row>
       </form>
     </Modal>

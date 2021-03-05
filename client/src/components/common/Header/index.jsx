@@ -10,7 +10,7 @@ import { FirebaseContext } from '../../firebase';
 
 import SearchInput from '../Search';
 import { pageWidth } from '../../../globalStyles/mixins';
-import { Row } from '../Flex';
+import { Row, Column } from '../Flex';
 import ProfileLink from '../ProfileLink';
 import { AlarmButton, MenuButton, HomeButton } from '../IconButtons';
 import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
@@ -77,13 +77,17 @@ const Header = () => {
               </>
             ) : (
               <>
-                <LightButton onClick={() => dispatch(toggleSignUpModal())}>
-                  Sign Up
-                </LightButton>
+                <Column>
+                  <LightButton onClick={() => dispatch(toggleSignUpModal())}>
+                    Sign Up
+                  </LightButton>
+                </Column>
 
-                <LightButton onClick={() => dispatch(toggleSignInModal())}>
-                  Sign In
-                </LightButton>
+                <Column>
+                  <LightButton onClick={() => dispatch(toggleSignInModal())}>
+                    Sign In
+                  </LightButton>
+                </Column>
               </>
             )}
           </Row>

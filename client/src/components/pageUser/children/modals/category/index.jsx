@@ -15,6 +15,7 @@ import DeleteModal from '../../../../common/modalDelete';
 import { LightButton } from '../../../../common/Button';
 import { Row } from '../../../../common/Flex';
 import { Input, Label } from '../../../../common/Inputs';
+import { SubmitButton } from '../../../../common/Button';
 
 const CategoryModal = () => {
   const dispatch = useDispatch();
@@ -82,23 +83,33 @@ const CategoryModal = () => {
         onOverlayClick={toggleCategoryModal()}
         onCall={handleSubmit(onSubmit)}
       >
-        <Row justifyContent="flex-end">
-          <LightButton small={true} onClick={() => onDelete()}>
-            Delete
-          </LightButton>
+        <Row justifyContent="flex-end" marginSize={3}>
+          {catData && (
+            <LightButton small={true} onClick={() => onDelete()}>
+              Delete
+            </LightButton>
+          )}
         </Row>
-        <form>
-          <Label htmlFor="name">Category Name</Label>
-          <Input
-            name="name"
-            id="name"
-            type="text"
-            defaultValue={
-              catData && catData[catIndex] && catData[catIndex].name
-            }
-            ref={register}
-          />
-        </form>
+        <Row marginSize={4} justifyContent="center">
+          <form>
+            <Label htmlFor="name">Category Name</Label>
+            <Input
+              name="name"
+              id="name"
+              type="text"
+              defaultValue={
+                catData && catData[catIndex] && catData[catIndex].name
+              }
+              ref={register}
+            />
+          </form>
+        </Row>
+
+        <Row>
+          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
+            Submit
+          </SubmitButton>
+        </Row>
       </Modal>
     </>
   );

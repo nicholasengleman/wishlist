@@ -15,7 +15,7 @@ export const Base = Styled.button`
   align-items: center;
   position: relative;
   padding: ${({ small }) => (small === true ? '0.5rem 1rem' : '0.5rem 2rem')};
-  width: fit-content;
+  width: max-content;
   border-radius: ${({ borderRadius }) => borderRadius || '10px'};
   margin-left: ${({ center }) => (center ? 'auto' : '')};
   margin-right: ${({ center }) => (center ? 'auto' : '')};

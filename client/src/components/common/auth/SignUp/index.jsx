@@ -54,11 +54,11 @@ const SignUpModal = () => {
   };
 
   return (
-    <Modal modalName="signUpModal" onOverlayClick={() => toggleSignUpModal()}>
+    <Modal modalName="signUpModal" onOverlayClick={toggleSignUpModal()}>
       <Row justifyContent="center" marginSize={2}>
         <H1>Create an Account</H1>
       </Row>
-      <Row justifyContent="center" marginSize={3}>
+      <Row justifyContent="center" marginSize={4}>
         <H3>Already have an account? Sign In</H3>
       </Row>
 
@@ -88,7 +88,7 @@ const SignUpModal = () => {
           </Column>
         </Row>
 
-        <Row marginSize={2} justifyContent="space-between">
+        <Row marginSize={4} justifyContent="space-between">
           <Column>
             <Input
               name="password"
@@ -113,12 +113,10 @@ const SignUpModal = () => {
           </Column>
         </Row>
 
-        <Row>
-          <Column>
-            <SubmitButton type="submit">
-              Create Account<i className="fas fa-arrow-right"></i>
-            </SubmitButton>
-          </Column>
+        <Row justifyContent="center">
+          <SubmitButton type="submit">
+            Create Account<i className="fas fa-arrow-right"></i>
+          </SubmitButton>
         </Row>
       </form>
     </Modal>
