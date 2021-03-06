@@ -21,8 +21,8 @@ const EditAvatar = ({ userAvatar, setUserAvatar }) => {
   const zoomEl = useRef();
 
   const onSubmit = () => {
-    setUserAvatar(inputEl.current.getImage());
-    console.log(inputEl.current.getImage());
+    console.log(inputEl.current.getImage().toDataURL());
+    setUserAvatar(inputEl.current.getImage().toDataURL());
     dispatch(toggleEditAvatarModal());
     dispatch(toggleEditProfileModal());
   };

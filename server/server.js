@@ -4,7 +4,8 @@ const cors = require('cors');
 const morgan = require('morgan');
 const express = require('express');
 const { openGraphIo } = require('./routes/opengraph');
-const { uploadFile } = require('./routes/upload');
+const { uploadWebImage } = require('./routes/uploadWebImage');
+const { uploadBase64 } = require('./routes/uploadBase64');
 
 const app = express();
 
@@ -20,7 +21,8 @@ app.use(
 app.use(morgan('tiny'));
 app.disable('x-powered-by');
 
-app.use('/storage/upload', uploadFile);
+app.use('/storage/upload', uploadWebImage);
+app.use('/storage/uploadBase64', uploadBase64);
 app.use('/opengraph/product', openGraphIo);
 
 app.use((err, req, res, next) => {
