@@ -32,10 +32,13 @@ const StyledProfileLink = Styled.button`
 const ProfileLink = () => {
   const { uid } = useSelector((state) => state.user);
   const username = useGetUser('username');
+  const avatarUrl = useGetUser('avatar');
+
+  console.log(avatarUrl);
 
   return (
     <StyledProfileLink>
-      <Avatar size="0" />
+      <Avatar size="0" url={avatarUrl} />
       <Link to={`user/${uid}`}>{username}</Link>
     </StyledProfileLink>
   );

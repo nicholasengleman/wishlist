@@ -6,6 +6,7 @@ export default gql`
       wishData
       name
       username
+      avatar
     }
   }
 `;

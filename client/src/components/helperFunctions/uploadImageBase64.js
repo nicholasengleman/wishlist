@@ -2,10 +2,10 @@ import axios from 'axios';
 
 export default function upload(image) {
   return axios
-    .post(`http://localhost:3001/storage/uploadBase64`, image)
+    .post(`http://localhost:3001/storage/uploadBase64`, { data: image })
     .then((response) => {
-      if (response.data) {
-        return response.data.key;
+      if (response) {
+        return response.data.location;
       }
       return null;
     })

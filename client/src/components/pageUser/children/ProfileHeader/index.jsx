@@ -6,6 +6,7 @@ import device from '../../../../globalStyles/breakpoints';
 import { Row, Column } from '../../../common/Flex';
 import { H1, Paragraph } from '../../../common/Text';
 import Avatar from '../../../common/Avatar';
+import useGetUser from '../../../../hooks/useGetUser';
 
 const HeaderContainer = Styled.div`
    ${pageWidth};
@@ -48,11 +49,13 @@ const RightColumn = Styled(Row)`
 // `;
 
 const ProfileHeader = () => {
+  const avatarUrl = useGetUser('avatar');
+
   return (
     <HeaderContainer>
       <ProfileInfo>
         <LeftColumn>
-          <Avatar size="2" />
+          <Avatar size="2" url={avatarUrl} />
           <Column>
             <H1>Nicholas Engleman</H1>
             <Paragraph>Web Developer</Paragraph>

@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
+import uploadImageBase64 from '../../../../helperFunctions/uploadImageBase64';
 
 import EditAvatar from '../EditAvatar';
 import {
@@ -35,8 +36,10 @@ const EditProfile = () => {
     setUserData(user);
   }, [user, status]);
 
-  const onSubmit = ({ username }) => {
+  const onSubmit = async ({ username }) => {
+    const avatar = await uploadImageBase64(userAvatar);
     updateUser(update, 'username', username);
+    updateUser(update, 'avatar', avatar);
     dispatch(toggleEditProfileModal());
   };
 

@@ -1,6 +1,6 @@
 const fs = require('fs');
 const { downloadImage } = require('../helperFunctions/downloadImage');
-const { uploadFile } = require('../helperFunctions/uploadFile');
+const { uploadImage } = require('../helperFunctions/uploadImage');
 
 const uploadWebImage = async (req, res) => {
   const siteUrl = req.query['url'];
@@ -9,7 +9,7 @@ const uploadWebImage = async (req, res) => {
   await downloadImage(siteUrl, `image${fileType}`);
   const fileContent = fs.readFileSync(`image${fileType}`);
 
-  const key = await uploadFile(fileContent, fileType);
+  const key = await uploadImage(fileContent, fileType);
   if (key) {
     res.json({ key });
   }

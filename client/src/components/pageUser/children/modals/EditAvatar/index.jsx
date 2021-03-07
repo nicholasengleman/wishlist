@@ -4,6 +4,7 @@ import Dropzone from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
+import ZoomInput from './StyledZoomInput';
 
 import {
   toggleEditAvatarModal,
@@ -21,7 +22,6 @@ const EditAvatar = ({ userAvatar, setUserAvatar }) => {
   const zoomEl = useRef();
 
   const onSubmit = () => {
-    console.log(inputEl.current.getImage().toDataURL());
     setUserAvatar(inputEl.current.getImage().toDataURL());
     dispatch(toggleEditAvatarModal());
     dispatch(toggleEditProfileModal());
@@ -33,21 +33,21 @@ const EditAvatar = ({ userAvatar, setUserAvatar }) => {
 
   return (
     <Modal modalName="editAvatarModal" onOverlayClick={toggleEditAvatarModal()}>
-      <Row marginSize={3}>
+      <Row marginSize={3} justifyContent="center">
         <AvatarEditor
           image={userAvatar}
-          width={250}
-          height={250}
-          border={50}
+          width={400}
+          height={400}
+          border={1}
           color={[255, 255, 255, 0.6]} // RGBA
           scale={Number(zoom)}
           rotate={0}
-          borderRadius={200}
+          borderRadius={500}
           ref={inputEl}
         />
       </Row>
-      <Row>
-        <input
+      <Row justifyContent="center">
+        <ZoomInput
           type="range"
           id="zoom"
           name="zoom"
@@ -57,7 +57,6 @@ const EditAvatar = ({ userAvatar, setUserAvatar }) => {
           ref={zoomEl}
           onChange={onZoomChange}
         />
-        <label htmlFor="zoom">Zoom</label>
       </Row>
       <Row>
         <SubmitButton center={true} onClick={onSubmit}>
