@@ -8,17 +8,12 @@ const uploadBase64 = async (req, res) => {
   const fileType = data.slice(data.indexOf('/') + 1, data.indexOf(';'));
   const base64 = data.slice(data.indexOf(',') + 1);
 
-  const buffer = Buffer.from(base64, 'base64');
+  fs.writeFile(`image.${fileType}`, base64, { encoding: 'base64' }, function() {
+    const fileContent = fs.readFile(`image.${fileType}`);
 
-  Jimp.read(buffer, (err, res) => {
-    if (err) throw new Error(err);
-    res.quality(5).write(`image.${fileType}`);
+    const upLoadedFileData = await uploadImage(fileContent, fileType);
+    res.json({ location: upLoadedFileData.Location });
   });
-
-  const fileContent = fs.readFileSync(`image.${fileType}`);
-
-  const upLoadedFileData = await uploadImage(fileContent, fileType);
-  res.json({ location: upLoadedFileData.Location });
 };
 
 exports.uploadBase64 = uploadBase64;

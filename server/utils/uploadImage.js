@@ -1,11 +1,15 @@
 const AWS = require('aws-sdk');
 const { v4: uuidv4 } = require('uuid');
 
-//const { S3_ACCESS_KEY_ID, S3_SECRET_ACCESS_KEY, S3_BUCKET } = require('./config');
+const {
+  S3_ACCESS_KEY_ID,
+  S3_SECRET_ACCESS_KEY,
+  S3_BUCKET,
+} = require('../config');
 
 const s3 = new AWS.S3({
-  accessKeyId: 'AKIAIPQDJAJ5BJSLRWAQ',
-  secretAccessKey: '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',
+  accessKeyId: S3_ACCESS_KEY_ID,
+  secretAccessKey: S3_SECRET_ACCESS_KEY,
 });
 
 const uploadImage = async (file, fileType) => {
@@ -14,7 +18,7 @@ const uploadImage = async (file, fileType) => {
   }
 
   const params = {
-    Bucket: 'wishlistengleman',
+    Bucket: S3_BUCKET,
     Key: `${uuidv4()}.${fileType}`,
     Body: file,
   };

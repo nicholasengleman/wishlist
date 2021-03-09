@@ -13,7 +13,12 @@ import { pageWidth } from '../../../globalStyles/mixins';
 import { Row, Column } from '../Flex';
 import ProfileLink from '../ProfileLink';
 import { AlarmButton, MenuButton, HomeButton } from '../IconButtons';
-import { MenuContainer, MenuHeader, MenuList, MenuItem } from '../Menu';
+import {
+  MenuContainer,
+  MenuHeader,
+  MenuList,
+  MenuItem,
+} from '../EditProfileMenu';
 import SignUpModal from '../auth/SignUp/index';
 import SignInModal from '../auth/SignIn/index';
 import { LightButton } from '../Button';

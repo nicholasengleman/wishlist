@@ -1,10 +1,8 @@
 import React, { useState, useEffect, useRef } from 'react';
-import AvatarEditor from 'react-avatar-editor';
-import Dropzone from 'react-dropzone';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useMutation } from '@apollo/client';
-import uploadImageBase64 from '../../../../helperFunctions/uploadImageBase64';
+import uploadImage from '../../../../utils/uploadImage';
 
 import EditAvatar from '../EditAvatar';
 import {
@@ -12,7 +10,7 @@ import {
   toggleEditAvatarModal,
 } from '../../../../../redux/actions/modals';
 import Modal from '../../../../common/Modal';
-import { Row, Column } from '../../../../common/Flex';
+import { Row } from '../../../../common/Flex';
 import { Label, Input } from '../../../../common/Inputs';
 import { SubmitButton } from '../../../../common/Button';
 
@@ -37,9 +35,9 @@ const EditProfile = () => {
   }, [user, status]);
 
   const onSubmit = async ({ username }) => {
-    const avatar = await uploadImageBase64(userAvatar);
+    const avatarCloudinaryId = await uploadImage(userAvatar);
     updateUser(update, 'username', username);
-    updateUser(update, 'avatar', avatar);
+    updateUser(update, 'avatarImg', avatarCloudinaryId);
     dispatch(toggleEditProfileModal());
   };
 
@@ -58,7 +56,7 @@ const EditProfile = () => {
       >
         <Row>
           <img
-            style={{ width: '300px', borderRadius: '200px' }}
+            style={{ width: '100px', borderRadius: '100%' }}
             src={userAvatar}
             alt="Profile"
           />

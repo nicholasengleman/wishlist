@@ -10,7 +10,7 @@ import { toggleWishModal } from '../../../../../redux/actions/modals';
 
 import Modal from '../../../../common/Modal';
 import Image from '../../../../common/Image';
-import uploadImage from '../../../../helperFunctions/uploadImage';
+import uploadImage from '../../../../utils/uploadImage';
 import DeleteModal from '../../../../common/modalDelete';
 import { LightButton } from '../../../../common/Button';
 import { Row, Column } from '../../../../common/Flex';

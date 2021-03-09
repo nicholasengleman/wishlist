@@ -1,9 +1,6 @@
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useRef } from 'react';
 import AvatarEditor from 'react-avatar-editor';
-import Dropzone from 'react-dropzone';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import { useMutation } from '@apollo/client';
+import { useDispatch } from 'react-redux';
 import ZoomInput from './StyledZoomInput';
 
 import {
@@ -11,8 +8,7 @@ import {
   toggleEditProfileModal,
 } from '../../../../../redux/actions/modals';
 import Modal from '../../../../common/Modal';
-import { Row, Column } from '../../../../common/Flex';
-import { Label, Input } from '../../../../common/Inputs';
+import { Row } from '../../../../common/Flex';
 import { SubmitButton } from '../../../../common/Button';
 
 const EditAvatar = ({ userAvatar, setUserAvatar }) => {
