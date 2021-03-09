@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import { useMutation } from '@apollo/client';
 import uploadImage from '../../../../utils/uploadImage';
 
 import EditAvatar from '../EditAvatar';
@@ -14,7 +13,6 @@ import { Row } from '../../../../common/Flex';
 import { Label, Input } from '../../../../common/Inputs';
 import { SubmitButton } from '../../../../common/Button';
 
-import UPDATE_USER from '../../../../../queries/updateUser';
 import useGetUser from '../../../../../hooks/useGetUser';
 import updateUser from '../../../../../hooks/updateUser';
 
@@ -22,7 +20,6 @@ const EditProfile = () => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals.editProfileModal);
   const { register, handleSubmit } = useForm();
-  const [update] = useMutation(UPDATE_USER);
   const user = useGetUser('username');
   const [userData, setUserData] = useState(null);
   const [userAvatar, setUserAvatar] = useState(
@@ -36,8 +33,8 @@ const EditProfile = () => {
 
   const onSubmit = async ({ username }) => {
     const avatarCloudinaryId = await uploadImage(userAvatar);
-    updateUser(update, 'username', username);
-    updateUser(update, 'avatarImg', avatarCloudinaryId);
+    updateUser('username', username);
+    updateUser('avatarImg', avatarCloudinaryId);
     dispatch(toggleEditProfileModal());
   };
 

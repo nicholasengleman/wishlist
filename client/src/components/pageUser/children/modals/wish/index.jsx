@@ -1,11 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import _ from 'lodash';
-import { useMutation } from '@apollo/client';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import UPDATE_USER from '../../../../../queries/updateUser';
 import { toggleWishModal } from '../../../../../redux/actions/modals';
 
 import Modal from '../../../../common/Modal';
@@ -26,7 +24,6 @@ const WishModal = () => {
   const [prefillData, setPrefillData] = useState({});
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
-  const [update] = useMutation(UPDATE_USER);
   const data = useGetUser('wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
@@ -61,7 +58,7 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    updateUser(update, 'wishData', newData);
+    updateUser('wishData', newData);
     dispatch(toggleWishModal());
   };
 
@@ -89,7 +86,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    updateUser(update, 'wishData', newData);
+    updateUser('wishData', newData);
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };
