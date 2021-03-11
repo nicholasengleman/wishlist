@@ -3,6 +3,7 @@ import Styled from 'styled-components';
 import Menu from '../../../../common/Menu';
 import { UploadFileButton } from '../../../../common/Button';
 import uploadImageBase64 from '../../../../utils/uploadImage';
+import updateUser from '../../../../../hooks/updateUser';
 
 const Header = Styled.ul`
     margin: 0;
@@ -37,9 +38,8 @@ const EditCoverMenu = (props) => {
   const [uploadMode, setUploadMode] = useState(1);
 
   const onImageUpload = async (image) => {
-    console.log(image);
     const avatarCloudinaryId = await uploadImageBase64(image);
-    console.log(avatarCloudinaryId);
+    updateUser('coverImg', avatarCloudinaryId);
   };
 
   return (

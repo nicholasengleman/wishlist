@@ -7,6 +7,7 @@ export default gql`
       username
       wishData
       avatarImg
+      coverImg
     }
   }
 `;

@@ -7,6 +7,7 @@ export default gql`
       name
       username
       avatarImg
+      coverImg
     }
   }
 `;
