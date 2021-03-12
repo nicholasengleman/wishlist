@@ -14,12 +14,11 @@ const HeaderContainer = Styled.div`
     position: relative;
     margin-bottom: 2rem;
     width: 100%;
-    height: 400px;
 `;
 
 const ProfileInfo = Styled.div`
     margin: 30px 30px 0 0;
-    width: 100%;
+    width: 300px;
     display: flex;
     justify-content: space-between;
     flex-direction: column;
@@ -36,17 +35,6 @@ const ProfileInfo = Styled.div`
 
 `;
 
-const LeftColumn = Styled(Row)`
-
-`;
-
-const RightColumn = Styled(Row)`
-    width: 100%;
-     @media ${device.tablet} {
-        width: 50%;
-    }
-`;
-
 const ProfileHeader = () => {
   const avatarPublicId = useGetUser('avatarImg');
 
@@ -54,14 +42,11 @@ const ProfileHeader = () => {
     <HeaderContainer>
       <Cover />
       <ProfileInfo>
-        <LeftColumn>
-          <Avatar size="2" publicId={avatarPublicId} />
-          <Column>
-            <H1>Nicholas Engleman</H1>
-            <Paragraph>Web Developer</Paragraph>
-          </Column>
-        </LeftColumn>
-        <RightColumn></RightColumn>
+        <Avatar size="2" publicId={avatarPublicId} />
+        <Column>
+          <H1>Nicholas Engleman</H1>
+          <Paragraph>Web Developer</Paragraph>
+        </Column>
       </ProfileInfo>
     </HeaderContainer>
   );

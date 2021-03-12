@@ -13,6 +13,7 @@ const StyledMenu = Styled.div`
     bottom: ${({ bottom }) => bottom || ''};
     width: min-content;
     color: black;
+    border-radius: 5px;
 `;
 
 const Menu = (props) => {

@@ -2,11 +2,10 @@ import Styled from 'styled-components';
 
 const InputBase = `
     width: 100%;
-    padding: 10px 20px;
+    padding: 5px 20px;
     border-radius: 10px;
     border: 1px solid lightblue;
     color: #444;
-    height: 45px;
     background-color: #F7F8FB;
     outline: none;
     transition: all 0.2s;

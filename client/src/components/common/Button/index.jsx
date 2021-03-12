@@ -20,7 +20,7 @@ export const Base = Styled.button`
   bottom: ${({ bottom }) => bottom || ''};
   padding: ${({ small }) => (small === true ? '0.5rem 1rem' : '0.5rem 2rem')};
   width: max-content;
-  border-radius: ${({ borderRadius }) => borderRadius || '10px'};
+  border-radius: ${({ borderRadius }) => borderRadius || '5px'};
   margin-left: ${({ center }) => (center ? 'auto' : '')};
   margin-right: ${({ center }) => (center ? 'auto' : '')};
 `;
@@ -67,7 +67,7 @@ export const EditButton = (props) => {
   );
 };
 
-export const UploadFileButton = ({ onFileChange }) => {
+export const UploadFileButton = (props) => {
   const inputEl = useRef();
   const fileUploadAction = () => inputEl.current.click();
 
@@ -75,7 +75,7 @@ export const UploadFileButton = ({ onFileChange }) => {
     let reader = new FileReader();
     reader.readAsDataURL(file);
     reader.onload = function () {
-      onFileChange(reader.result);
+      props.onFileChange({ image: reader.result });
     };
     reader.onerror = function (error) {
       console.log('Error: ', error);
@@ -90,7 +90,9 @@ export const UploadFileButton = ({ onFileChange }) => {
         ref={inputEl}
         onChange={() => convertToBase64(inputEl.current.files[0])}
       />
-      <SubmitButton onClick={fileUploadAction}>Choose An Image</SubmitButton>
+      <SubmitButton {...props} onClick={fileUploadAction}>
+        Choose An Image
+      </SubmitButton>
     </div>
   );
 };

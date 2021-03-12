@@ -10,12 +10,15 @@ import useGetUser from '../../../../hooks/useGetUser';
 const Cover = Styled.div`
   margin-bottom: 1rem;
   background-color: grey;
-  height: 250px;
+  height: ${({ hasImage }) => (hasImage ? '250px' : '100px')};
   width: 100%;
   position: absolute;
   .coverImg-container {
     overflow: hidden;
     max-height: 100%;
+    img {
+      100%;
+    }
   }
 `;
 
@@ -24,7 +27,7 @@ const StyledCover = () => {
   const publicId = useGetUser('coverImg');
 
   return (
-    <Cover>
+    <Cover hasImage={publicId}>
       <div className="coverImg-container">
         <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
           <Transformation quality="auto" fetchFormat="auto" />

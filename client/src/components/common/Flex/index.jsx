@@ -4,11 +4,12 @@ const margin = ['0', '0.5rem', '1rem', '2rem', '3rem'];
 
 export const Row = styled.div`
   margin-bottom: 1rem;
+  margin-bottom: ${({ marginSize }) => margin[marginSize]};
   display: flex;
   align-items: center;
-  margin-bottom: ${({ marginSize }) => margin[marginSize]};
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
+  width: 100%;
 `;
 
 export const Column = styled.div`

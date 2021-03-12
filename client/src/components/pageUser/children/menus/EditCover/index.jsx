@@ -1,13 +1,21 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import Styled from 'styled-components';
+import { useForm } from 'react-hook-form';
 import Menu from '../../../../common/Menu';
-import { UploadFileButton } from '../../../../common/Button';
+import { UploadFileButton, SubmitButton } from '../../../../common/Button';
 import uploadImageBase64 from '../../../../utils/uploadImage';
 import updateUser from '../../../../../hooks/updateUser';
+import { Row } from '../../../../common/Flex';
+import { Description } from '../../../../common/Text';
+import { toggleEditCoverMenu } from '../../../../../redux/actions/menus';
+import { Input } from '../../../../common/Inputs';
 
 const Header = Styled.ul`
+    width: 400px;
     margin: 0;
     display: flex;
+    justify-content: space-between;
     border-bottom: 1px solid lightblue;
     li {
       padding: 5px;
@@ -18,39 +26,85 @@ const Header = Styled.ul`
         background-color: #F7F7F5;
       }
     }
-    li:nth-child(1) {
+    .mode:nth-child(1) {
       border-bottom: ${({ mode }) => (mode === 1 ? '2px solid black' : '')};
     }
-    li:nth-child(2) {
+    .mode:nth-child(2) {
       border-bottom: ${({ mode }) => (mode === 2 ? '2px solid black' : '')};
     }
-    li:nth-child(3) {
+    .mode:nth-child(3) {
       border-bottom: ${({ mode }) => (mode === 3 ? '2px solid black' : '')};
     }
-
 `;
 
 const Body = Styled.div`
   margin: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
 `;
 
 const EditCoverMenu = (props) => {
+  const { register, handleSubmit, formState } = useForm();
+
+  const dispatch = useDispatch();
   const [uploadMode, setUploadMode] = useState(1);
 
-  const onImageUpload = async (image) => {
+  const handleImageUpload = async ({ image }) => {
     const avatarCloudinaryId = await uploadImageBase64(image);
     updateUser('coverImg', avatarCloudinaryId);
+    setUploadMode(1);
+    dispatch(toggleEditCoverMenu());
+  };
+
+  const handleRemoveCover = () => {
+    updateUser('coverImg', '');
+    setUploadMode(1);
+    dispatch(toggleEditCoverMenu());
   };
 
   return (
     <Menu {...props} menuName="editCoverMenu">
       <Header mode={uploadMode}>
-        <li onClick={() => setUploadMode(1)}>Upload</li>
-        <li onClick={() => setUploadMode(2)}>Link</li>
-        <li onClick={() => setUploadMode(3)}>Unsplash</li>
+        <Row marginSize="0">
+          <li className="mode" onClick={() => setUploadMode(1)}>
+            Upload
+          </li>
+          <li className="mode" onClick={() => setUploadMode(2)}>
+            Link
+          </li>
+          <li className="mode" onClick={() => setUploadMode(3)}>
+            Unsplash
+          </li>
+        </Row>
+        <li onClick={handleRemoveCover}>Remove</li>
       </Header>
       <Body>
-        <UploadFileButton onFileChange={onImageUpload} />
+        {uploadMode === 1 && (
+          <>
+            <Row justifyContent="center">
+              <UploadFileButton small={true} onFileChange={handleImageUpload} />
+            </Row>
+            <Description>Images wider than 1500px work best.</Description>
+          </>
+        )}
+        {uploadMode === 2 && (
+          <>
+            <form
+              onSubmit={handleSubmit(handleImageUpload)}
+              style={{ width: '100%' }}
+            >
+              <Row>
+                <Input name="image" type="text" ref={register} />
+              </Row>
+              <Row justifyContent="center">
+                <SubmitButton type="submit">Submit</SubmitButton>
+              </Row>
+            </form>
+            <Description>Works with any image from the web.</Description>
+          </>
+        )}
       </Body>
     </Menu>
   );
