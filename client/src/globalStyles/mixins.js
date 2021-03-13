@@ -5,6 +5,7 @@ export const pageWidth = () => `
     max-width: 1250px;
     margin: 0 auto;
     padding: 0 10px;
+    box-sizing: border-box;
 
     @media ${device.tablet} {
         padding: 0 50px;

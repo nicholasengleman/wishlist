@@ -10,6 +10,7 @@ export const Row = styled.div`
   align-items: ${({ alignItems }) => alignItems};
   justify-content: ${({ justifyContent }) => justifyContent};
   width: 100%;
+  width: ${({ width }) => width};
 `;
 
 export const Column = styled.div`

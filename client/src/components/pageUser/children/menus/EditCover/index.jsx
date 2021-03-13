@@ -99,7 +99,9 @@ const EditCoverMenu = (props) => {
                 <Input name="image" type="text" ref={register} />
               </Row>
               <Row justifyContent="center">
-                <SubmitButton type="submit">Submit</SubmitButton>
+                <SubmitButton type="submit" small={true}>
+                  Submit
+                </SubmitButton>
               </Row>
             </form>
             <Description>Works with any image from the web.</Description>

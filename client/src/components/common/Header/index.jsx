@@ -57,7 +57,7 @@ const Header = () => {
             <HomeButton />
             <SearchInput />
           </Row>
-          <Row marginSize={0}>
+          <Row marginSize={0} width="auto">
             {userUid ? (
               <>
                 <AlarmButton />

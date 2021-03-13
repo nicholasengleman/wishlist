@@ -17,7 +17,7 @@ const Cover = Styled.div`
     overflow: hidden;
     max-height: 100%;
     img {
-      100%;
+      width: 100%;
     }
   }
 `;
