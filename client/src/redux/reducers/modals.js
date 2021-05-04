@@ -1,7 +1,7 @@
 import {
   TOGGLE_CATEGORY_MODAL,
   TOGGLE_WISH_MODAL,
-  TOGGLE_EDIT_PROFILE_MODAL,
+  TOGGLE_SETTINGS_MODAL,
   TOGGLE_SIGN_UP_MODAL,
   TOGGLE_SIGN_IN_MODAL,
   TOGGLE_EDIT_AVATAR_MODAL,
@@ -11,7 +11,7 @@ export default function modals(
   state = {
     categoryModal: {},
     wishModal: {},
-    editProfileModal: {},
+    settingsModal: {},
     signUpModal: {},
     signInModal: {},
     editAvatarModal: {},
@@ -62,11 +62,11 @@ export default function modals(
         };
       }
 
-    case TOGGLE_EDIT_PROFILE_MODAL:
+    case TOGGLE_SETTINGS_MODAL:
       return {
         ...state,
-        editProfileModal: {
-          status: !state.editProfileModal.status,
+        settingsModal: {
+          status: !state.settingsModal.status,
         },
       };
     case TOGGLE_SIGN_UP_MODAL:

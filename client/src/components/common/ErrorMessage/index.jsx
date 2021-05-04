@@ -11,6 +11,7 @@ const ErrorMessage = Styled.span`
     border-radius: 3px;
     font-size: 12px;
     width: fit-content;
+    margin-top: 7px;
     margin-right: 7px;
     margin-bottom: 1rem;
     margin-bottom: ${({ marginSize }) => margin[marginSize]};
@@ -19,10 +20,6 @@ const ErrorMessage = Styled.span`
 const StyledErrorMessage = ({ message }) => {
   if (!message) {
     return null;
-  }
-
-  if (/ref:password/.test(message)) {
-    return <ErrorMessage>Passwords do not match!</ErrorMessage>;
   }
 
   return <ErrorMessage>{message}</ErrorMessage>;

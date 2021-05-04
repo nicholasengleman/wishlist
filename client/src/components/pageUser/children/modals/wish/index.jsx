@@ -58,7 +58,7 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    updateUser('wishData', newData);
+    updateUser({ wishData: newData });
     dispatch(toggleWishModal());
   };
 
@@ -86,7 +86,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    updateUser('wishData', newData);
+    updateUser({ wishData: newData });
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };

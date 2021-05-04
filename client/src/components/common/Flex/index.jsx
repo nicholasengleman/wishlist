@@ -23,6 +23,7 @@ export const Column = styled.div`
 export const FlexContainer = styled.div`
   display: flex;
   flex-wrap: wrap;
+  flex-wrap: ${({ flexWrap }) => flexWrap};
   justify-content: flex-start;
   margin-left: ${({ marginSize }) => margin[marginSize]};
 `;

@@ -3,7 +3,7 @@ import GET_USER from '../queries/getUser';
 import UPDATE_USER from '../queries/updateUser';
 import client from '../apollo';
 
-export default function updateUser(dataName, dataValue) {
+export default function updateUser(newData) {
   const { user } = store.getState();
 
   client
@@ -12,12 +12,12 @@ export default function updateUser(dataName, dataValue) {
       variables: {
         user_id: user.uid,
         data: {
-          [dataName]: dataValue,
+          ...newData,
         },
       },
       refetchQueries: [{ query: GET_USER, variables: { user_id: user.uid } }],
     })
-    .then(`User ${user.username} ${dataName} updated to ${dataValue}`)
+    .then(`Data updated`)
     .catch((err) => {
       console.error(err);
     });

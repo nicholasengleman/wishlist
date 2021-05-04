@@ -55,7 +55,7 @@ const CategoryModal = () => {
       };
     }
 
-    updateUser('wishData', newData);
+    updateUser({ wishData: newData });
     dispatch(toggleCategoryModal());
   };
 
@@ -63,7 +63,7 @@ const CategoryModal = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    updateUser('wishData', newData);
+    updateUser({ wishData: newData });
     // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };

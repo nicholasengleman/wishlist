@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import {
   toggleSignUpModal,
   toggleSignInModal,
-  toggleEditProfileModal,
+  toggleSettingsModal,
 } from '../../../redux/actions/modals';
 import { FirebaseContext } from '../../firebase';
 
@@ -67,9 +67,7 @@ const Header = () => {
                     <MenuButton />
                   </MenuHeader>
                   <MenuList>
-                    <MenuItem
-                      onClick={() => dispatch(toggleEditProfileModal())}
-                    >
+                    <MenuItem onClick={() => dispatch(toggleSettingsModal())}>
                       <i className="fas fa-sign-out-alt" />
                       <p>Edit Profile</p>
                     </MenuItem>

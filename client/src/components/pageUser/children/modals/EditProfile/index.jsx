@@ -1,91 +1,25 @@
-import React, { useState, useEffect, useRef } from 'react';
-import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
-import uploadImage from '../../../../utils/uploadImage';
-
-import EditAvatar from '../EditAvatar';
-import {
-  toggleEditProfileModal,
-  toggleEditAvatarModal,
-} from '../../../../../redux/actions/modals';
+import React, { useState } from 'react';
+import SideBarMenu from '../../../../../components/common/SideBarMenu/SideBarMenu';
+import { toggleSettingsModal } from '../../../../../redux/actions/modals';
 import Modal from '../../../../common/Modal';
-import { Row } from '../../../../common/Flex';
-import { Label, Input } from '../../../../common/Inputs';
-import { SubmitButton } from '../../../../common/Button';
-
-import useGetUser from '../../../../../hooks/useGetUser';
-import updateUser from '../../../../../hooks/updateUser';
+import { FlexContainer } from '../../../../common/Flex';
+import EditProfilePanel from './editProfilePanel';
+import EditPasswordPanel from './editPasswordPanel';
 
 const EditProfile = () => {
-  const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.modals.editProfileModal);
-  const { register, handleSubmit } = useForm();
-  const user = useGetUser('username');
-  const [userData, setUserData] = useState(null);
-  const [userAvatar, setUserAvatar] = useState(
-    'https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg',
-  );
-  const inputEl = useRef();
-
-  useEffect(() => {
-    setUserData(user);
-  }, [user, status]);
-
-  const onSubmit = async ({ username }) => {
-    const avatarCloudinaryId = await uploadImage(userAvatar);
-    updateUser('username', username);
-    updateUser('avatarImg', avatarCloudinaryId);
-    dispatch(toggleEditProfileModal());
-  };
-
-  const handleImageUpload = () => {
-    dispatch(toggleEditProfileModal());
-    dispatch(toggleEditAvatarModal());
-    setUserAvatar(URL.createObjectURL(inputEl.current.files[0]));
-  };
+  const [selectedPanel, setSelectedPanel] = useState('');
 
   return (
-    <>
-      <EditAvatar userAvatar={userAvatar} setUserAvatar={setUserAvatar} />
-      <Modal
-        modalName="editProfileModal"
-        onOverlayClick={toggleEditProfileModal()}
-      >
-        <Row>
-          <img
-            style={{ width: '100px', borderRadius: '100%' }}
-            src={userAvatar}
-            alt="Profile"
-          />
-        </Row>
-        <Row>
-          <input
-            type="file"
-            id="profile_upload"
-            name="profile_upload"
-            onChange={handleImageUpload}
-            ref={inputEl}
-          ></input>
-        </Row>
-        <Row>
-          <form>
-            <Label htmlFor="name">User Name</Label>
-            <Input
-              name="username"
-              id="username"
-              type="text"
-              defaultValue={userData}
-              ref={register}
-            />
-          </form>
-        </Row>
-        <Row>
-          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
-            Submit
-          </SubmitButton>
-        </Row>
-      </Modal>
-    </>
+    <Modal modalName="settingsModal" onOverlayClick={toggleSettingsModal()}>
+      <FlexContainer flexWrap="nowrap">
+        <SideBarMenu
+          items={['Edit Profile', 'Password']}
+          itemSelectedCb={setSelectedPanel}
+        />
+        {selectedPanel === 'Edit Profile' && <EditProfilePanel />}
+        {selectedPanel === 'Password' && <EditPasswordPanel />}
+      </FlexContainer>
+    </Modal>
   );
 };
 

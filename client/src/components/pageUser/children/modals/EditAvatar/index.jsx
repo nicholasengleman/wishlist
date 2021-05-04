@@ -5,7 +5,7 @@ import ZoomInput from './StyledZoomInput';
 
 import {
   toggleEditAvatarModal,
-  toggleEditProfileModal,
+  toggleSettingsModal,
 } from '../../../../../redux/actions/modals';
 import Modal from '../../../../common/Modal';
 import { Row } from '../../../../common/Flex';
@@ -20,7 +20,7 @@ const EditAvatar = ({ userAvatar, setUserAvatar }) => {
   const onSubmit = () => {
     setUserAvatar(inputEl.current.getImage().toDataURL());
     dispatch(toggleEditAvatarModal());
-    dispatch(toggleEditProfileModal());
+    dispatch(toggleSettingsModal());
   };
 
   const onZoomChange = () => {

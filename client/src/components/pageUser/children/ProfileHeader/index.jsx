@@ -3,7 +3,7 @@ import Styled from 'styled-components';
 
 import { pageWidth } from '../../../../globalStyles/mixins';
 import device from '../../../../globalStyles/breakpoints';
-import { Row, Column } from '../../../common/Flex';
+import { Column } from '../../../common/Flex';
 import { H1, Paragraph } from '../../../common/Text';
 import Avatar from '../../../common/Avatar';
 import useGetUser from '../../../../hooks/useGetUser';
@@ -13,7 +13,7 @@ const HeaderContainer = Styled.div`
    ${pageWidth};
     position: relative;
     margin-bottom: 2rem;
-    width: 100%;
+    height: 250px;
 `;
 
 const ProfileInfo = Styled.div`
@@ -23,7 +23,9 @@ const ProfileInfo = Styled.div`
     justify-content: space-between;
     flex-direction: column;
     z-index: 2;
-    position: relative;
+    position: absolute;
+    top: 0;
+    left: 70px;
     @media ${device.tablet} {
         flex-direction: row;
     }

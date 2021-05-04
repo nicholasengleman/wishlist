@@ -11,9 +11,6 @@ export default function useGetUser(field) {
 
   if (data) {
     if (field) {
-      if (field === 'wishData') {
-        return JSON.parse(data.users_by_pk[field]);
-      }
       return data.users_by_pk[field];
     }
     return data.users_by_pk;

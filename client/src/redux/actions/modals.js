@@ -1,6 +1,6 @@
 export const TOGGLE_CATEGORY_MODAL = 'TOGGLE_CATEGORY_MODAL';
 export const TOGGLE_WISH_MODAL = 'TOGGLE_WISH_MODAL';
-export const TOGGLE_EDIT_PROFILE_MODAL = 'TOGGLE_EDIT_PROFILE_MODAL';
+export const TOGGLE_SETTINGS_MODAL = 'TOGGLE_SETTINGS_MODAL';
 export const TOGGLE_SIGN_UP_MODAL = 'TOGGLE_SIGN_UP_MODAL';
 export const TOGGLE_SIGN_IN_MODAL = 'TOGGLE_SIGN_IN_MODAL';
 export const TOGGLE_EDIT_AVATAR_MODAL = 'TOGGLE_EDIT_AVATAR_MODAL';
@@ -19,9 +19,9 @@ export function toggleWishModal(payload) {
   };
 }
 
-export function toggleEditProfileModal() {
+export function toggleSettingsModal() {
   return {
-    type: TOGGLE_EDIT_PROFILE_MODAL,
+    type: TOGGLE_SETTINGS_MODAL,
   };
 }
 

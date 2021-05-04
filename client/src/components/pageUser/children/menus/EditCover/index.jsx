@@ -53,13 +53,13 @@ const EditCoverMenu = (props) => {
 
   const handleImageUpload = async ({ image }) => {
     const avatarCloudinaryId = await uploadImageBase64(image);
-    updateUser('coverImg', avatarCloudinaryId);
+    updateUser({ coverImg: avatarCloudinaryId });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
 
   const handleRemoveCover = () => {
-    updateUser('coverImg', '');
+    updateUser({ coverImg: '' });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
