@@ -11,7 +11,7 @@ import INSERT_USER from '../../../../queries/insertUser';
 import Modal from '../../Modal';
 import { toggleSignUpModal } from '../../../../redux/actions/modals';
 import { Row, Column } from '../../Flex';
-import { Input } from '../../Inputs';
+import { Input, Label } from '../../Inputs';
 import { H1, H3 } from '../../Text';
 import ErrorMessage from '../../ErrorMessage';
 import { SubmitButton } from '../../Button';
@@ -19,26 +19,54 @@ import { SubmitButton } from '../../Button';
 const schema = Joi.object({
   email: Joi.string()
     .email({ tlds: { allow: false } })
-    .required(),
-  username: Joi.string().min(4).required(),
-  password: Joi.string().min(8).required(),
-  passwordConfirm: Joi.any().equal(Joi.ref('password')).required(),
+    .required()
+    .messages({
+      'string.base':
+        'Sorry! It looks like something went wrong. Please try later',
+      'string.empty': 'Please add a valid email.',
+      'string.email': 'This email is not valid.',
+    }),
+  username: Joi.string().min(6).required().messages({
+    'string.base':
+      'Sorry! It looks like something went wrong. Please try later',
+    'string.required': 'Please pick a username!',
+    'string.empty': 'Please pick a username!',
+    'string.min': 'Usernames must be at least 6 characters.',
+  }),
+  password: Joi.string().min(8).required().messages({
+    'string.base':
+      'Sorry! It looks like something went wrong. Please try later',
+    'string.required': 'Please add a password.',
+    'string.empty': 'Please add a password.',
+    'string.min': 'Password must be at least 8 characters.',
+  }),
+  passwordConfirm: Joi.any().equal(Joi.ref('password')).required().messages({
+    'string.base':
+      'Sorry! It looks like something went wrong. Please try later',
+    'any.required': 'Please add a password.',
+    'string.empty': 'Please add a password.',
+    'any.only': 'Passwords do not match.',
+  }),
 });
 
 const SignUpModal = () => {
-  const [insertUser] = useMutation(INSERT_USER);
+  const [insertUser] = useMutation(INSERT_USER, {
+    context: {
+      headers: {
+        'x-hasura-admin-secret': process.env.REACT_APP_HASURA_ADMIN_SECRET,
+      },
+    },
+  });
+
   const dispatch = useDispatch();
   const { register, handleSubmit, formState } = useForm({
     resolver: joiResolver(schema),
   });
 
-  const emailError = formState?.errors?.email?.message;
-  const passwordError = formState?.errors?.password?.message;
-  const passwordConfirmError = formState?.errors?.passwordConfirm?.message;
-
   const firebase = useContext(FirebaseContext);
 
   const onSubmit = ({ email, password, username }) => {
+    console.log(username);
     firebase
       .doCreateUserWithEmailAndPassword(email, password)
       .then((authUser) => {
@@ -62,63 +90,45 @@ const SignUpModal = () => {
         <H3>Already have an account? Sign In</H3>
       </Row>
 
-      <form onSubmit={handleSubmit(onSubmit)}>
+      <form>
         <Row marginSize={2}>
           <Column>
-            <Input
-              name="email"
-              type="email"
-              ref={register}
-              placeholder="Email"
-            />
-          </Column>
-          <Column>
-            <Input
-              name="username"
-              type="text"
-              ref={register}
-              placeholder="username"
-            />
+            <Label htmlFor="email">Email</Label>
+            <Input name="email" ref={register} />
+            <ErrorMessage message={formState?.errors?.email?.message} />
           </Column>
         </Row>
 
-        <Row>
+        <Row marginSize={2}>
           <Column>
-            <ErrorMessage message={emailError} />
+            <Label htmlFor="username">Username</Label>
+            <Input name="username" ref={register} />
+            <ErrorMessage message={formState?.errors?.username?.message} />
           </Column>
         </Row>
 
-        <Row marginSize={4} justifyContent="space-between">
+        <Row marginSize={2}>
           <Column>
-            <Input
-              name="password"
-              type="text"
-              ref={register}
-              placeholder="Password"
-            />
-          </Column>
-          <Column>
-            <Input
-              name="passwordConfirm"
-              type="text"
-              ref={register}
-              placeholder="Password Confirm"
-            />
+            <Label htmlFor="password">Password</Label>
+            <Input name="password" type="password" ref={register} />
+            <ErrorMessage message={formState?.errors?.password?.message} />
           </Column>
         </Row>
-        <Row>
+        <Row marginSize={4}>
           <Column>
-            <ErrorMessage message={passwordError} />
-            <ErrorMessage message={passwordConfirmError} />
+            <Label htmlFor="passwordConfirm">Confirm Password</Label>
+            <Input name="passwordConfirm" type="password" ref={register} />
+            <ErrorMessage
+              message={formState?.errors?.passwordConfirm?.message}
+            />
           </Column>
-        </Row>
-
-        <Row justifyContent="center">
-          <SubmitButton type="submit">
-            Create Account<i className="fas fa-arrow-right"></i>
-          </SubmitButton>
         </Row>
       </form>
+      <Row justifyContent="center">
+        <SubmitButton type="submit" onClick={handleSubmit(onSubmit)}>
+          Create Account<i className="fas fa-arrow-right"></i>
+        </SubmitButton>
+      </Row>
     </Modal>
   );
 };

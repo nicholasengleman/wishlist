@@ -16,12 +16,14 @@ const schema = Joi.object({
     'string.base':
       'Sorry! It looks like something went wrong. Please try later',
     'string.required': 'Please add a password.',
+    'string.empty': 'Please add a password.',
     'string.min': 'Password must be at least 8 characters.',
   }),
   password_repeat: Joi.string().required().equal(Joi.ref('password')).messages({
     'string.base':
       'Sorry! It looks like something went wrong. Please try later',
     'any.required': 'Please add a password.',
+    'string.empty': 'Please add a password.',
     'any.only': 'Passwords do not match.',
   }),
 });

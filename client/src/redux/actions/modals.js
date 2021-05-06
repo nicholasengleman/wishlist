@@ -3,6 +3,7 @@ export const TOGGLE_WISH_MODAL = 'TOGGLE_WISH_MODAL';
 export const TOGGLE_SETTINGS_MODAL = 'TOGGLE_SETTINGS_MODAL';
 export const TOGGLE_SIGN_UP_MODAL = 'TOGGLE_SIGN_UP_MODAL';
 export const TOGGLE_SIGN_IN_MODAL = 'TOGGLE_SIGN_IN_MODAL';
+export const TOGGLE_RESET_PASSWORD_MODAL = 'TOGGLE_RESET_PASSWORD_MODAL';
 export const TOGGLE_EDIT_AVATAR_MODAL = 'TOGGLE_EDIT_AVATAR_MODAL';
 
 export function toggleCategoryModal(payload) {
@@ -34,6 +35,12 @@ export function toggleSignUpModal() {
 export function toggleSignInModal() {
   return {
     type: TOGGLE_SIGN_IN_MODAL,
+  };
+}
+
+export function toggleResetPasswordModal() {
+  return {
+    type: TOGGLE_RESET_PASSWORD_MODAL,
   };
 }
 

@@ -20,6 +20,7 @@ const App = () => {
 
   useEffect(() => {
     const listener = firebase.auth.onAuthStateChanged(async (user) => {
+
       if (user) {
         const token = await user.getIdToken();
         const idTokenResult = await user.getIdTokenResult();

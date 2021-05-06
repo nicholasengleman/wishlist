@@ -13,7 +13,6 @@ const ErrorMessage = Styled.span`
     width: fit-content;
     margin-top: 7px;
     margin-right: 7px;
-    margin-bottom: 1rem;
     margin-bottom: ${({ marginSize }) => margin[marginSize]};
 `;
 

@@ -9,7 +9,7 @@ export default function useGetUser(field) {
     variables: { user_id: userUid },
   });
 
-  if (data) {
+  if (data?.users_by_pk) {
     if (field) {
       return data.users_by_pk[field];
     }

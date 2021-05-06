@@ -4,6 +4,7 @@ import {
   TOGGLE_SETTINGS_MODAL,
   TOGGLE_SIGN_UP_MODAL,
   TOGGLE_SIGN_IN_MODAL,
+  TOGGLE_RESET_PASSWORD_MODAL,
   TOGGLE_EDIT_AVATAR_MODAL,
 } from '../actions/modals';
 
@@ -14,6 +15,7 @@ export default function modals(
     settingsModal: {},
     signUpModal: {},
     signInModal: {},
+    resetPasswordModal: {},
     editAvatarModal: {},
   },
   action,
@@ -81,6 +83,13 @@ export default function modals(
         ...state,
         signInModal: {
           status: !state.signInModal.status,
+        },
+      };
+    case TOGGLE_RESET_PASSWORD_MODAL:
+      return {
+        ...state,
+        resetPasswordModal: {
+          status: !state.resetPasswordModal.status,
         },
       };
     case TOGGLE_EDIT_AVATAR_MODAL:
