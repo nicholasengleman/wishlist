@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { Image, Placeholder, Transformation } from 'cloudinary-react';
+import placeholder from '../../../resources/images/placeholder-person.png';
 
 const AvatarSizes = ['35px', '45px', '175px'];
 
@@ -16,12 +17,19 @@ const BaseAvatar = styled.div`
 `;
 
 const Avatar = ({ className, publicId, size = 2 }) => {
+  if (publicId) {
+    return (
+      <BaseAvatar size={size}>
+        <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
+          <Transformation quality="auto" fetchFormat="auto" />
+          <Placeholder type="blur" />
+        </Image>
+      </BaseAvatar>
+    );
+  }
   return (
     <BaseAvatar size={size}>
-      <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
-        <Transformation quality="auto" fetchFormat="auto" />
-        <Placeholder type="blur" />
-      </Image>
+      <img src={placeholder} alt="placeholder" />
     </BaseAvatar>
   );
 };
