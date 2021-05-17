@@ -4,7 +4,7 @@ import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import Menu from '../../../../common/Menu';
 import { UploadFileButton, SubmitButton } from '../../../../common/Button';
-import uploadImageBase64 from '../../../../utils/uploadImage';
+import uploadImage from '../../../../utils/uploadImage';
 import updateUser from '../../../../../hooks/updateUser';
 import { Row } from '../../../../common/Flex';
 import { Description } from '../../../../common/Text';
@@ -52,7 +52,7 @@ const EditCoverMenu = (props) => {
   const [uploadMode, setUploadMode] = useState(1);
 
   const handleImageUpload = async ({ image }) => {
-    const avatarCloudinaryId = await uploadImageBase64(image);
+    const avatarCloudinaryId = await uploadImage(image);
     updateUser({ coverImg: avatarCloudinaryId });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
@@ -91,15 +91,16 @@ const EditCoverMenu = (props) => {
         )}
         {uploadMode === 2 && (
           <>
-            <form
-              onSubmit={handleSubmit(handleImageUpload)}
-              style={{ width: '100%' }}
-            >
+            <form style={{ width: '100%' }}>
               <Row>
                 <Input name="image" type="text" ref={register} />
               </Row>
               <Row justifyContent="center">
-                <SubmitButton type="submit" small={true}>
+                <SubmitButton
+                  type="submit"
+                  small={true}
+                  onClick={handleSubmit(handleImageUpload)}
+                >
                   Submit
                 </SubmitButton>
               </Row>

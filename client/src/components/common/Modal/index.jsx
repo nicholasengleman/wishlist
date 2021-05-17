@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useCallback } from 'react';
 import Styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -29,7 +29,7 @@ const StyledModal = Styled.div`
     border-radius: 20px;
 `;
 
-const Modal = ({ children, modalName, onOverlayClick }) => {
+const Modal = ({ children, modalName, onClose, onCloseCb }) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals[modalName]);
 
@@ -37,11 +37,20 @@ const Modal = ({ children, modalName, onOverlayClick }) => {
     return null;
   }
 
+  const handleClose = () => {
+    if (onClose) {
+      dispatch(onClose);
+    }
+    if (onCloseCb) {
+      onCloseCb();
+    }
+  };
+
   return (
-    <ModalOverlay>
+    <ModalOverlay onClick={() => handleClose()}>
       <StyledModal onClick={(e) => e.stopPropagation()}>
         <Row justifyContent="flex-start">
-          <CloseButton click={() => dispatch(onOverlayClick)} />
+          <CloseButton click={() => handleClose()} />
         </Row>
         <Row marginSize={1}>
           <Column>{children}</Column>

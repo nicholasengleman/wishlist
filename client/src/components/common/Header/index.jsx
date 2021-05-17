@@ -13,6 +13,7 @@ import { pageWidth } from '../../../globalStyles/mixins';
 import { Row, Column } from '../Flex';
 import ProfileLink from '../ProfileLink';
 import { AlarmButton, MenuButton, HomeButton } from '../IconButtons';
+import EditProfileModal from './EditProfile';
 import {
   MenuContainer,
   MenuHeader,
@@ -49,6 +50,7 @@ const Header = () => {
 
   return (
     <>
+      <EditProfileModal />
       <SignUpModal />
       <SignInModal />
       <HeaderContainer>

@@ -1,6 +1,10 @@
 const functions = require('firebase-functions');
 const admin = require('firebase-admin');
-admin.initializeApp(functions.config().firebase);
+admin.initializeApp(
+  functions.config({
+    databaseURL: 'https://wishlist-8cc2b-default-rtdb.firebaseio.com/',
+  }).firebase,
+);
 
 // On sign up.
 exports.processSignUp = functions.auth.user().onCreate((user) => {

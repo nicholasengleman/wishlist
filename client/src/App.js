@@ -1,6 +1,9 @@
 import React, { useEffect, useContext } from 'react';
+import { ApolloClient, InMemoryCache, createHttpLink } from '@apollo/client';
 import { BrowserRouter as Switch, Route } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { ApolloProvider } from '@apollo/client';
+
 import { FirebaseContext } from './components/firebase';
 
 import GlobalStyles from './globalStyles/globalStyles';
@@ -10,17 +13,24 @@ import pageProduct from './components/pageProduct';
 import pageUser from './components/pageUser';
 
 import { setAuthData } from './redux/actions/user';
-import client from './apollo';
-
-import { ApolloProvider } from '@apollo/client';
 
 const App = () => {
   const firebase = useContext(FirebaseContext);
   const dispatch = useDispatch();
+  const { token } = useSelector((state) => state.user.token);
+
+  const httpLink = createHttpLink({
+    uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
+    headers: token ? { Authorization: `Bearer ${token}` } : {},
+  });
+
+  const client = new ApolloClient({
+    link: httpLink,
+    cache: new InMemoryCache(),
+  });
 
   useEffect(() => {
     const listener = firebase.auth.onAuthStateChanged(async (user) => {
-
       if (user) {
         const token = await user.getIdToken();
         const idTokenResult = await user.getIdTokenResult();

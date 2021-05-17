@@ -4,12 +4,12 @@ import { useDispatch } from 'react-redux';
 import { joiResolver } from '@hookform/resolvers/joi';
 import Joi from 'joi';
 
-import { FirebaseContext } from '../../../../firebase';
-import { toggleSettingsModal } from '../../../../../redux/actions/modals';
-import { Row, Column, FlexContainer } from '../../../../common/Flex';
-import ErrorMessage from '../../../../common/ErrorMessage';
-import { Label, Input } from '../../../../common/Inputs';
-import { SubmitButton } from '../../../../common/Button';
+import { FirebaseContext } from '../../../firebase';
+import { toggleSettingsModal } from '../../../../redux/actions/modals';
+import { Row, Column, FlexContainer } from '../../Flex';
+import ErrorMessage from '../../ErrorMessage';
+import { Label, Input } from '../../Inputs';
+import { SubmitButton } from '../../Button';
 
 const schema = Joi.object({
   password: Joi.string().min(8).required().messages({

@@ -11,7 +11,6 @@ import { EditButton } from '../common/Button';
 import ProfileHeader from './children/ProfileHeader';
 import WishModal from './children/modals/Wish';
 import CategoryModal from './children/modals/Category';
-import EditProfileModal from './children/modals/EditProfile';
 import CategoryHeader from './children/CategoryHeader';
 import Wish from './children/Wish';
 
@@ -29,7 +28,6 @@ const Profile = () => {
     <>
       <WishModal />
       <CategoryModal />
-      <EditProfileModal />
       <ProfileHeader />
       <WishContainer>
         <Row>

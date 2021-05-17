@@ -1,20 +1,20 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
-import uploadImage from '../../../../utils/uploadImage';
+import uploadImage from '../../../utils/uploadImage';
 
-import EditAvatar from '../EditAvatar';
+import EditAvatar from '../../../pageUser/children/modals/EditAvatar';
 
 import {
   toggleSettingsModal,
   toggleEditAvatarModal,
-} from '../../../../../redux/actions/modals';
-import { Row, Column, FlexContainer } from '../../../../common/Flex';
-import { Label, Input } from '../../../../common/Inputs';
-import { SubmitButton } from '../../../../common/Button';
+} from '../../../../redux/actions/modals';
+import { Row, Column, FlexContainer } from '../../Flex';
+import { Label, Input } from '../../Inputs';
+import { SubmitButton } from '../../Button';
 
-import useGetUser from '../../../../../hooks/useGetUser';
-import updateUser from '../../../../../hooks/updateUser';
+import useGetUser from '../../../../hooks/useGetUser';
+import updateUser from '../../../../hooks/updateUser';
 
 const EditProfilePanel = () => {
   const dispatch = useDispatch();

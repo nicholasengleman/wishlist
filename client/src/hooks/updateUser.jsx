@@ -6,6 +6,8 @@ import client from '../apollo';
 export default function updateUser(newData) {
   const { user } = store.getState();
 
+  console.log(user.uid);
+
   client
     .mutate({
       mutation: UPDATE_USER,
