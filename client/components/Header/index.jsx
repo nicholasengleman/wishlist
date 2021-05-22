@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import {
@@ -6,7 +7,6 @@ import {
   toggleSignInModal,
   toggleSettingsModal,
 } from '../../redux/actions/modals';
-import { FirebaseContext } from '../firebase';
 
 import SearchInput from '../Search';
 import { pageWidth } from '../../globalStyles/mixins';
@@ -20,8 +20,6 @@ import {
   MenuList,
   MenuItem,
 } from '../EditProfileMenu';
-import SignUpModal from '../auth/SignUp/index';
-import SignInModal from '../auth/SignIn/index';
 import { LightButton } from '../Button';
 
 const HeaderContainer = styled.div`
@@ -41,18 +39,11 @@ const HeaderContent = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch();
-  const firebase = useContext(FirebaseContext);
   const userUid = useSelector((state) => state.user?.uid);
-
-  const handleSignOut = () => {
-    firebase.doSignOut();
-  };
 
   return (
     <>
       <EditProfileModal />
-      <SignUpModal />
-      <SignInModal />
       <HeaderContainer>
         <HeaderContent>
           <Row marginSize={0}>
@@ -73,7 +64,7 @@ const Header = () => {
                       <i className="fas fa-sign-out-alt" />
                       <p>Edit Profile</p>
                     </MenuItem>
-                    <MenuItem onClick={() => handleSignOut()}>
+                    <MenuItem>
                       <i className="fas fa-sign-out-alt" />
                       <p>Log Out</p>
                     </MenuItem>
@@ -83,15 +74,10 @@ const Header = () => {
             ) : (
               <>
                 <Column>
-                  <LightButton onClick={() => dispatch(toggleSignUpModal())}>
-                    Sign Up
-                  </LightButton>
+                  <Link href="/api/auth/login">Log in or Sign Up</Link>
                 </Column>
-
                 <Column>
-                  <LightButton onClick={() => dispatch(toggleSignInModal())}>
-                    Sign In
-                  </LightButton>
+                  <Link href="/api/auth/logout">Logout</Link>
                 </Column>
               </>
             )}

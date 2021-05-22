@@ -5,7 +5,6 @@ import SideBarMenu from 'components/SideBarMenu';
 import Modal from 'components/Modal';
 import { FlexContainer } from 'components/Flex';
 import EditProfilePanel from 'components/Header/EditProfile/editProfilePanel';
-import EditPasswordPanel from 'components/Header/EditProfile/editPasswordPanel';
 
 const EditProfile = () => {
   const [selectedPanel, setSelectedPanel] = useState('Edit Profile');
@@ -22,7 +21,6 @@ const EditProfile = () => {
           itemSelectedCb={setSelectedPanel}
         />
         {selectedPanel === 'Edit Profile' && <EditProfilePanel />}
-        {selectedPanel === 'Password' && <EditPasswordPanel />}
       </FlexContainer>
     </Modal>
   );
