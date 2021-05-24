@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState } from 'react';
 import styled from 'styled-components';
+import { useRouter } from 'next/router';
 
 const StyledMenuContainer = styled.ul`
   list-style: none;
@@ -88,11 +89,17 @@ export const MenuList = ({ children }) => {
   return <StyledMenuList menuStatus={menuStatus}>{children}</StyledMenuList>;
 };
 
-export const MenuItem = ({ children, onClick }) => {
+export const MenuItem = ({ children, onClick, href }) => {
   const { toggleMenuStatus } = useContext(MenuContext);
+  const router = useRouter();
   const handleClick = () => {
     toggleMenuStatus();
-    onClick();
+    if (onClick) {
+      onClick();
+    }
+    if (href) {
+      router.push(href);
+    }
   };
   return <StyledMenuItem onClick={handleClick}>{children}</StyledMenuItem>;
 };

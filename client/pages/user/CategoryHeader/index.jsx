@@ -3,7 +3,7 @@ import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { toggleCategoryModal, toggleWishModal } from 'redux/actions/modals';
 import { Row } from 'components/Flex';
-import { EditButton } from 'components/Button';
+import { EditButton } from 'components/Buttons/EditButton';
 
 const StyledCategory = styled.div`
   margin-bottom: 1rem;

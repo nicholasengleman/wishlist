@@ -1,15 +1,17 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Image, Placeholder, Transformation } from 'cloudinary-react';
-import { toggleEditCoverMenu } from '/redux/actions/menus';
 import Styled from 'styled-components';
+
+import { toggleEditCoverMenu } from '/redux/actions/menus';
 import EditCoverMenu from 'pages/user/menus/EditCover';
-import { EditButton } from 'components/Button';
 import useGetUser from 'hooks/useGetUser';
+
+import { EditButton } from 'components/Buttons/EditButton';
 
 const Cover = Styled.div`
   background-color: grey;
-  height: ${({ hasImage }) => (hasImage ? 'inherit' : '100px')};
+  height: ${({ hasImage }) => (hasImage ? 'inherit' : '150px')};
   width: 100%;
   position: relative;
   cursor: move;
@@ -42,14 +44,16 @@ const RepositionInstructions = Styled.span`
 
 const StyledCover = () => {
   const dispatch = useDispatch();
-  const { publicId, coverImgPosition } = useGetUser();
+  const { publicId = '', coverImgPosition } = useGetUser();
   const [reposition, setReposition] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);
   const [currentDrag, setCurrentDrag] = useState(0);
-  const dragImg = document.createElement('img');
-  dragImg.src =
-    'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  if (typeof windows !== 'undefined') {
+    const dragImg = document.createElement('img');
+    dragImg.src =
+      'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
+  }
 
   const toggleReposition = () => {
     setReposition(!reposition);

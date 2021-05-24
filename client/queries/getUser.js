@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  query getUser($user_id: String!) {
-    users_by_pk(user_id: $user_id) {
+  query getUser($id: String!) {
+    users_by_pk(id: $id) {
       name
       created_at
       last_seen
       wishData
       username
-      user_id
+      id
       avatarImg
       coverImg
       coverImgPosition

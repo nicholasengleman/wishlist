@@ -1,14 +1,14 @@
 import { gql } from '@apollo/client';
 
 export default gql`
-  mutation updateUser($user_id: String!, $data: users_set_input!) {
-    update_users_by_pk(pk_columns: { user_id: $user_id }, _set: $data) {
+  mutation updateUser($id: String!, $data: users_set_input!) {
+    update_users_by_pk(pk_columns: { id: $id }, _set: $data) {
       name
       created_at
       last_seen
       wishData
       username
-      user_id
+      id
       avatarImg
       coverImg
       coverImgPosition

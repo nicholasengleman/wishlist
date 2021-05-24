@@ -9,7 +9,7 @@ import {
 } from 'redux/actions/modals';
 import Modal from 'components/Modal';
 import { Row } from 'components/Flex';
-import { SubmitButton } from 'components/Button';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const EditAvatar = ({ userAvatar, setUserAvatar }) => {
   const [zoom, setZoom] = useState(1);

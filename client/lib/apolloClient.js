@@ -1,101 +1,75 @@
-import fetch from 'isomorphic-unfetch';
-import { ApolloClient, ApolloLink } from '@apollo/client';
-import { InMemoryCache } from 'apollo-cache-inmemory';
-import { HttpLink } from 'apollo-link-http';
+import {
+  ApolloClient,
+  ApolloLink,
+  InMemoryCache,
+  HttpLink,
+} from '@apollo/client';
 import { onError } from 'apollo-link-error';
-import { WebSocketLink } from 'apollo-link-ws';
-import { SubscriptionClient } from 'subscriptions-transport-ws';
+import { useMemo } from 'react';
+import fetch from 'isomorphic-unfetch';
+import { requestAccessToken } from './requestAccessTokens';
 
-let accessToken = null;
+let apolloClient;
 
-const requestAccessToken = async () => {
-  if (accessToken) return;
-
-  const res = await fetch(
-    `${process.env.NEXT_PUBLIC_APP_HOST}/api/auth/session`,
-  );
-
-  if (res.ok) {
-    const json = await res.json();
-    accessToken = json.accessToken;
-  } else {
-    accessToken = null;
-  }
-};
-
-// remove cached token on 401 from the server
-const resetTokenLink = onError(({ networkError }) => {
-  if (
-    networkError &&
-    networkError.name === 'ServerError' &&
-    networkError.statusCode === 401
-  ) {
-    accessToken = null;
-  }
+const errorHandling = onError(({ graphQLErrors, networkError }) => {
+  if (graphQLErrors)
+    graphQLErrors.forEach(({ message, locations, path }) =>
+      console.log(
+        `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
+      ),
+    );
+  if (networkError)
+    if (typeof networkError === 'object') {
+      console.log(networkError);
+    } else {
+      console.log(
+        `[Network error]: ${networkError}. Backend is unreachable. Is it running?`,
+      );
+    }
 });
 
-const createHttpLink = (headers) => {
-  const httpLink = new HttpLink({
-    uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
-    credentials: 'include',
-    headers, // auth token is fetched on the server side
-    fetch,
-  });
-  return httpLink;
-};
+const httpLink = new HttpLink({
+  uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
+  credentials: 'include',
+  headers: requestAccessToken(),
+  fetch,
+});
 
-const createWSLink = () => {
-  return new WebSocketLink(
-    new SubscriptionClient('wss://enhanced-boa-89.hasura.app/v1/graphql', {
-      lazy: true,
-      reconnect: true,
-      connectionParams: async () => {
-        await requestAccessToken(); // happens on the client
-        if (accessToken) {
-          return {
-            headers: {
-              authorization: `Bearer ${accessToken}`,
-            },
-          };
-        } else {
-          return {
-            headers: {},
-          };
-        }
-      },
-    }),
-  );
-};
-
-export default function createApolloClient(initialState, headers) {
-  const ssrMode = typeof window === 'undefined';
-  let link;
-  if (ssrMode) {
-    link = createHttpLink(headers); // executed on server
-  } else {
-    link = createWSLink(); // executed on client
-  }
+function createApolloClient() {
   return new ApolloClient({
-    ssrMode,
-    link: ApolloLink.from([
-      onError(({ graphQLErrors, networkError }) => {
-        if (graphQLErrors)
-          graphQLErrors.forEach(({ message, locations, path }) =>
-            console.log(
-              `[GraphQL error]: Message: ${message}, Location: ${locations}, Path: ${path}`,
-            ),
-          );
-        if (networkError)
-          if (typeof networkError === 'object') {
-            console.log(networkError);
-          } else {
-            console.log(
-              `[Network error]: ${networkError}. Backend is unreachable. Is it running?`,
-            );
-          }
-      }),
-      link,
-    ]),
-    cache: new InMemoryCache().restore(initialState),
+    ssrMode: typeof window === 'undefined',
+    link: ApolloLink.from([errorHandling, httpLink]),
+    cache: new InMemoryCache(),
   });
+}
+
+export function initializeApollo(initialState = null) {
+  const _apolloClient = apolloClient ?? createApolloClient();
+
+  // If page has Next.js data fetching methods that use Apollo Client,
+  // the initial state gets hydrated here
+  if (initialState) {
+    // Get existing cache, loaded during client side data fetching
+    const existingCache = _apolloClient.extract();
+
+    // Restore the cache using the data passed from
+    // getStaticProps/getServerSideProps combined with the existing cache data
+    _apolloClient.cache.restore({ ...existingCache, ...initialState });
+  }
+
+  // For SSG and SSR always create a new Apollo Client
+  if (typeof window === 'undefined') {
+    return _apolloClient;
+  }
+
+  // Create the Apollo Client once in the client
+  if (!apolloClient) {
+    apolloClient = _apolloClient;
+    return apolloClient;
+  }
+}
+
+export function useApollo(initialState) {
+  const store = useMemo(() => initializeApollo(initialState), [initialState]);
+  return store;
 }

@@ -1,19 +1,19 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+
 import uploadImage from 'pages/api/uploadImage';
 import EditAvatar from 'pages/user/modals/EditAvatar';
-
+import useGetUser from '/hooks/useGetUser';
+import useUpdateUser from '/hooks/useUpdateUser';
 import {
   toggleSettingsModal,
   toggleEditAvatarModal,
-} from '../../../redux/actions/modals';
-import { Row, Column, FlexContainer } from '../../Flex';
-import { Label, Input } from '../../Inputs';
-import { SubmitButton } from '../../Button';
+} from '/redux/actions/modals';
 
-import useGetUser from '../../../hooks/useGetUser';
-import updateUser from '../../../hooks/updateUser';
+import { Row, Column, FlexContainer } from 'components/Flex';
+import { Label, Input } from 'components/Inputs';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const EditProfilePanel = () => {
   const dispatch = useDispatch();
@@ -31,9 +31,9 @@ const EditProfilePanel = () => {
   }, [user, status]);
 
   const onSubmit = async (data) => {
-    updateUser(data);
+    useUpdateUser(data);
     const avatarCloudinaryId = await uploadImage(userAvatar);
-    updateUser({ avatarImg: avatarCloudinaryId });
+    useUpdateUser({ avatarImg: avatarCloudinaryId });
     dispatch(toggleSettingsModal());
   };
 

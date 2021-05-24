@@ -1,10 +1,11 @@
 import React from 'react';
 import Link from 'next/link';
 import Styled from 'styled-components';
-import { useSelector } from 'react-redux';
-import Avatar from 'components/Avatar';
-import { buttonColor } from 'globalStyles/mixins';
+
 import useGetUser from 'hooks/useGetUser';
+import { buttonColor } from 'globalStyles/mixins';
+
+import Avatar from 'components/Avatar';
 
 const StyledProfileLink = Styled.button`
     ${buttonColor}
@@ -30,14 +31,15 @@ const StyledProfileLink = Styled.button`
 `;
 
 const ProfileLink = () => {
-  const { uid } = useSelector((state) => state.user);
   const username = useGetUser('username');
   const avatarPublicId = useGetUser('avatarImg');
 
   return (
-    <StyledProfileLink>
-      <Avatar size="0" publicId={avatarPublicId} />
-      <Link href={`user/${uid}`}>{username}</Link>
+    <StyledProfileLink aria-hidden>
+      <>
+        <Avatar size="0" publicId={avatarPublicId} />
+        <Link href={`user/${username}`}>{username || ''}</Link>
+      </>
     </StyledProfileLink>
   );
 };

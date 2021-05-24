@@ -22,48 +22,24 @@ export default function modals(
 ) {
   switch (action.type) {
     case TOGGLE_CATEGORY_MODAL:
-      if (!state.categoryModal.status) {
-        return {
-          ...state,
-          categoryModal: {
-            status: true,
-            mode: action.payload.mode,
-            catIndex: action.payload.catIndex,
-          },
-        };
-      } else {
-        return {
-          ...state,
-          categoryModal: {
-            status: false,
-            mode: '',
-            catIndex: '',
-          },
-        };
-      }
+      return {
+        ...state,
+        categoryModal: {
+          status: !state.categoryModal.status,
+          mode: action?.payload?.mode,
+          catIndex: action?.payload?.catIndex,
+        },
+      };
     case TOGGLE_WISH_MODAL:
-      if (!state.wishModal.status) {
-        return {
-          ...state,
-          wishModal: {
-            status: true,
-            mode: action.payload.mode,
-            wishIndex: action.payload.wishIndex,
-            catIndex: action.payload.catIndex,
-          },
-        };
-      } else {
-        return {
-          ...state,
-          wishModal: {
-            status: false,
-            mode: '',
-            wishIndex: '',
-            catIndex: '',
-          },
-        };
-      }
-
+      return {
+        ...state,
+        wishModal: {
+          status: !state.wishModal.status,
+          mode: action?.payload?.mode,
+          wishIndex: action?.payload?.wishIndex,
+          catIndex: action?.payload?.catIndex,
+        },
+      };
     case TOGGLE_SETTINGS_MODAL:
       return {
         ...state,

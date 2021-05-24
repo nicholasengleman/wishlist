@@ -1,26 +1,23 @@
 import React, { useContext } from 'react';
-import Link from 'next/link';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import {
-  toggleSignUpModal,
-  toggleSignInModal,
-  toggleSettingsModal,
-} from '../../redux/actions/modals';
+import { useUser } from '@auth0/nextjs-auth0';
 
-import SearchInput from '../Search';
-import { pageWidth } from '../../globalStyles/mixins';
-import { Row, Column } from '../Flex';
-import ProfileLink from '../ProfileLink';
-import { AlarmButton, MenuButton, HomeButton } from '../IconButtons';
-import EditProfileModal from './EditProfile';
+import { pageWidth } from '/globalStyles/mixins';
+import { toggleSettingsModal } from 'redux/actions/modals';
+
+import SearchInput from 'components/Search';
+import { Row, Column } from 'components/Flex';
+import ProfileLink from 'components/ProfileLink';
+import { AlarmButton, MenuButton, HomeButton } from 'components/IconButtons';
+import EditProfileModal from 'components/Header/EditProfileModal';
 import {
   MenuContainer,
   MenuHeader,
   MenuList,
   MenuItem,
-} from '../EditProfileMenu';
-import { LightButton } from '../Button';
+} from 'components/MenuDropDown';
+import { NavButton } from '/components/Buttons/NavButton';
 
 const HeaderContainer = styled.div`
   width: 100%;
@@ -39,7 +36,7 @@ const HeaderContent = styled.div`
 
 const Header = () => {
   const dispatch = useDispatch();
-  const userUid = useSelector((state) => state.user?.uid);
+  const { user, error, isLoading } = useUser();
 
   return (
     <>
@@ -51,7 +48,7 @@ const Header = () => {
             <SearchInput />
           </Row>
           <Row marginSize={0} width="auto">
-            {userUid ? (
+            {user ? (
               <>
                 <AlarmButton />
                 <ProfileLink />
@@ -64,9 +61,9 @@ const Header = () => {
                       <i className="fas fa-sign-out-alt" />
                       <p>Edit Profile</p>
                     </MenuItem>
-                    <MenuItem>
+                    <MenuItem href="/api/auth/logout">
                       <i className="fas fa-sign-out-alt" />
-                      <p>Log Out</p>
+                      <p>Logout</p>
                     </MenuItem>
                   </MenuList>
                 </MenuContainer>
@@ -74,10 +71,9 @@ const Header = () => {
             ) : (
               <>
                 <Column>
-                  <Link href="/api/auth/login">Log in or Sign Up</Link>
-                </Column>
-                <Column>
-                  <Link href="/api/auth/logout">Logout</Link>
+                  <NavButton href="/api/auth/login">
+                    Log in or Sign Up
+                  </NavButton>
                 </Column>
               </>
             )}

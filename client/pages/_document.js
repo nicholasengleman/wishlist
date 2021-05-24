@@ -14,7 +14,12 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en-CA">
-        <Head />
+        <Head>
+          <script
+            src="https://kit.fontawesome.com/bbc2e8f300.js"
+            crossOrigin="anonymous"
+          ></script>
+        </Head>
         <body>
           <Main />
           <NextScript />

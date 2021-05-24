@@ -4,18 +4,18 @@ import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 
-import { toggleWishModal } from '../../../../redux/actions/modals';
+import { toggleWishModal } from 'redux/actions/modals';
+import useGetUser from 'hooks/useGetUser';
+import useUpdateUser from 'hooks/useUpdateUser';
 
 import Modal from 'components/Modal';
 import Image from 'components/Image';
 import uploadImage from 'pages/api/uploadImage';
 import DeleteModal from 'components/modalDelete';
-import { LightButton } from 'components/Button';
+import { NavButton } from 'components/Buttons/NavButton';
 import { Row, Column } from 'components/Flex';
 import { Input, Textarea, Form, Label } from 'components/Inputs';
-import { SubmitButton } from 'components/Button';
-import useGetUser from 'hooks/useGetUser';
-import updateUser from 'hooks/updateUser';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const WishModal = () => {
   const dispatch = useDispatch();
@@ -58,7 +58,7 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    updateUser({ wishData: newData });
+    useUpdateUser({ wishData: newData });
     dispatch(toggleWishModal());
   };
 
@@ -86,7 +86,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    updateUser({ wishData: newData });
+    useUpdateUser({ wishData: newData });
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };
@@ -111,14 +111,14 @@ const WishModal = () => {
         onCall={handleSubmit(onSubmit)}
       >
         <Row justifyContent="flex-end" marginSize={4}>
-          <LightButton
+          <NavButton
             small={true}
             onClick={() =>
               setModalStatus({ ...modalStatus, modalDelete: true })
             }
           >
             Delete Wish
-          </LightButton>
+          </NavButton>
         </Row>
 
         <Row marginSize={4}>
@@ -133,7 +133,7 @@ const WishModal = () => {
               />
             </Row>
 
-            <LightButton center={true}>Get Info</LightButton>
+            <NavButton center={true}>Get Info</NavButton>
           </Form>
         </Row>
 

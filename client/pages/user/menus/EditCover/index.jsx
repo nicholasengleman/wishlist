@@ -2,11 +2,14 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+
 import { toggleEditCoverMenu } from 'redux/actions/menus';
-import updateUser from 'hooks/updateUser';
-import Menu from 'components/Menu';
-import { UploadFileButton, SubmitButton } from 'components/Button';
+import useUpdateUser from 'hooks/useUpdateUser';
 import uploadImage from 'pages/api/uploadImage';
+
+import Menu from 'components/Menu';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
+import { UploadButton } from 'components/Buttons/UploadButton';
 import { Row } from 'components/Flex';
 import { Description } from 'components/Text';
 import { Input } from 'components/Inputs';
@@ -53,13 +56,13 @@ const EditCoverMenu = (props) => {
 
   const handleImageUpload = async ({ image }) => {
     const avatarCloudinaryId = await uploadImage(image);
-    updateUser({ coverImg: avatarCloudinaryId });
+    useUpdateUser({ coverImg: avatarCloudinaryId });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
 
   const handleRemoveCover = () => {
-    updateUser({ coverImg: '' });
+    useUpdateUser({ coverImg: '' });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
@@ -84,7 +87,7 @@ const EditCoverMenu = (props) => {
         {uploadMode === 1 && (
           <>
             <Row justifyContent="center">
-              <UploadFileButton small={true} onFileChange={handleImageUpload} />
+              <UploadButton small={true} onFileChange={handleImageUpload} />
             </Row>
             <Description>Images wider than 1500px work best.</Description>
           </>

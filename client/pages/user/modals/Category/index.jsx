@@ -6,18 +6,18 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { toggleCategoryModal } from 'redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
-import updateUser from 'hooks/updateUser';
+import useUpdateUser from 'hooks/useUpdateUser';
 
 import Modal from 'components/Modal';
 import DeleteModal from 'components/modalDelete';
-import { LightButton } from 'components/Button';
+import { NavButton } from 'components/Buttons/NavButton';
 import { Row } from 'components/Flex';
 import { Input, Label } from 'components/Inputs';
-import { SubmitButton } from 'components/Button';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const CategoryModal = () => {
   const dispatch = useDispatch();
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
   const [catData, setCatData] = useState(null);
   const userData = useGetUser('wishData');
@@ -30,7 +30,7 @@ const CategoryModal = () => {
     }
   }, [mode, catData, userData]);
 
-  const onSubmit = (category) => {
+  const onSubmit = ({ category }) => {
     let newData = _.cloneDeep(catData);
 
     if (mode === 'add') {
@@ -38,24 +38,25 @@ const CategoryModal = () => {
         newData = [
           {
             id: uuidv4(),
-            name: category.name,
+            name: category,
             wishes: [],
           },
         ];
       } else {
-        newData.push({ id: uuidv4(), name: category.name, wishes: [] });
+        newData.push({ id: uuidv4(), name: category, wishes: [] });
       }
     }
 
     if (mode === 'edit') {
       newData[catIndex] = {
-        ...category,
+        name: category,
         id: newData[catIndex].id,
         wishes: newData[catIndex].wishes,
       };
     }
 
-    updateUser({ wishData: newData });
+    console.log(newData);
+    useUpdateUser({ wishData: newData });
     dispatch(toggleCategoryModal());
   };
 
@@ -63,7 +64,7 @@ const CategoryModal = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    updateUser({ wishData: newData });
+    useUpdateUser({ wishData: newData });
     // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };
@@ -77,14 +78,14 @@ const CategoryModal = () => {
       /> */}
       <Modal
         modalName="categoryModal"
-        onOverlayClick={toggleCategoryModal()}
-        onCall={handleSubmit(onSubmit)}
+        onClose={toggleCategoryModal()}
+        onCloseCb={() => reset()}
       >
         <Row justifyContent="flex-end" marginSize={3}>
           {catData && (
-            <LightButton small={true} onClick={() => onDelete()}>
+            <NavButton small={true} onClick={() => onDelete()}>
               Delete
-            </LightButton>
+            </NavButton>
           )}
         </Row>
         <Row marginSize={4} justifyContent="center">
@@ -97,7 +98,7 @@ const CategoryModal = () => {
               defaultValue={
                 catData && catData[catIndex] && catData[catIndex].name
               }
-              ref={register}
+              {...register('category')}
             />
           </form>
         </Row>

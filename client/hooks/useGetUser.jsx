@@ -1,12 +1,9 @@
 import GET_USER from '../queries/getUser';
-import { useSelector } from 'react-redux';
 import { useQuery } from '@apollo/client';
 
-export default function useGetUser(field) {
-  const userUid = useSelector((state) => state.user?.uid);
-
+export default function useGetUser(id, field) {
   const { data } = useQuery(GET_USER, {
-    variables: { user_id: userUid },
+    variables: { id: id || '' },
   });
 
   if (data?.users_by_pk) {
@@ -15,5 +12,6 @@ export default function useGetUser(field) {
     }
     return data.users_by_pk;
   }
-  return null;
+
+  return '';
 }

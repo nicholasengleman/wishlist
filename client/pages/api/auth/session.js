@@ -1,5 +1,3 @@
-import fetch from 'isomorphic-unfetch';
-
 import { getAccessToken, getSession } from '@auth0/nextjs-auth0';
 
 export default async function session(req, res) {
