@@ -17,6 +17,7 @@ Router.events.on('routeChangeError', () => NProgress.done());
 
 function MyApp({ Component, pageProps }) {
   const client = useApollo(pageProps.initialApolloState || {});
+
   const { session } = pageProps;
 
   return (

@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import uploadImage from 'pages/api/uploadImage';
 import EditAvatar from 'pages/user/modals/EditAvatar';
@@ -18,17 +19,14 @@ import { SubmitButton } from 'components/Buttons/SubmitButton';
 const EditProfilePanel = () => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals.settingsModal);
+  const { user, error, isLoading } = useUser();
+
   const { register, handleSubmit } = useForm();
-  const user = useGetUser();
-  const [userData, setUserData] = useState({});
+  const userData = useGetUser(user?.sub);
   const [userAvatar, setUserAvatar] = useState(
     'https://www.mantruckandbus.com/fileadmin/media/bilder/02_19/219_05_busbusiness_interviewHeader_1485x1254.jpg',
   );
   const inputEl = useRef();
-
-  useEffect(() => {
-    setUserData(user);
-  }, [user, status]);
 
   const onSubmit = async (data) => {
     useUpdateUser(data);

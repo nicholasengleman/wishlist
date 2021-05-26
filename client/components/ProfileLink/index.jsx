@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Styled from 'styled-components';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import useGetUser from 'hooks/useGetUser';
 import { buttonColor } from 'globalStyles/mixins';
@@ -31,8 +32,9 @@ const StyledProfileLink = Styled.button`
 `;
 
 const ProfileLink = () => {
-  const username = useGetUser('username');
-  const avatarPublicId = useGetUser('avatarImg');
+  const { user, error, isLoading } = useUser();
+  const username = useGetUser(user?.sub, 'username');
+  const avatarPublicId = useGetUser(user?.sub, 'avatarImg');
 
   return (
     <StyledProfileLink aria-hidden>

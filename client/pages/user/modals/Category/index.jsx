@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import _ from 'lodash';
 import { useForm } from 'react-hook-form';
 import { v4 as uuidv4 } from 'uuid';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleCategoryModal } from 'redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
@@ -17,10 +18,11 @@ import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const CategoryModal = () => {
   const dispatch = useDispatch();
+  const { user, error, isLoading } = useUser();
   const { register, handleSubmit, reset } = useForm();
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
   const [catData, setCatData] = useState(null);
-  const userData = useGetUser('wishData');
+  const userData = useGetUser(user?.sub, 'wishData');
 
   useEffect(() => {
     if (mode === 'edit') {
@@ -55,8 +57,7 @@ const CategoryModal = () => {
       };
     }
 
-    console.log(newData);
-    useUpdateUser({ wishData: newData });
+    useUpdateUser(user?.sub, { wishData: newData });
     dispatch(toggleCategoryModal());
   };
 

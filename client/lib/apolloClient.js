@@ -5,6 +5,7 @@ import {
   HttpLink,
 } from '@apollo/client';
 import { onError } from 'apollo-link-error';
+import { setContext } from '@apollo/client/link/context';
 import { useMemo } from 'react';
 import fetch from 'isomorphic-unfetch';
 import { requestAccessToken } from './requestAccessTokens';
@@ -31,14 +32,31 @@ const errorHandling = onError(({ graphQLErrors, networkError }) => {
 const httpLink = new HttpLink({
   uri: 'https://enhanced-boa-89.hasura.app/v1/graphql',
   credentials: 'include',
-  headers: requestAccessToken(),
   fetch,
+});
+
+const authLink = setContext(async (_, { headers }) => {
+  const token = await requestAccessToken();
+  if (token) {
+    return {
+      headers: {
+        ...headers,
+        authorization: `Bearer ${token}`,
+      },
+    };
+  } else {
+    return {
+      headers: {
+        ...headers,
+      },
+    };
+  }
 });
 
 function createApolloClient() {
   return new ApolloClient({
     ssrMode: typeof window === 'undefined',
-    link: ApolloLink.from([errorHandling, httpLink]),
+    link: ApolloLink.from([errorHandling, authLink, httpLink]),
     cache: new InMemoryCache(),
   });
 }
@@ -65,11 +83,12 @@ export function initializeApollo(initialState = null) {
   // Create the Apollo Client once in the client
   if (!apolloClient) {
     apolloClient = _apolloClient;
-    return apolloClient;
   }
+
+  return apolloClient;
 }
 
-export function useApollo(initialState) {
+export function useApollo(initialState = null) {
   const store = useMemo(() => initializeApollo(initialState), [initialState]);
   return store;
 }

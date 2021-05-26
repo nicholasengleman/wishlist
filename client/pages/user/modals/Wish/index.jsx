@@ -3,6 +3,7 @@ import axios from 'axios';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleWishModal } from 'redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
@@ -19,12 +20,13 @@ import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const WishModal = () => {
   const dispatch = useDispatch();
+  const { user, error, isLoading } = useUser();
   const { register, handleSubmit } = useForm();
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
-  const data = useGetUser('wishData');
+  const data = useGetUser(user?.sub, 'wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
   );

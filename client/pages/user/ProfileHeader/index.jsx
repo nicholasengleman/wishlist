@@ -1,5 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { pageWidth } from 'globalStyles/mixins';
 import device from 'globalStyles/breakpoints';
@@ -38,7 +39,8 @@ const ProfileInfo = Styled.div`
 `;
 
 const ProfileHeader = () => {
-  const avatarPublicId = useGetUser('avatarImg');
+  const { user, error, isLoading } = useUser();
+  const avatarPublicId = useGetUser(user?.sub, 'avatarImg');
 
   return (
     <HeaderContainer>

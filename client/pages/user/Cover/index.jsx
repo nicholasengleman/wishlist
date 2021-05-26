@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { Image, Placeholder, Transformation } from 'cloudinary-react';
 import Styled from 'styled-components';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleEditCoverMenu } from '/redux/actions/menus';
 import EditCoverMenu from 'pages/user/menus/EditCover';
@@ -44,7 +45,8 @@ const RepositionInstructions = Styled.span`
 
 const StyledCover = () => {
   const dispatch = useDispatch();
-  const { publicId = '', coverImgPosition } = useGetUser();
+  const { user, error, isLoading } = useUser();
+  const { publicId = '', coverImgPosition } = useGetUser(user?.sub);
   const [reposition, setReposition] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);

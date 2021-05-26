@@ -4,7 +4,7 @@ let accessToken;
 
 export const requestAccessToken = async () => {
   if (accessToken) {
-    return true;
+    return accessToken;
   }
 
   const res = await fetch(
@@ -18,15 +18,5 @@ export const requestAccessToken = async () => {
     accessToken = null;
   }
 
-  if (accessToken) {
-    return {
-      headers: {
-        authorization: `Bearer ${accessToken}`,
-      },
-    };
-  } else {
-    return {
-      headers: {},
-    };
-  }
+  return accessToken;
 };
