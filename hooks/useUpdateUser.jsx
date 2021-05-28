@@ -9,7 +9,7 @@ export default function updateUser(id, newData) {
     .mutate({
       mutation: UPDATE_USER,
       variables: {
-        id,
+        id: id || '',
         data: {
           ...newData,
         },

@@ -11,9 +11,7 @@ import useUpdateUser from 'hooks/useUpdateUser';
 
 import Modal from 'components/Modal';
 import Image from 'components/Image';
-import uploadImage from 'pages/api/uploadImage';
 import DeleteModal from 'components/modalDelete';
-import { NavButton } from 'components/Buttons/NavButton';
 import { Row, Column } from 'components/Flex';
 import { Input, Textarea, Form, Label } from 'components/Inputs';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
@@ -21,11 +19,14 @@ import { SubmitButton } from 'components/Buttons/SubmitButton';
 const WishModal = () => {
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
-  const { register, handleSubmit } = useForm();
+
+  const { register, handleSubmit, reset } = useForm();
+  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
+
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
-  const { register: register2, handleSubmit: handleSubmit2 } = useForm();
   const [modalStatus, setModalStatus] = useState({});
+
   const data = useGetUser(user?.sub, 'wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
@@ -37,10 +38,12 @@ const WishModal = () => {
 
     // A new image is uploaded
     if (prefillData.image) {
-      const image = await uploadImage(prefillData.image);
+      const image = await axios.post('/api/upload-image', {
+        data: prefillData.image,
+      });
       wishWithUpdatedImage = {
         ...updatedWish,
-        image: `https://wishlistengleman.s3.amazonaws.com/${image}`,
+        image,
       };
     }
 
@@ -60,15 +63,16 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    useUpdateUser({ wishData: newData });
+    useUpdateUser(user?.sub, { wishData: newData });
     dispatch(toggleWishModal());
   };
 
   const onPrefillSubmit = ({ url }) => {
     axios
-      .get(`http://localhost:3001/opengraph/product?url=${url}`)
+      .post(`/api/get-open-graph-tags/`, { data: url })
       .then((response) => {
         if (response.data) {
+          console.log(response.data);
           const prefileData = {
             description: response.data.hybridGraph.description,
             name: response.data.hybridGraph.title,
@@ -109,33 +113,38 @@ const WishModal = () => {
       /> */}
       <Modal
         modalName="wishModal"
-        onOverlayClick={toggleWishModal()}
-        onCall={handleSubmit(onSubmit)}
+        onClose={toggleWishModal()}
+        onCloseCb={() => reset()}
       >
         <Row justifyContent="flex-end" marginSize={4}>
-          <NavButton
+          <SubmitButton
             small={true}
             onClick={() =>
               setModalStatus({ ...modalStatus, modalDelete: true })
             }
           >
             Delete Wish
-          </NavButton>
+          </SubmitButton>
         </Row>
 
         <Row marginSize={4}>
-          <Form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
+          <Form className="prefill">
             <Row>
               <Input
                 name="url"
                 id="url"
                 type="text"
                 placeholder="Enter Product URL to Prefill Info"
-                ref={register2}
+                {...register2('url')}
               />
             </Row>
 
-            <NavButton center={true}>Get Info</NavButton>
+            <SubmitButton
+              center={true}
+              onClick={handleSubmit2(onPrefillSubmit)}
+            >
+              Get Info
+            </SubmitButton>
           </Form>
         </Row>
 
@@ -157,7 +166,7 @@ const WishModal = () => {
                       id="name"
                       type="text"
                       defaultValue={prefillData.name || wishData.name}
-                      ref={register}
+                      {...register('name')}
                     />
                   </Column>
                 </Row>
@@ -169,7 +178,7 @@ const WishModal = () => {
                       id="price"
                       type="text"
                       defaultValue={prefillData.price || wishData.price}
-                      ref={register}
+                      {...register('price')}
                     />
                   </Column>
                 </Row>
@@ -181,7 +190,7 @@ const WishModal = () => {
                       id="store"
                       type="text"
                       defaultValue={prefillData.store || wishData.store}
-                      ref={register}
+                      {...register('store')}
                     />
                   </Column>
                 </Row>

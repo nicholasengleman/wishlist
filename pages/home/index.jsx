@@ -24,18 +24,17 @@ const pageHome = () => (
 export async function getServerSideProps({ req, res }) {
   const apolloClient = initializeApollo();
   const session = await getSession(req, res);
-  const user = session?.user ?? {};
 
   await apolloClient.query({
     query: GET_USER,
     variables: {
-      id: user?.sub || '',
+      id: session?.user?.sub || '',
     },
   });
 
   return {
     props: {
-      session: user,
+      session: { ...session },
       initialApolloState: apolloClient.cache.extract(),
     },
   };

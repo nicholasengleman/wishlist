@@ -1,12 +1,13 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { getSession } from '@auth0/nextjs-auth0';
+import { getSession, useUser } from '@auth0/nextjs-auth0';
 
 import { toggleCategoryModal } from 'redux/actions/modals';
 import { pageWidth } from 'globalStyles/mixins';
 import { initializeApollo } from 'lib/apolloClient';
 import GET_USER from 'queries/getUser';
+import useGetUser from 'hooks/useGetUser';
 
 import { FlexContainer, Row } from 'components/Flex';
 import { EditButton } from 'components/Buttons/EditButton';
@@ -23,8 +24,10 @@ const WishContainer = Styled(FlexContainer)`
   ${pageWidth};
 `;
 
-const UserPage = (props) => {
+const UserPage = () => {
+  const { user, error, isLoading } = useUser();
   const dispatch = useDispatch();
+  const wishData = useGetUser(user.sub, 'wishData');
 
   return (
     <>
@@ -40,7 +43,7 @@ const UserPage = (props) => {
           </EditButton>
         </Row>
 
-        {/* {Array.isArray(wishData) &&
+        {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
             <>
               <CategoryHeader
@@ -60,7 +63,7 @@ const UserPage = (props) => {
                   ))}
               </FlexContainer>
             </>
-          ))} */}
+          ))}
       </WishContainer>
     </>
   );
@@ -68,20 +71,18 @@ const UserPage = (props) => {
 
 export async function getServerSideProps({ req, res }) {
   const apolloClient = initializeApollo();
-
   const session = await getSession(req, res);
-  const user = session?.user ?? {};
 
   await apolloClient.query({
     query: GET_USER,
     variables: {
-      id: user?.sub,
+      id: session?.user?.sub || '',
     },
   });
 
   return {
     props: {
-      session: user,
+      session: { ...session },
       initialApolloState: apolloClient.cache.extract(),
     },
   };

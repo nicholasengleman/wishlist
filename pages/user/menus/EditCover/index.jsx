@@ -5,7 +5,7 @@ import { useForm } from 'react-hook-form';
 
 import { toggleEditCoverMenu } from 'redux/actions/menus';
 import useUpdateUser from 'hooks/useUpdateUser';
-import uploadImage from 'pages/api/uploadImage';
+import uploadImage from 'pages/api/upload-image';
 
 import Menu from 'components/Menu';
 import { SubmitButton } from 'components/Buttons/SubmitButton';

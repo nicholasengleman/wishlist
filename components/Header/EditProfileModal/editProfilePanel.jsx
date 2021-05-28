@@ -3,7 +3,7 @@ import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUser } from '@auth0/nextjs-auth0';
 
-import uploadImage from 'pages/api/uploadImage';
+import uploadImage from 'pages/api/upload-image';
 import EditAvatar from 'pages/user/modals/EditAvatar';
 import useGetUser from '/hooks/useGetUser';
 import useUpdateUser from '/hooks/useUpdateUser';

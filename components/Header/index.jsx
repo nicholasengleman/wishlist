@@ -1,5 +1,5 @@
-import React, { useContext } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React from 'react';
+import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
 import { useUser } from '@auth0/nextjs-auth0';
 
@@ -34,7 +34,7 @@ const HeaderContent = styled.div`
   align-items: center;
 `;
 
-const Header = () => {
+const Header = ({ session }) => {
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
 
