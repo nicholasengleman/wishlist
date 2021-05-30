@@ -29,9 +29,9 @@ const EditProfilePanel = () => {
   const inputEl = useRef();
 
   const onSubmit = async (data) => {
-    useUpdateUser(data);
+    useUpdateUser(user?.sub, data);
     const avatarCloudinaryId = await uploadImage(userAvatar);
-    useUpdateUser({ avatarImg: avatarCloudinaryId });
+    useUpdateUser(user?.sub, { avatarImg: avatarCloudinaryId });
     dispatch(toggleSettingsModal());
   };
 

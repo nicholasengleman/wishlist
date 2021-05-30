@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import SubmitButton from './SubmitButton';
+import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 export const UploadButton = (props) => {
   const inputEl = useRef();

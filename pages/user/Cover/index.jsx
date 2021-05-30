@@ -7,8 +7,10 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { toggleEditCoverMenu } from '/redux/actions/menus';
 import EditCoverMenu from 'pages/user/menus/EditCover';
 import useGetUser from 'hooks/useGetUser';
+import useUpdateUser from '/hooks/useUpdateUser';
 
 import { EditButton } from 'components/Buttons/EditButton';
+let dragImg;
 
 const Cover = Styled.div`
   background-color: grey;
@@ -46,13 +48,14 @@ const RepositionInstructions = Styled.span`
 const StyledCover = () => {
   const dispatch = useDispatch();
   const { user, error, isLoading } = useUser();
-  const { publicId = '', coverImgPosition } = useGetUser(user?.sub);
+  const { coverImg = '', coverImgPosition } = useGetUser(user?.sub);
   const [reposition, setReposition] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);
-  const [currentDrag, setCurrentDrag] = useState(0);
-  if (typeof windows !== 'undefined') {
-    const dragImg = document.createElement('img');
+  const [currentDrag, setCurrentDrag] = useState(coverImgPosition);
+
+  if (typeof window !== 'undefined') {
+    dragImg = document.createElement('img');
     dragImg.src =
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   }
@@ -76,9 +79,14 @@ const StyledCover = () => {
     setLastDrag(currentDrag);
   };
 
+  const handleSaveReposition = () => {
+    useUpdateUser(user.sub, { coverImgPosition: currentDrag });
+    toggleReposition();
+  };
+
   return (
     <Cover
-      hasImage={publicId}
+      hasImage={coverImg}
       onDrag={handleDrag}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
@@ -89,7 +97,7 @@ const StyledCover = () => {
       <div className="coverImg-container">
         <Image
           cloudName="dazynasdm"
-          publicId={publicId}
+          publicId={coverImg}
           loading="lazy"
           style={{
             objectPosition: `center ${currentDrag}px`,
@@ -99,18 +107,31 @@ const StyledCover = () => {
           <Placeholder type="blur" />
         </Image>
       </div>
-      <EditButton
-        as="div"
-        position="absolute"
-        bottom="15px"
-        right={reposition ? '105px' : '120px'}
-        small={true}
-        onClick={() => dispatch(toggleEditCoverMenu())}
-      >
-        {!reposition && 'Edit Cover'}
-        {reposition && 'Save Position'}
-        <EditCoverMenu top="40px" right="0" />
-      </EditButton>
+      {reposition && (
+        <EditButton
+          as="div"
+          position="absolute"
+          bottom="15px"
+          right={reposition ? '105px' : '120px'}
+          small={true}
+          onClick={() => handleSaveReposition()}
+        >
+          {'Save Position'}
+        </EditButton>
+      )}
+      {!reposition && (
+        <EditButton
+          as="div"
+          position="absolute"
+          bottom="15px"
+          right={reposition ? '105px' : '120px'}
+          small={true}
+          onClick={() => dispatch(toggleEditCoverMenu())}
+        >
+          {'Edit Cover'}
+          <EditCoverMenu top="40px" right="0" />
+        </EditButton>
+      )}
       <EditButton
         as="div"
         position="absolute"

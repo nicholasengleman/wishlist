@@ -92,7 +92,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    useUpdateUser({ wishData: newData });
+    useUpdateUser(user?.sub, { wishData: newData });
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };

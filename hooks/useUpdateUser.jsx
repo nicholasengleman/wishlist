@@ -5,6 +5,10 @@ import { initializeApollo } from '/lib/apolloClient';
 export default function updateUser(id, newData) {
   const client = initializeApollo({});
 
+  console.log({
+    ...newData,
+  });
+
   client
     .mutate({
       mutation: UPDATE_USER,

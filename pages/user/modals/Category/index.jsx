@@ -65,7 +65,7 @@ const CategoryModal = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    useUpdateUser({ wishData: newData });
+    useUpdateUser(user?.sub, { wishData: newData });
     // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };
