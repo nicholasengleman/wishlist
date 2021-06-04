@@ -33,7 +33,7 @@ const CategoryModal = () => {
   }, [mode, catData, userData]);
 
   const onSubmit = ({ category }) => {
-    let newData = _.cloneDeep(catData);
+    let newData = _.cloneDeep(userData);
 
     if (mode === 'add') {
       if (!newData) {

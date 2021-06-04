@@ -13,43 +13,40 @@ import Cover from 'pages/user/Cover';
 const HeaderContainer = Styled.div`
    ${pageWidth};
     position: relative;
-    margin-bottom: 2rem;
-    height: 250px;
+    margin-bottom: 150px;
+    height: 200px;
 `;
 
 const ProfileInfo = Styled.div`
-    margin: 30px 30px 0 0;
-    width: 300px;
     display: flex;
     justify-content: space-between;
-    flex-direction: column;
+    position: relative;
     z-index: 2;
-    position: absolute;
-    top: 0;
-    left: 70px;
-    @media ${device.tablet} {
-        flex-direction: row;
-    }
 
     h1 {
-        font-size: 20px;
+        font-size: 28px;
         font-weight: 600;
+        margin: 1rem 0;
     }
 
+    p {
+      margin: 0;
+      font-size: 18px;
+    }
 `;
 
 const ProfileHeader = () => {
   const { user, error, isLoading } = useUser();
-  const avatarPublicId = useGetUser(user?.sub, 'avatarImg');
+  const { avatarPublicId, name, location } = useGetUser(user?.sub);
 
   return (
     <HeaderContainer>
       <Cover />
       <ProfileInfo>
-        <Avatar size="2" publicId={avatarPublicId} />
+        <Avatar size="2" publicId={avatarPublicId} margin={'-100px 30px 0 30px'}/>
         <Column>
-          <H1>Nicholas Engleman</H1>
-          <Paragraph>Web Developer</Paragraph>
+           <h1>{name}</h1>
+          <Paragraph>{location}</Paragraph>
         </Column>
       </ProfileInfo>
     </HeaderContainer>
