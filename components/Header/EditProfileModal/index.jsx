@@ -17,7 +17,7 @@ const EditProfile = () => {
     >
       <FlexContainer flexWrap="nowrap">
         <SideBarMenu
-          items={['Edit Profile', 'Password']}
+          items={['Edit Profile']}
           itemSelectedCb={setSelectedPanel}
         />
         {selectedPanel === 'Edit Profile' && <EditProfilePanel />}

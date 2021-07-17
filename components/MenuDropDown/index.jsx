@@ -22,7 +22,9 @@ const StyledMenuHeader = styled.li`
 `;
 
 const StyledMenuList = styled.ul`
-  display: block;
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
   transform-origin: top center;
   transition: all 0.1s ease-in-out;
   opacity: ${(props) => (props.menuStatus ? '1' : '0')};
@@ -38,21 +40,46 @@ const StyledMenuList = styled.ul`
   color: #333;
   border-radius: 5px;
   min-width: 200px;
-  padding: 3px 0;
+  padding: 15px;
 `;
 
 const StyledMenuItem = styled.li`
-  padding: 10px 15px;
+  padding: 0;
   font-size: 14px;
   display: flex;
   align-items: center;
   cursor: pointer;
+  transition: all 0.1s;
+
+  button {
+    background: none;
+    width: 100%;
+    display: flex;
+    border-radius: ${(props) => props.theme.borderRadius};
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.1s;
+    border: none;
+    &:hover {
+      background: ${(props) => props.theme.btnBackgroundHover};
+      p {
+        color: ${(props) => props.theme.btnTextHover};
+      }
+      i {
+        color: ${(props) => props.theme.iconColorHover};
+      }
+    }
+  }
+  p {
+    margin: 0;
+    transition: all 0.1s;
+    color: ${(props) => props.theme.btnText};
+  }
   i {
     font-size: 14px;
     margin-right: 10px;
-  }
-  &:hover {
-    background-color: lightgray;
+    transition: all 0.1s;
+    color: ${(props) => props.theme.iconColor};
   }
 `;
 
@@ -101,7 +128,11 @@ export const MenuItem = ({ children, onClick, href }) => {
       router.push(href);
     }
   };
-  return <StyledMenuItem onClick={handleClick}>{children}</StyledMenuItem>;
+  return (
+    <StyledMenuItem onClick={handleClick}>
+      <button>{children}</button>
+    </StyledMenuItem>
+  );
 };
 
 export const MenuItemCategory = ({ children }) => (

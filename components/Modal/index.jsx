@@ -5,6 +5,15 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Row, Column } from 'components/Flex';
 import { CloseButton } from 'components/IconButtons';
 
+const ModalHeader = Styled(Row)`
+  box-shadow: 0 8px 6px -6px black;
+  padding: 13px 20px;
+  box-sizing: border-box;
+  margin: 0;
+  position: relative;
+  z-index: 1;
+`;
+
 const ModalOverlay = Styled.div`
    background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
@@ -20,10 +29,9 @@ const ModalOverlay = Styled.div`
 
 const StyledModal = Styled.div`
     width: 30%;
-    min-width: 600px;
+    min-width: 700px;
     max-width: 95%;
     background-color: white;
-    padding: 1.5rem 1rem;
     box-sizing: content-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
     border-radius: 20px;
@@ -49,9 +57,6 @@ const Modal = ({ children, modalName, onClose, onCloseCb }) => {
   return (
     <ModalOverlay onClick={() => handleClose()}>
       <StyledModal onClick={(e) => e.stopPropagation()}>
-        <Row justifyContent="flex-start">
-          <CloseButton click={() => handleClose()} />
-        </Row>
         <Row marginSize={1}>
           <Column>{children}</Column>
         </Row>

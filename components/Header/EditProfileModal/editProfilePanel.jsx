@@ -73,7 +73,7 @@ const EditProfilePanel = () => {
                   id="username"
                   type="text"
                   defaultValue={userData.username}
-                  ref={register}
+                  {...register('username')}
                 />
               </Column>
             </Row>
@@ -85,7 +85,7 @@ const EditProfilePanel = () => {
                   id="name"
                   type="text"
                   defaultValue={userData.name}
-                  ref={register}
+                  {...register('name')}
                 />
               </Column>
             </Row>
@@ -98,7 +98,7 @@ const EditProfilePanel = () => {
                   id="location"
                   type="text"
                   defaultValue={userData.location}
-                  ref={register}
+                  {...register('location')}
                 />
               </Column>
             </Row>
@@ -111,7 +111,7 @@ const EditProfilePanel = () => {
                   id="bio"
                   type="textarea"
                   defaultValue={userData.bio}
-                  ref={register}
+                  {...register('bio')}
                 />
               </Column>
             </Row>

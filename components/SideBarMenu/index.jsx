@@ -3,16 +3,20 @@ import styled from 'styled-components';
 
 const StyledSideBarMenu = styled.ul`
   min-width: 150px;
-  margin-right: 50px;
+  margin: 0 30px 0 0;
+  list-style: none;
+  padding: 0;
+  border-right: 1px solid lightblue;
 
   li {
-    padding: 10px 0;
+    padding: 10px;
     font-size: 18px;
     color: #6e6d7a;
     cursor: pointer;
+    border-bottom: 1px solid lightblue;
     &.active {
       color: #333;
-      font-weight: 700;
+      font-weight: 600;
     }
     &:hover {
       color: #333;
