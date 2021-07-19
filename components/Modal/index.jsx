@@ -1,18 +1,9 @@
-import React, { useEffect, useCallback } from 'react';
+import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-
 import { Row, Column } from 'components/Flex';
-import { CloseButton } from 'components/IconButtons';
-
-const ModalHeader = Styled(Row)`
-  box-shadow: 0 8px 6px -6px black;
-  padding: 13px 20px;
-  box-sizing: border-box;
-  margin: 0;
-  position: relative;
-  z-index: 1;
-`;
+import { SubmitButton } from 'components/Buttons/SubmitButton';
+import { CancelButton } from 'components/Buttons/CancelButton';
 
 const ModalOverlay = Styled.div`
    background-color: rgba(0, 0, 0, 0.7);
@@ -28,13 +19,28 @@ const ModalOverlay = Styled.div`
 `;
 
 const StyledModal = Styled.div`
-    width: 30%;
-    min-width: 700px;
-    max-width: 95%;
+    width: 80%;
+    height: 80%;
     background-color: white;
-    box-sizing: content-box;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border-radius: 20px;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+`;
+
+const StyledContent = Styled.div`
+  padding: 50px;
+  height: calc(100% - 70px);
+`;
+
+const StyledFooter = Styled.footer`
+  background: ${(props) => props.theme.modalFooterBg};
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  gap: 20px;
+  padding: 15px 30px;
+  height: 70px;
 `;
 
 const Modal = ({ children, modalName, onClose, onCloseCb }) => {
@@ -57,9 +63,13 @@ const Modal = ({ children, modalName, onClose, onCloseCb }) => {
   return (
     <ModalOverlay onClick={() => handleClose()}>
       <StyledModal onClick={(e) => e.stopPropagation()}>
-        <Row marginSize={1}>
-          <Column>{children}</Column>
-        </Row>
+        <StyledContent>{children}</StyledContent>
+        <StyledFooter>
+          <CancelButton small={true} onClick={() => handleClose()}>
+            Cancel
+          </CancelButton>
+          <SubmitButton>Save</SubmitButton>
+        </StyledFooter>
       </StyledModal>
     </ModalOverlay>
   );

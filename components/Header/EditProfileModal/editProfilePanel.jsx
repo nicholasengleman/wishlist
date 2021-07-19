@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
+import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
 import { useDispatch, useSelector } from 'react-redux';
 import { useUser } from '@auth0/nextjs-auth0';
@@ -12,9 +13,25 @@ import {
   toggleEditAvatarModal,
 } from '/redux/actions/modals';
 
+import Cover from 'pages/user/Cover';
 import { Row, Column, FlexContainer } from 'components/Flex';
 import { Label, Input } from 'components/Inputs';
-import { SubmitButton } from 'components/Buttons/SubmitButton';
+
+const StyledDiv = Styled.div`
+  display: flex;
+  height: 100%;
+
+  .illustration {
+    width: 30%;
+    border-right: 1px solid lightgrey;
+    margin-right: 50px;
+  }
+
+  .form {
+    overflow: scroll;
+  }
+
+`;
 
 const EditProfilePanel = () => {
   const dispatch = useDispatch();
@@ -42,88 +59,87 @@ const EditProfilePanel = () => {
   };
 
   return (
-    <>
-      <EditAvatar userAvatar={userAvatar} setUserAvatar={setUserAvatar} />
-      <FlexContainer>
-        <Row>
-          <img
-            style={{
-              width: '100px',
-              borderRadius: '100%',
-              marginRight: '20px',
-            }}
-            src={userAvatar}
-            alt="Profile"
-          />
-          <input
-            type="file"
-            id="profile_upload"
-            name="profile_upload"
-            onChange={handleImageUpload}
-            ref={inputEl}
-          ></input>
-        </Row>
-        <Row>
-          <form style={{ width: '100%' }}>
-            <Row>
-              <Column>
-                <Label htmlFor="name">User Name</Label>
-                <Input
-                  name="username"
-                  id="username"
-                  type="text"
-                  defaultValue={userData.username}
-                  {...register('username')}
-                />
-              </Column>
-            </Row>
-            <Row>
-              <Column>
-                <Label htmlFor="name">Name</Label>
-                <Input
-                  name="name"
-                  id="name"
-                  type="text"
-                  defaultValue={userData.name}
-                  {...register('name')}
-                />
-              </Column>
-            </Row>
+    <StyledDiv>
+      <div className="illustration"></div>
+      <div className="form">
+        <Cover height="200px" editable={true} />
+        <EditAvatar userAvatar={userAvatar} setUserAvatar={setUserAvatar} />
+        <FlexContainer>
+          <Row>
+            <img
+              style={{
+                width: '100px',
+                borderRadius: '100%',
+                marginRight: '20px',
+              }}
+              src={userAvatar}
+              alt="Profile"
+            />
+            <input
+              type="file"
+              id="profile_upload"
+              name="profile_upload"
+              onChange={handleImageUpload}
+              ref={inputEl}
+            ></input>
+          </Row>
+          <Row>
+            <form style={{ width: '100%' }}>
+              <Row>
+                <Column>
+                  <Label htmlFor="name">User Name</Label>
+                  <Input
+                    name="username"
+                    id="username"
+                    type="text"
+                    defaultValue={userData.username}
+                    {...register('username')}
+                  />
+                </Column>
+              </Row>
+              <Row>
+                <Column>
+                  <Label htmlFor="name">Name</Label>
+                  <Input
+                    name="name"
+                    id="name"
+                    type="text"
+                    defaultValue={userData.name}
+                    {...register('name')}
+                  />
+                </Column>
+              </Row>
 
-            <Row>
-              <Column>
-                <Label htmlFor="name">Location</Label>
-                <Input
-                  name="location"
-                  id="location"
-                  type="text"
-                  defaultValue={userData.location}
-                  {...register('location')}
-                />
-              </Column>
-            </Row>
+              <Row>
+                <Column>
+                  <Label htmlFor="name">Location</Label>
+                  <Input
+                    name="location"
+                    id="location"
+                    type="text"
+                    defaultValue={userData.location}
+                    {...register('location')}
+                  />
+                </Column>
+              </Row>
 
-            <Row>
-              <Column>
-                <Label htmlFor="name">Bio</Label>
-                <Input
-                  name="bio"
-                  id="bio"
-                  type="textarea"
-                  defaultValue={userData.bio}
-                  {...register('bio')}
-                />
-              </Column>
-            </Row>
-          </form>
-        </Row>
-        <Row>
-          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
-            Submit
-          </SubmitButton>
-        </Row>
-      </FlexContainer>
-    </>
+              <Row>
+                <Column>
+                  <Label htmlFor="name">Bio</Label>
+                  <Input
+                    name="bio"
+                    id="bio"
+                    type="textarea"
+                    defaultValue={userData.bio}
+                    {...register('bio')}
+                  />
+                </Column>
+              </Row>
+            </form>
+          </Row>
+        </FlexContainer>
+      </div>
+    </StyledDiv>
   );
 };
 

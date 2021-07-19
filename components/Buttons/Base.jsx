@@ -15,7 +15,7 @@ export const Base = Styled.button`
   right: ${({ right }) => right || ''};
   top: ${({ top }) => top || ''};
   bottom: ${({ bottom }) => bottom || ''};
-  padding: ${({ small }) => (small === true ? '0.5rem 1rem' : '0.5rem 2rem')};
+  padding: ${({ small }) => (small === true ? '0.5rem 3rem' : '0.5rem 4rem')};
   width: max-content;
   border-radius: ${({ borderRadius }) => borderRadius || '5px'};
   margin-left: ${({ center }) => (center ? 'auto' : '')};

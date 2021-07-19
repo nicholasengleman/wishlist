@@ -44,7 +44,6 @@
     "redux": "^4.1.0",
     "sass": "^1.32.13",
     "styled-components": "^5.3.0",
-    "styled-reset": "^4.3.4",
     "subscriptions-transport-ws": "^0.9.18",
     "uuid": "^8.3.2"
   },

@@ -8,6 +8,9 @@ const theme = {
   btnBackgroundHover: 'lightblue',
   btnTextHover: 'hsl(240, 4%, 25%)',
   iconColorHover: 'hsl(240, 4%, 25%)',
+
+  // Modal
+  modalFooterBg: 'hsl(240, 17%, 90%)',
 };
 
 export default theme;

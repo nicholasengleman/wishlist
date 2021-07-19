@@ -43,10 +43,7 @@ const Header = ({ session }) => {
       <EditProfileModal />
       <HeaderContainer>
         <HeaderContent>
-          <Row marginSize={0}>
-            <HomeButton />
-            <SearchInput />
-          </Row>
+          <Row marginSize={0}></Row>
           <Row marginSize={0} width="auto">
             {user ? (
               <>

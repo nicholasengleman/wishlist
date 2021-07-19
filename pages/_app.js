@@ -6,6 +6,7 @@ import NProgress from 'nprogress';
 import { ThemeProvider } from 'styled-components';
 
 import { useApollo } from '/lib/apolloClient';
+import { GlobalStyles } from 'globalStyles/globalStyles';
 import theme from 'globalStyles/theme';
 import 'globalStyles/nprogress.css';
 import store from 'redux/store';
@@ -23,6 +24,7 @@ function MyApp({ Component, pageProps }) {
       <UserProvider user={pageProps?.session?.user}>
         <Provider store={store}>
           <ThemeProvider theme={theme}>
+            <GlobalStyles />
             <Page>
               <Component {...pageProps} />
             </Page>
