@@ -47,10 +47,9 @@ const RepositionInstructions = Styled.span`
     display: ${({ reposition }) => (reposition ? 'block' : 'none')};
 `;
 
-const Cover = ({ editable, height }) => {
+const Cover = ({ editable, height, coverReposition, setCoverReposition }) => {
   const { user, error, isLoading } = useUser();
   const { coverImg = '', coverImgPosition } = useGetUser(user?.sub);
-  const [reposition, setReposition] = useState(false);
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);
   const [currentDrag, setCurrentDrag] = useState(coverImgPosition);
@@ -62,7 +61,7 @@ const Cover = ({ editable, height }) => {
   }
 
   const toggleReposition = () => {
-    setReposition(!reposition);
+    setCoverReposition(!coverReposition);
   };
 
   const handleSaveReposition = () => {
@@ -71,33 +70,33 @@ const Cover = ({ editable, height }) => {
   };
 
   const handleDrag = (e) => {
-    if (reposition && e.clientY) {
+    if (coverReposition && e.clientY) {
       setCurrentDrag(lastDrag + e.clientY - dragStart);
     }
   };
 
   const handleDragStart = (e) => {
-    if (reposition) {
+    if (coverReposition) {
       setDragStart(e.clientY);
       e.dataTransfer.setDragImage(dragImg, 0, 0);
     }
   };
 
   const handleDragEnd = () => {
-    if (reposition) {
+    if (coverReposition) {
       setLastDrag(currentDrag);
     }
   };
 
   return (
     <StyledCover
-      reposition={reposition}
+      coverReposition={coverReposition}
       onDrag={handleDrag}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
       height={height}
     >
-      <RepositionInstructions reposition={reposition}>
+      <RepositionInstructions coverReposition={coverReposition}>
         Drag Image to Reposition.
       </RepositionInstructions>
       <div className="coverImg-container">
@@ -115,7 +114,7 @@ const Cover = ({ editable, height }) => {
       </div>
       {editable && (
         <EditCoverButtons
-          reposition={reposition}
+          coverReposition={coverReposition}
           handleSaveReposition={handleSaveReposition}
           toggleReposition={toggleReposition}
         />

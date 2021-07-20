@@ -26,6 +26,9 @@ export const FlexContainer = styled.div`
   flex-wrap: ${({ flexWrap }) => flexWrap};
   justify-content: flex-start;
   margin-left: ${({ marginSize }) => margin[marginSize]};
+  width: 100%;
+  width: ${(props) => props.width};
+  gap: ${(props) => props.gap};
 `;
 
 export default Row;

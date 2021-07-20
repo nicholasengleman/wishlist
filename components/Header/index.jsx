@@ -6,11 +6,10 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { pageWidth } from '/globalStyles/mixins';
 import { toggleSettingsModal } from 'redux/actions/modals';
 
-import SearchInput from 'components/Search';
 import { Row, Column } from 'components/Flex';
 import ProfileLink from 'components/ProfileLink';
 import { AlarmButton, MenuButton, HomeButton } from 'components/IconButtons';
-import EditProfileModal from 'components/Header/EditProfileModal';
+import EditProfileModal from 'components/Header/children/EditProfileModal';
 import {
   MenuContainer,
   MenuHeader,

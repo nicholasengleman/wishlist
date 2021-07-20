@@ -2,32 +2,33 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
-import { EditButton } from 'components/Buttons/EditButton';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
 import { CancelButton } from 'components/Buttons/CancelButton';
+
+import { EditButton, MoveButton } from 'components/IconButtons';
 
 import { toggleEditCoverMenu } from '/redux/actions/menus';
 import EditCoverMenu from 'pages/user/menus/EditCover';
 
 const StyledEditCoverButtons = Styled.div`
     position: absolute;
-    bottom: 15px;
-    right: 20px;
+    bottom: ${(props) => (props.coverReposition ? '20px' : '-20px')};
+    right: ${(props) => (props.coverReposition ? '20px' : '0')};
     display: flex;
     gap: 20px;
     justify-content: flex-end;
 `;
 
 const EditCoverButtons = ({
-  reposition,
+  coverReposition,
   handleSaveReposition,
   toggleReposition,
 }) => {
   const dispatch = useDispatch();
 
   return (
-    <StyledEditCoverButtons>
-      {reposition && (
+    <StyledEditCoverButtons coverReposition={coverReposition}>
+      {coverReposition && (
         <>
           <CancelButton small={true} onClick={() => toggleReposition()}>
             Cancel
@@ -41,21 +42,15 @@ const EditCoverButtons = ({
           </SubmitButton>
         </>
       )}
-      {!reposition && (
+      {!coverReposition && (
         <>
-          <EditButton
-            as="div"
-            small={true}
-            onClick={() => dispatch(toggleEditCoverMenu())}
-          >
+          <EditButton onClick={() => dispatch(toggleEditCoverMenu())}>
             Edit Cover
-            <EditCoverMenu top="40px" right="0" />
           </EditButton>
-          <EditButton as="div" small={true} onClick={() => toggleReposition()}>
-            Reposition
-          </EditButton>
+          <MoveButton onClick={() => toggleReposition()}>Reposition</MoveButton>
         </>
       )}
+      <EditCoverMenu top="50px" right="100px" />
     </StyledEditCoverButtons>
   );
 };

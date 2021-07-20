@@ -11,11 +11,3 @@ export const pageWidth = () => `
         padding: 0 50px;
     }
 `;
-
-export const buttonColor = () => `
-    transition: all 0.2s ease-in-out;
-    &:hover {
-       color: #2f2f2f;
-       background-color: #DCE7F9;
-    }
-`;

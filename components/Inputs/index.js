@@ -2,19 +2,15 @@ import Styled from 'styled-components';
 
 const InputBase = `
     width: 100%;
-    padding: 5px 20px;
-    border-radius: 10px;
-    border: 1px solid lightblue;
+    padding: 3px 15px;
+    border-radius: 7px;
+    border: 2px solid #DFE8FF;
     color: #444;
-    background-color: #F7F8FB;
+    background-color: white;
     outline: none;
     transition: all 0.2s;
     box-sizing: border-box;
-    font-size: 18px;
-    &:focus {
-        background-color: white;
-        box-shadow: -1px 1px 3px #ccbfbf, 1px -1px 3px #fff9f9;
-    }
+    font-size: 16px;
 `;
 
 export const Input = Styled.input`
@@ -35,8 +31,8 @@ export const Form = Styled.form`
 `;
 
 export const Label = Styled.label`
- color: grey;
- margin-bottom: 5px;
+ color: #949494;
+ margin-bottom: 3px;
  font-size: 14px;
  display: inline-box;
 `;

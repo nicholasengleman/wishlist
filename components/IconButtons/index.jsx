@@ -1,23 +1,25 @@
 import React from 'react';
 import Styled from 'styled-components';
 import Link from 'next/link';
-import { buttonColor } from 'globalStyles/mixins';
 
 const Icon = Styled.button`
-  ${buttonColor}
-  background: none;
-  height: 35px;
-  width: 35px;
+  background-color: ${(props) => props.theme.buttonBgLight};
+  transition: all 0.2s ease-in-out;
+  height: 40px;
+  width: 40px;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
-  color: ${(props) => props.theme.headerText};
-  font-size: 22px;
+  color: white;
   border-radius: 50%;
   margin-right: 10px;
   outline: transparent;
+  position: relative;
+  i {
+    font-size: 16px;
+  }
 `;
 
 export const AlarmButton = () => (
@@ -44,4 +46,16 @@ export const HomeButton = () => (
       <i className="fas fa-home"></i>
     </Icon>
   </Link>
+);
+
+export const EditButton = (props) => (
+  <Icon {...props}>
+    <i className="far fa-edit"></i>
+  </Icon>
+);
+
+export const MoveButton = (props) => (
+  <Icon {...props}>
+    <i className="fas fa-expand-arrows-alt"></i>
+  </Icon>
 );

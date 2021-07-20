@@ -11,6 +11,9 @@ const theme = {
 
   // Modal
   modalFooterBg: 'hsl(240, 17%, 90%)',
+
+  // Buttons
+  buttonBgLight: 'hsl(223, 98%, 60%)',
 };
 
 export default theme;
