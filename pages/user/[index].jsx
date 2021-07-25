@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { getSession, useUser } from '@auth0/nextjs-auth0';
@@ -45,7 +45,7 @@ const UserPage = () => {
 
         {Array.isArray(wishData) &&
           wishData.map((category, catIndex) => (
-            <>
+            <Fragment key={catIndex}>
               <CategoryHeader
                 category={category}
                 catIndex={catIndex}
@@ -62,7 +62,7 @@ const UserPage = () => {
                     />
                   ))}
               </FlexContainer>
-            </>
+            </Fragment>
           ))}
       </WishContainer>
     </>

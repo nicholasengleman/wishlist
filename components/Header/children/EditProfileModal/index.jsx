@@ -11,24 +11,25 @@ import useGetUser from '/hooks/useGetUser';
 import useUpdateUser from '/hooks/useUpdateUser';
 
 import Modal from 'components/Modal';
-import Cover from 'pages/user/Cover';
-import ChangeAvatar from '../ChangeAvatar';
 import { Row, Column, FlexContainer } from 'components/Flex';
 import { Label, Input, Textarea } from 'components/Inputs';
+import image1 from 'resources/images/undraw-portfolio.svg';
 
 const StyledDiv = Styled.div`
   display: flex;
   height: 100%;
 
   .illustration {
-    width: 30%;
-    min-width: 30%;
+    width: 33%;
+    min-width: 33%;
     border-right: 1px solid lightgrey;
-    margin-right: 50px;
+    margin-right: 200px;
+    padding-top: 100px;
   }
 
   .form {
     overflow: scroll;
+    padding-top: 100px;
   }
 
 `;
@@ -37,7 +38,6 @@ const EditProfileModal = () => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals.settingsModal);
   const { user, error, isLoading } = useUser();
-  const [coverReposition, setCoverReposition] = useState(false);
 
   const { register, handleSubmit } = useForm();
   const userData = useGetUser(user?.sub);
@@ -52,22 +52,18 @@ const EditProfileModal = () => {
     dispatch(toggleSettingsModal());
   };
 
+  console.log(image1);
+
   return (
     <Modal modalName="settingsModal" onClose={toggleSettingsModal()}>
       <StyledDiv>
-        <div className="illustration"></div>
+        <div className="illustration">
+          <img src={image1.src} alt="" />
+        </div>
         <div className="form">
-          <Cover
-            height={coverReposition ? '250px' : '150px'}
-            editable={true}
-            coverReposition={coverReposition}
-            setCoverReposition={setCoverReposition}
-          />
-          <ChangeAvatar userAvatar={userAvatar} setUserAvatar={setUserAvatar} />
-
           <form style={{ width: '100%' }}>
-            <FlexContainer gap="30px">
-              <FlexContainer width="47%">
+            <FlexContainer gap="50px">
+              <FlexContainer width="35%">
                 <Row>
                   <Column>
                     <Label htmlFor="name">User Name</Label>

@@ -1,11 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Image, Placeholder, Transformation } from 'cloudinary-react';
 import Styled from 'styled-components';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import useGetUser from 'hooks/useGetUser';
 import useUpdateUser from '/hooks/useUpdateUser';
-
 import EditCoverButtons from './children/EditCoverButtons';
 
 let dragImg;
@@ -47,12 +46,14 @@ const RepositionInstructions = Styled.span`
     display: ${({ reposition }) => (reposition ? 'block' : 'none')};
 `;
 
-const Cover = ({ editable, height, coverReposition, setCoverReposition }) => {
+const Cover = ({ editable }) => {
   const { user, error, isLoading } = useUser();
   const { coverImg = '', coverImgPosition } = useGetUser(user?.sub);
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);
   const [currentDrag, setCurrentDrag] = useState(coverImgPosition);
+  const [reposition, setReposition] = useState(false);
+  const imageRef = useRef();
 
   if (typeof window !== 'undefined') {
     dragImg = document.createElement('img');
@@ -60,43 +61,49 @@ const Cover = ({ editable, height, coverReposition, setCoverReposition }) => {
       'data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7';
   }
 
-  const toggleReposition = () => {
-    setCoverReposition(!coverReposition);
-  };
-
   const handleSaveReposition = () => {
     useUpdateUser(user.sub, { coverImgPosition: currentDrag });
-    toggleReposition();
+    setReposition(!reposition);
   };
 
   const handleDrag = (e) => {
-    if (coverReposition && e.clientY) {
-      setCurrentDrag(lastDrag + e.clientY - dragStart);
+    const renderedWidth = imageRef.current.element.current.width;
+    const naturalHeight = imageRef.current.element.current.naturalHeight;
+    const naturalWidth = imageRef.current.element.current.naturalWidth;
+
+    const maxNegative = (renderedWidth / naturalWidth) * naturalHeight - 200;
+
+    if (reposition && e.clientY) {
+      const proposedChange = lastDrag + e.clientY - dragStart;
+
+      if (-maxNegative < proposedChange && proposedChange < 0) {
+        setCurrentDrag(proposedChange);
+      }
     }
   };
 
   const handleDragStart = (e) => {
-    if (coverReposition) {
+    if (reposition) {
       setDragStart(e.clientY);
       e.dataTransfer.setDragImage(dragImg, 0, 0);
     }
   };
 
   const handleDragEnd = () => {
-    if (coverReposition) {
+    if (reposition) {
       setLastDrag(currentDrag);
     }
   };
 
   return (
     <StyledCover
-      coverReposition={coverReposition}
+      reposition={reposition}
       onDrag={handleDrag}
       onDragStart={handleDragStart}
       onDragEnd={handleDragEnd}
-      height={height}
+      height="200px"
     >
-      <RepositionInstructions coverReposition={coverReposition}>
+      <RepositionInstructions reposition={reposition}>
         Drag Image to Reposition.
       </RepositionInstructions>
       <div className="coverImg-container">
@@ -104,6 +111,7 @@ const Cover = ({ editable, height, coverReposition, setCoverReposition }) => {
           cloudName="dazynasdm"
           publicId={coverImg}
           loading="lazy"
+          ref={imageRef}
           style={{
             objectPosition: `center ${currentDrag}px`,
           }}
@@ -114,9 +122,9 @@ const Cover = ({ editable, height, coverReposition, setCoverReposition }) => {
       </div>
       {editable && (
         <EditCoverButtons
-          coverReposition={coverReposition}
+          reposition={reposition}
           handleSaveReposition={handleSaveReposition}
-          toggleReposition={toggleReposition}
+          toggleReposition={() => setReposition(!reposition)}
         />
       )}
     </StyledCover>

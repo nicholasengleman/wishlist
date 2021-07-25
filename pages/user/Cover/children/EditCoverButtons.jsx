@@ -12,23 +12,23 @@ import EditCoverMenu from 'pages/user/menus/EditCover';
 
 const StyledEditCoverButtons = Styled.div`
     position: absolute;
-    bottom: ${(props) => (props.coverReposition ? '20px' : '-20px')};
-    right: ${(props) => (props.coverReposition ? '20px' : '0')};
+    bottom: ${(props) => (props.reposition ? '20px' : '-20px')};
+    right: ${(props) => (props.reposition ? '20px' : '0')};
     display: flex;
     gap: 20px;
     justify-content: flex-end;
 `;
 
 const EditCoverButtons = ({
-  coverReposition,
+  reposition,
   handleSaveReposition,
   toggleReposition,
 }) => {
   const dispatch = useDispatch();
 
   return (
-    <StyledEditCoverButtons coverReposition={coverReposition}>
-      {coverReposition && (
+    <StyledEditCoverButtons reposition={reposition}>
+      {reposition && (
         <>
           <CancelButton small={true} onClick={() => toggleReposition()}>
             Cancel
@@ -42,12 +42,10 @@ const EditCoverButtons = ({
           </SubmitButton>
         </>
       )}
-      {!coverReposition && (
+      {!reposition && (
         <>
-          <EditButton onClick={() => dispatch(toggleEditCoverMenu())}>
-            Edit Cover
-          </EditButton>
-          <MoveButton onClick={() => toggleReposition()}>Reposition</MoveButton>
+          <EditButton onClick={() => dispatch(toggleEditCoverMenu())} />
+          <MoveButton onClick={() => toggleReposition()} />
         </>
       )}
       <EditCoverMenu top="50px" right="100px" />

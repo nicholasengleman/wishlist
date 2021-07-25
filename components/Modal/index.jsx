@@ -19,11 +19,11 @@ const ModalOverlay = Styled.div`
 `;
 
 const StyledModal = Styled.div`
-    width: 80%;
-    height: 80%;
+    width: 100%;
+    height: 100%;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border-radius: 15px;
+    border-radius: 0;
     overflow: hidden;
     position: relative;
 `;

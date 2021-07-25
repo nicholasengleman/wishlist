@@ -37,7 +37,7 @@ const ProfileLink = () => {
   const avatarPublicId = useGetUser(user?.sub, 'avatarImg');
 
   return (
-    <StyledProfileLink aria-hidden>
+    <StyledProfileLink>
       <>
         <Avatar size="0" publicId={avatarPublicId} />
         <Link href={`user/${username}`}>{username || ''}</Link>

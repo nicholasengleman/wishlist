@@ -13,15 +13,11 @@ const Button = Styled(Base)`
 
 export const NavButton = ({ href = '', onClick, children }) => {
   if (onClick) {
-    return (
-      <Button aria-hidden onClick={() => onClick()}>
-        {children}
-      </Button>
-    );
+    return <Button onClick={() => onClick()}>{children}</Button>;
   }
   return (
-    <Link aria-hidden href={href}>
-      <Button aria-hidden>{children}</Button>
+    <Link href={href}>
+      <Button>{children}</Button>
     </Link>
   );
 };
