@@ -1,6 +1,7 @@
 import React from 'react';
 import Styled from 'styled-components';
-import { useSelector } from 'react-redux';
+import { useDetectClickOutside } from 'react-detect-click-outside';
+import { useSelector, useDispatch  } from 'react-redux';
 
 const StyledMenu = Styled.div`
     background-color: white;
@@ -16,18 +17,32 @@ const StyledMenu = Styled.div`
     border-radius: 5px;
 `;
 
-const Menu = (props) => {
-  const { status } = useSelector((state) => state.menus[props.menuName]);
+const Menu = ({ menuName, onClose, onCloseCb, children, left, right, top, bottom }) => {
+  const dispatch = useDispatch();
+  const { status } = useSelector((state) => state.menus[menuName]);
+
+  const handleClose = () => {
+    if (onClose) {
+      dispatch(onClose);
+    }
+    if (onCloseCb) {
+      onCloseCb();
+    }
+  };
+
+  const ref = useDetectClickOutside({ onTriggered: handleClose });
 
   if (!status) {
     return null;
   }
 
   return (
-    <StyledMenu {...props} onClick={(e) => e.stopPropagation()}>
-      {props.children}
+    <StyledMenu left={left} right={right} top={top} bottom={bottom} ref={ref}>
+      {children}
     </StyledMenu>
   );
 };
+
+
 
 export default Menu;

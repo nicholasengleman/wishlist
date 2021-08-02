@@ -10,7 +10,6 @@ import EditCoverButtons from './children/EditCoverButtons';
 let dragImg;
 
 const StyledCover = Styled.div`
-  background-color: grey;
   width: 100%;
   height: 100%;
   position: relative;
@@ -21,6 +20,7 @@ const StyledCover = Styled.div`
     overflow: hidden;
     max-height: 100%;
     height: 100%;
+    border-radius: 20px;
 
     img {
       object-fit: cover;

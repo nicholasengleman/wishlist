@@ -39,7 +39,7 @@ const ProfileLink = () => {
   return (
     <StyledProfileLink>
       <>
-        <Avatar size="0" publicId={avatarPublicId} />
+        <Avatar size="1" publicId={avatarPublicId} />
         <Link href={`user/${username}`}>{username || ''}</Link>
       </>
     </StyledProfileLink>

@@ -30,11 +30,7 @@ const ProfileHeader = () => {
     <HeaderContainer>
       <Cover editable={true} />
       <ProfileInfo>
-        <Avatar
-          size="2"
-          publicId={avatarPublicId}
-          margin={'-100px 30px 0 30px'}
-        />
+        <Avatar editable={true} size="2" publicId={avatarPublicId} />
       </ProfileInfo>
     </HeaderContainer>
   );

@@ -2,13 +2,12 @@ import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
+import { toggleEditCoverMenu } from '/redux/actions/menus';
+
 import { SubmitButton } from 'components/Buttons/SubmitButton';
 import { CancelButton } from 'components/Buttons/CancelButton';
-
 import { EditButton, MoveButton } from 'components/IconButtons';
-
-import { toggleEditCoverMenu } from '/redux/actions/menus';
-import EditCoverMenu from 'pages/user/menus/EditCover';
+import EditCoverMenu from '../EditCoverMenu';
 
 const StyledEditCoverButtons = Styled.div`
     position: absolute;
@@ -25,6 +24,11 @@ const EditCoverButtons = ({
   toggleReposition,
 }) => {
   const dispatch = useDispatch();
+
+  const handleToggleEditCoverMenu = (e) => {
+    dispatch(toggleEditCoverMenu());
+    e.stopPropagation();
+  }
 
   return (
     <StyledEditCoverButtons reposition={reposition}>
@@ -44,7 +48,7 @@ const EditCoverButtons = ({
       )}
       {!reposition && (
         <>
-          <EditButton onClick={() => dispatch(toggleEditCoverMenu())} />
+          <EditButton onClick={(e) => handleToggleEditCoverMenu(e)} />
           <MoveButton onClick={() => toggleReposition()} />
         </>
       )}

@@ -73,7 +73,7 @@ const EditCoverMenu = (props) => {
   };
 
   return (
-    <Menu {...props} menuName="editCoverMenu">
+    <Menu {...props} menuName="editCoverMenu" onClose={toggleEditCoverMenu()}>
       <Header mode={uploadMode}>
         <Row marginSize="0">
           <li className="mode" onClick={() => setUploadMode(1)}>
@@ -82,9 +82,9 @@ const EditCoverMenu = (props) => {
           <li className="mode" onClick={() => setUploadMode(2)}>
             Link
           </li>
-          <li className="mode" onClick={() => setUploadMode(3)}>
+          {/* <li className="mode" onClick={() => setUploadMode(3)}>
             Unsplash
-          </li>
+          </li> */}
         </Row>
         <li onClick={handleRemoveCover}>Remove</li>
       </Header>

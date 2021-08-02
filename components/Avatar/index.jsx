@@ -1,49 +1,62 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Image, Placeholder, Transformation } from 'cloudinary-react';
+import React, { useRef } from 'react';
+import Styled from 'styled-components';
+import { useDispatch } from 'react-redux';
 
-const AvatarSizes = ['35px', '45px', '175px'];
+import { EditButton } from 'components/IconButtons';
+import ChangeProfileImgModal from './children/ChangeProfileImgModal';
+import ProfileImg from './children/ProfileImg';
 
-const BaseAvatar = styled.div`
-  height: ${(props) => AvatarSizes[props.size]};
-  width: ${(props) => AvatarSizes[props.size]};
-  margin: ${(props) => props.margin || ''};
-  img {
-    height: 100%;
-    width: auto;
-    border-radius: 50%;
-    border: ${(props) => `${1 + Number(props.size)}px solid white`};
-    &:before {
-      content: '';
+import {
+  toggleSettingsModal,
+  toggleEditAvatarModal,
+} from '/redux/actions/modals';
+
+const AvatarContainer = Styled.div`
+  width: 225px;
+  position: relative;
+  margin: -130px 0 20px 100px;
+
+    label {
+      top: 50%;
+      right: -20px;
       position: absolute;
-      top: 0;
-      right: 0;
-      bottom: 0;
-      left: 0;
-      z-index: -1;
-      margin: 5px;
-      border-radius: inherit; /* !importanté */
-      background: linear-gradient(to right, red, orange);
-    }
-  }
+   }
 `;
 
-const Avatar = ({ publicId, size = 2, margin }) => {
-  if (publicId) {
+const Avatar = ({ userAvatar, setUserAvatar, size, editable }) => {
+  const dispatch = useDispatch();
+  const inputEl = useRef();
+
+  const handleImageUpload = () => {
+    dispatch(toggleSettingsModal());
+    dispatch(toggleEditAvatarModal());
+    setUserAvatar(URL.createObjectURL(inputEl.current.files[0]));
+  };
+
+  if (editable) {
     return (
-      <BaseAvatar size={size} margin={margin}>
-        <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
-          <Transformation quality="auto" fetchFormat="auto" />
-          <Placeholder type="blur" />
-        </Image>
-      </BaseAvatar>
+      <>
+        <ChangeProfileImgModal
+          userAvatar={userAvatar}
+          setUserAvatar={setUserAvatar}
+        />
+        <AvatarContainer>
+          <ProfileImg publicId={userAvatar} size={size} />
+          <EditButton as="label" for="profile_upload" />
+          <input
+            type="file"
+            id="profile_upload"
+            name="profile_upload"
+            onChange={handleImageUpload}
+            ref={inputEl}
+            style={{ display: 'none' }}
+          ></input>
+        </AvatarContainer>
+      </>
     );
   }
-  return (
-    <BaseAvatar size={size} margin={margin}>
-      <img src="/placeholder-person.png" alt="placeholder" />
-    </BaseAvatar>
-  );
+
+  return <ProfileImg publicId={userAvatar} />;
 };
 
 export default Avatar;
