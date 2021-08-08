@@ -4,7 +4,7 @@ import Styled from 'styled-components';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import useGetUser from 'hooks/useGetUser';
-import useUpdateUser from '/hooks/useUpdateUser';
+import updateUser from '/utils/updateUser';
 import EditCoverButtons from './children/EditCoverButtons';
 
 let dragImg;
@@ -47,8 +47,8 @@ const RepositionInstructions = Styled.span`
 `;
 
 const Cover = ({ editable }) => {
-  const { user, error, isLoading } = useUser();
-  const { coverImg = '', coverImgPosition } = useGetUser(user?.sub);
+  const { user } = useUser();
+  const { coverImg = '', coverImgPosition } = useGetUser();
   const [dragStart, setDragStart] = useState(0);
   const [lastDrag, setLastDrag] = useState(0);
   const [currentDrag, setCurrentDrag] = useState(coverImgPosition);
@@ -62,7 +62,7 @@ const Cover = ({ editable }) => {
   }
 
   const handleSaveReposition = () => {
-    useUpdateUser(user.sub, { coverImgPosition: currentDrag });
+    updateUser(user?.sub, { coverImgPosition: currentDrag });
     setReposition(!reposition);
   };
 

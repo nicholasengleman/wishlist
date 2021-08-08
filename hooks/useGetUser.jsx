@@ -1,9 +1,11 @@
 import GET_USER from '../queries/getUser';
 import { useQuery } from '@apollo/client';
+import { useUser } from '@auth0/nextjs-auth0';
 
-export default function useGetUser(id, field) {
+function useGetUser(field) {
+  const { user } = useUser();
   const { data } = useQuery(GET_USER, {
-    variables: { id: id || '' },
+    variables: { id: user?.sub || '' },
   });
 
   if (data?.users_by_pk) {
@@ -15,3 +17,5 @@ export default function useGetUser(id, field) {
 
   return '';
 }
+
+export default useGetUser;

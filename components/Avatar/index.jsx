@@ -1,62 +1,41 @@
-import React, { useRef } from 'react';
+import React, { useRef, useState } from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 
+import useGetUser from 'hooks/useGetUser';
 import { EditButton } from 'components/IconButtons';
-import ChangeProfileImgModal from './children/ChangeProfileImgModal';
-import ProfileImg from './children/ProfileImg';
 
-import {
-  toggleSettingsModal,
-  toggleEditAvatarModal,
-} from '/redux/actions/modals';
+import ProfileImg from './children/ProfileImg';
+import { toggleEditAvatarModal } from '/redux/actions/modals';
 
 const AvatarContainer = Styled.div`
   width: 225px;
   position: relative;
   margin: -130px 0 20px 100px;
 
-    label {
+    button {
       top: 50%;
       right: -20px;
       position: absolute;
    }
 `;
 
-const Avatar = ({ userAvatar, setUserAvatar, size, editable }) => {
+const Avatar = ({ size, editable }) => {
   const dispatch = useDispatch();
-  const inputEl = useRef();
-
-  const handleImageUpload = () => {
-    dispatch(toggleSettingsModal());
-    dispatch(toggleEditAvatarModal());
-    setUserAvatar(URL.createObjectURL(inputEl.current.files[0]));
-  };
+  const avatarImgId = useGetUser('avatarImg');
 
   if (editable) {
     return (
       <>
-        <ChangeProfileImgModal
-          userAvatar={userAvatar}
-          setUserAvatar={setUserAvatar}
-        />
         <AvatarContainer>
-          <ProfileImg publicId={userAvatar} size={size} />
-          <EditButton as="label" for="profile_upload" />
-          <input
-            type="file"
-            id="profile_upload"
-            name="profile_upload"
-            onChange={handleImageUpload}
-            ref={inputEl}
-            style={{ display: 'none' }}
-          ></input>
+          <ProfileImg publicId={avatarImgId} size={size} />
+          <EditButton onClick={() => dispatch(toggleEditAvatarModal())} />
         </AvatarContainer>
       </>
     );
   }
 
-  return <ProfileImg publicId={userAvatar} />;
+  return <ProfileImg publicId={avatarImgId} />;
 };
 
 export default Avatar;

@@ -20,17 +20,32 @@ const ProfileInfo = Styled.div`
    width: 300px;
    z-index: 2;
    position: relative;
+   .bio {
+    position: absolute;
+    top: 150px;
+    left: 350px;
+    width: 200px;
+   }
 `;
 
 const ProfileHeader = () => {
-  const { user, error, isLoading } = useUser();
-  const { avatarPublicId, name, location } = useGetUser(user?.sub);
+  const { user } = useUser();
+  const { avatarPublicId, name, location, bio, hobbies, twitter, instagram } =
+    useGetUser();
 
   return (
     <HeaderContainer>
       <Cover editable={true} />
       <ProfileInfo>
         <Avatar editable={true} size="2" publicId={avatarPublicId} />
+        <div className="bio">
+          <H1>{name}</H1>
+          <Paragraph>{hobbies}</Paragraph>
+          <Paragraph>{location}</Paragraph>
+          <Paragraph>{bio}</Paragraph>
+          <Paragraph>{twitter}</Paragraph>
+          <Paragraph>{instagram}</Paragraph>
+        </div>
       </ProfileInfo>
     </HeaderContainer>
   );

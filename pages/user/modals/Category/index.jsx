@@ -7,7 +7,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleCategoryModal } from 'redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
-import useUpdateUser from 'hooks/useUpdateUser';
+import updateUser from 'utils/updateUser';
 
 import Modal from 'components/Modal';
 import DeleteModal from 'components/modalDelete';
@@ -18,16 +18,16 @@ import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const CategoryModal = () => {
   const dispatch = useDispatch();
-  const { user, error, isLoading } = useUser();
   const { register, handleSubmit, reset } = useForm();
   const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
   const [catData, setCatData] = useState(null);
-  const userData = useGetUser(user?.sub, 'wishData');
+  const userData = useGetUser('wishData');
 
   useEffect(() => {
     if (mode === 'edit') {
       if (!catData && userData) {
         setCatData(userData);
+        s;
       }
     }
   }, [mode, catData, userData]);
@@ -57,7 +57,7 @@ const CategoryModal = () => {
       };
     }
 
-    useUpdateUser(user?.sub, { wishData: newData });
+    updateUser(user?.sub, { wishData: newData });
     dispatch(toggleCategoryModal());
   };
 
@@ -65,7 +65,7 @@ const CategoryModal = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
 
-    useUpdateUser(user?.sub, { wishData: newData });
+    updateUser(user?.sub, { wishData: newData });
     // setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleCategoryModal());
   };

@@ -5,7 +5,6 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 import useGetUser from 'hooks/useGetUser';
 import { buttonColor } from 'globalStyles/mixins';
-
 import Avatar from 'components/Avatar';
 
 const StyledProfileLink = Styled.button`
@@ -32,9 +31,9 @@ const StyledProfileLink = Styled.button`
 `;
 
 const ProfileLink = () => {
-  const { user, error, isLoading } = useUser();
-  const username = useGetUser(user?.sub, 'username');
-  const avatarPublicId = useGetUser(user?.sub, 'avatarImg');
+  const { user } = useUser();
+  const username = useGetUser('username');
+  const avatarPublicId = useGetUser('avatarImg');
 
   return (
     <StyledProfileLink>

@@ -5,10 +5,9 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useForm } from 'react-hook-form';
 import { useUser } from '@auth0/nextjs-auth0';
 
-import { toggleWishModal } from 'redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
-import useUpdateUser from 'hooks/useUpdateUser';
-
+import { toggleWishModal } from 'redux/actions/modals';
+import updateUser from 'utils/updateUser';
 import Modal from 'components/Modal';
 import Image from 'components/Image';
 import DeleteModal from 'components/modalDelete';
@@ -17,8 +16,8 @@ import { Input, Textarea, Form, Label } from 'components/Inputs';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const WishModal = () => {
+  const { user } = useUser();
   const dispatch = useDispatch();
-  const { user, error, isLoading } = useUser();
 
   const { register, handleSubmit, reset } = useForm();
   const { register: register2, handleSubmit: handleSubmit2 } = useForm();
@@ -27,7 +26,7 @@ const WishModal = () => {
   const [prefillData, setPrefillData] = useState({});
   const [modalStatus, setModalStatus] = useState({});
 
-  const data = useGetUser(user?.sub, 'wishData');
+  const data = useGetUser('wishData');
   const { mode, catIndex, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
   );
@@ -38,7 +37,7 @@ const WishModal = () => {
 
     // A new image is uploaded
     if (prefillData.image) {
-      const image = await axios.post('/api/upload-image', {
+      const image = await axios.post('/api/image-upload', {
         data: prefillData.image,
       });
       wishWithUpdatedImage = {
@@ -63,7 +62,7 @@ const WishModal = () => {
       newData[catIndex]?.wishes.push(wishWithUpdatedImage);
     }
 
-    useUpdateUser(user?.sub, { wishData: newData });
+    updateUser(user?.sub, { wishData: newData });
     dispatch(toggleWishModal());
   };
 
@@ -72,7 +71,6 @@ const WishModal = () => {
       .post(`/api/get-open-graph-tags/`, { data: url })
       .then((response) => {
         if (response.data) {
-          console.log(response.data);
           const prefileData = {
             description: response.data.hybridGraph.description,
             name: response.data.hybridGraph.title,
@@ -92,7 +90,7 @@ const WishModal = () => {
     const newData = _.cloneDeep(data);
     newData[catIndex].wishes.splice(wishIndex, 1);
 
-    useUpdateUser(user?.sub, { wishData: newData });
+    updateUser(user?.sub, { wishData: newData });
     setModalStatus({ ...modalStatus, modalDelete: false });
     dispatch(toggleWishModal());
   };

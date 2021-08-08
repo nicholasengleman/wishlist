@@ -1,20 +1,21 @@
 import React, { Fragment } from 'react';
 import Styled from 'styled-components';
 import { useDispatch } from 'react-redux';
-import { getSession, useUser } from '@auth0/nextjs-auth0';
+import { getSession } from '@auth0/nextjs-auth0';
 
 import { toggleCategoryModal } from 'redux/actions/modals';
+
+import ChangeAvatarModal from 'pages/user/modals/changeAvatar';
+import WishModal from 'pages/user/modals/Wish';
+import CategoryModal from 'pages/user/modals/Category';
+
 import { pageWidth } from 'globalStyles/mixins';
 import { initializeApollo } from 'lib/apolloClient';
 import GET_USER from 'queries/getUser';
 import useGetUser from 'hooks/useGetUser';
-
 import { FlexContainer, Row } from 'components/Flex';
 import { EditButton } from 'components/Buttons/EditButton';
-
 import ProfileHeader from 'pages/user/ProfileHeader';
-import WishModal from 'pages/user/modals/Wish';
-import CategoryModal from 'pages/user/modals/Category';
 import CategoryHeader from 'pages/user/CategoryHeader';
 import Wish from 'pages/user/Wish';
 
@@ -25,14 +26,14 @@ const WishContainer = Styled(FlexContainer)`
 `;
 
 const UserPage = () => {
-  const { user, error, isLoading } = useUser();
   const dispatch = useDispatch();
-  const wishData = useGetUser(user.sub, 'wishData');
+  const wishData = useGetUser('wishData');
 
   return (
     <>
       <WishModal />
       <CategoryModal />
+      <ChangeAvatarModal />
       <ProfileHeader />
       <WishContainer>
         <Row>

@@ -6,17 +6,17 @@ const Icon = Styled.button`
   background-color: ${(props) => props.theme.buttonBgLight};
   transition: all 0.2s ease-in-out;
   height: 40px;
-  width: 40px;
   border: none;
   display: flex;
   justify-content: center;
   align-items: center;
   cursor: pointer;
   color: white;
-  border-radius: 50%;
-  margin-right: 10px;
   outline: transparent;
   position: relative;
+  margin: ${({ rect }) => (rect ? '20px auto' : ' 0 10px 0 0')};
+  width: ${({ rect }) => (rect ? '400px' : '40px')};
+  border-radius: ${({ rect }) => (rect ? '10px' : '50%')};
   i {
     font-size: 16px;
   }
@@ -51,6 +51,12 @@ export const HomeButton = () => (
 export const EditButton = (props) => (
   <Icon {...props}>
     <i className="far fa-edit"></i>
+  </Icon>
+);
+
+export const UploadPhotoButton = (props) => (
+  <Icon {...props}>
+    <i className="fas fa-camera-retro"></i>
   </Icon>
 );
 

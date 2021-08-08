@@ -19,17 +19,17 @@ const ModalOverlay = Styled.div`
 `;
 
 const StyledModal = Styled.div`
-    width: 100%;
-    height: 100%;
+    width: 80%;
+    height: 80%;
     background-color: white;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
-    border-radius: 0;
+    border-radius: 20px;
     overflow: hidden;
     position: relative;
 `;
 
 const StyledContent = Styled.div`
-  padding: 50px;
+  padding: 100px 50px 50px 50px;
   height: calc(100% - 70px);
 `;
 
@@ -43,7 +43,7 @@ const StyledFooter = Styled.footer`
   height: 70px;
 `;
 
-const Modal = ({ children, modalName, onClose, onCloseCb }) => {
+const Modal = ({ children, modalName, onClose, onSubmit, onCloseCb }) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals[modalName]);
 
@@ -60,6 +60,15 @@ const Modal = ({ children, modalName, onClose, onCloseCb }) => {
     }
   };
 
+  const handleSubmit = () => {
+    if (onSubmit) {
+      onSubmit();
+    }
+    if (onCloseCb) {
+      onCloseCb();
+    }
+  };
+
   return (
     <ModalOverlay onClick={() => handleClose()}>
       <StyledModal onClick={(e) => e.stopPropagation()}>
@@ -68,7 +77,7 @@ const Modal = ({ children, modalName, onClose, onCloseCb }) => {
           <CancelButton small={true} onClick={() => handleClose()}>
             Cancel
           </CancelButton>
-          <SubmitButton>Save</SubmitButton>
+          <SubmitButton onClick={() => handleSubmit()}>Save</SubmitButton>
         </StyledFooter>
       </StyledModal>
     </ModalOverlay>
