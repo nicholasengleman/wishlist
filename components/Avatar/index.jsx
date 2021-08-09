@@ -20,7 +20,7 @@ const AvatarContainer = Styled.div`
    }
 `;
 
-const Avatar = ({ size, editable }) => {
+const Avatar = ({ size, editable = false }) => {
   const dispatch = useDispatch();
   const avatarImgId = useGetUser('avatarImg');
 

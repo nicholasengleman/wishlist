@@ -21,27 +21,30 @@ const EditAvatar = () => {
   const uploadImageEl = useRef();
   const avatarEl = useRef();
   const zoomEl = useRef();
-  const avatarOriginalId = useGetUser('avatarOriginal');
+  const { avatarOriginalId, avatarImg } = useGetUser();
+  console.log(avatarImg);
 
   useEffect(async () => {
-    const data = await axios.post('/api/image-info', {
-      data: avatarOriginalId,
-    });
-    if (data.status === 200) {
-      setAvatar(data?.data?.result?.url);
+    if (avatarOriginalId) {
+      const data = await axios.post('/api/image-info', {
+        data: avatarOriginalId,
+      });
+      if (data.status === 200) {
+        setAvatar(data?.data?.result?.url);
+      }
     }
   }, [avatarOriginalId]);
 
   const onSubmit = async () => {
     const image = avatarEl.current.getImage();
-    imageUpload(user?.sub, image, 'avatarImg');
+    imageUpload(user?.sub, image, avatarImg, 'avatarImg');
     dispatch(toggleEditAvatarModal());
   };
 
   const handleUploadNewImage = async () => {
     const file = uploadImageEl.current.files[0];
     setAvatar(URL.createObjectURL(file));
-    imageUpload(user?.sub, file, 'avatarOriginal');
+    imageUpload(user?.sub, file, avatarOriginalId, 'avatarOriginal');
     setZoom(1);
   };
 

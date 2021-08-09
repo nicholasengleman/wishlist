@@ -28,10 +28,10 @@ const BaseAvatar = styled.div`
   }
 `;
 
-const Avatar = ({ publicId, size = 1, margin }) => {
+const Avatar = ({ publicId, size = 1 }) => {
   if (publicId) {
     return (
-      <BaseAvatar size={size} margin={margin}>
+      <BaseAvatar size={size}>
         <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
           <Transformation quality="auto" fetchFormat="auto" />
           <Placeholder type="blur" />
@@ -40,7 +40,7 @@ const Avatar = ({ publicId, size = 1, margin }) => {
     );
   }
   return (
-    <BaseAvatar size={size} margin={margin}>
+    <BaseAvatar size={size}>
       <img src="/placeholder-person.png" alt="placeholder" />
     </BaseAvatar>
   );

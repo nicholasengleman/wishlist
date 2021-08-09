@@ -10,14 +10,14 @@ export default gql`
       username
       id
       avatarImg
-      avatarOriginal
-      twitter
-      instagram
       coverImg
-      coverImgPosition
       location
       bio
+      coverImgPosition
+      twitter
+      instagram
       hobbies
+      avatarOriginal
     }
   }
 `;

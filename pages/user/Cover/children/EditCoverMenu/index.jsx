@@ -1,11 +1,13 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
-import axios from 'axios';
 import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleEditCoverMenu } from 'redux/actions/menus';
 import updateUser from 'utils/updateUser';
+import imageUpload from 'utils/imageUpload';
+import useGetUser from 'hooks/useGetUser';
 
 import Menu from 'components/Menu';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
@@ -49,22 +51,22 @@ const Body = Styled.div`
 `;
 
 const EditCoverMenu = (props) => {
-  const { register, handleSubmit, formState } = useForm();
-
+  const { user } = useUser();
   const dispatch = useDispatch();
+  const { register, handleSubmit } = useForm();
+  const { coverImg } = useGetUser();
   const [uploadMode, setUploadMode] = useState(1);
 
   const handleImageUpload = async ({ image }) => {
-    const avatarCloudinaryId = await axios.post('/api/image-upload', {
-      data: image,
-    });
-    updateUser(user?.sub, { coverImg: avatarCloudinaryId.data.public_id });
+    imageUpload(user?.sub, image, coverImg, 'coverImg');
+    updateUser(user?.sub, { coverImgPosition: 0 });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
 
   const handleRemoveCover = () => {
     updateUser(user?.sub, { coverImg: '' });
+    updateUser(user?.sub, { coverImgPosition: 0 });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
   };
@@ -98,7 +100,7 @@ const EditCoverMenu = (props) => {
           <>
             <form style={{ width: '100%' }}>
               <Row>
-                <Input name="image" type="text" {...register('image')} />
+                <Input name="image" type="texts" {...register('image')} />
               </Row>
               <Row justifyContent="center">
                 <SubmitButton

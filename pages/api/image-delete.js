@@ -10,7 +10,7 @@ const imageDelete = async (req, res) => {
   try {
     const file = req?.body?.data;
     if (file) {
-      const data = await cloudinary.uploader.destroy(file);
+      const data = await cloudinary.v2.uploader.destroy(file);
       res.json({ result: data });
       if (data.result === 'ok') {
         console.log(`Image ${file} deleted from Cloudinary.`);
