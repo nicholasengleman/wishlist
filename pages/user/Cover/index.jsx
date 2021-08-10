@@ -22,6 +22,10 @@ const StyledCover = Styled.div`
     height: 100%;
     border-radius: 20px;
 
+    &:empty {
+      background: lightblue;
+    }
+
     img {
       object-fit: cover;
       width: 100%;
@@ -107,18 +111,20 @@ const Cover = ({ editable }) => {
         Drag Image to Reposition.
       </RepositionInstructions>
       <div className="coverImg-container">
-        <Image
-          cloudName="dazynasdm"
-          publicId={coverImg}
-          loading="lazy"
-          ref={imageRef}
-          style={{
-            objectPosition: `center ${currentDrag}px`,
-          }}
-        >
-          <Transformation quality="auto" fetchFormat="auto" />
-          <Placeholder type="blur" />
-        </Image>
+        {coverImg && (
+          <Image
+            cloudName="dazynasdm"
+            publicId={coverImg}
+            loading="lazy"
+            ref={imageRef}
+            style={{
+              objectPosition: `center ${currentDrag}px`,
+            }}
+          >
+            <Transformation quality="auto" fetchFormat="auto" />
+            <Placeholder type="blur" />
+          </Image>
+        )}
       </div>
       {editable && (
         <EditCoverButtons

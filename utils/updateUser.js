@@ -10,7 +10,7 @@ async function updateUser(userId, newData) {
 
   const client = initializeApollo({});
 
-  const result = await client
+  return await client
     .mutate({
       mutation: UPDATE_USER,
       variables: {
@@ -21,16 +21,9 @@ async function updateUser(userId, newData) {
       },
       refetchQueries: [{ query: GET_USER, variables: { id: userId } }],
     })
-    .then((data) => {
-      //console.log('data updated', data);
-      return { status: 'success', ...data };
-    })
     .catch((err) => {
-      console.error(err);
-      return { status: 'error' };
+      console.error(`Error uploading image id to Hasura: ${err}`);
     });
-
-  return result;
 }
 
 export default updateUser;

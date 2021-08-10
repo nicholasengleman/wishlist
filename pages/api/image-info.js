@@ -7,22 +7,16 @@ cloudinary.config({
 });
 
 const imageInfo = async (req, res) => {
-  try {
-    const id = req?.body?.data;
-    if (id) {
-      const data = await cloudinary.api.resource(id);
-      res.json({ result: data });
-      if (data.result === 'ok') {
-        console.log(`Image ${file} info returned from Cloudinary.`);
-      }
-    } else {
-      throw new Error(
-        'Do not import this function. Use axios and call it at the api endpoint /api/image-info.',
-      );
+  const id = req?.body?.data;
+
+  if (id) {
+    try {
+      const response = await cloudinary.api.resource(id);
+      res.status(200).json({ result: response });
+      console.log(`Image ${id} info returned from Cloudinary.`);
+    } catch (error) {
+      console.log(`There was an error using image-info.js : ${error}`);
     }
-  } catch (err) {
-    console.error(err);
-    res?.status(500).json({ err: 'Something went wrong' });
   }
 };
 

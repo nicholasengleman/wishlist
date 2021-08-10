@@ -24,7 +24,6 @@ const toBase64 = (file) => {
     ) {
       resolve(file);
     }
-    reject(null);
   });
 };
 

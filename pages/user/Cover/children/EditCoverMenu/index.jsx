@@ -6,7 +6,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleEditCoverMenu } from 'redux/actions/menus';
 import updateUser from 'utils/updateUser';
-import imageUpload from 'utils/imageUpload';
+import imageUpdate from 'utils/updateImage';
 import useGetUser from 'hooks/useGetUser';
 
 import Menu from 'components/Menu';
@@ -58,7 +58,7 @@ const EditCoverMenu = (props) => {
   const [uploadMode, setUploadMode] = useState(1);
 
   const handleImageUpload = async ({ image }) => {
-    imageUpload(user?.sub, image, coverImg, 'coverImg');
+    imageUpdate(user?.sub, image, 'coverImg', coverImg);
     updateUser(user?.sub, { coverImgPosition: 0 });
     setUploadMode(1);
     dispatch(toggleEditCoverMenu());
@@ -106,7 +106,7 @@ const EditCoverMenu = (props) => {
                 <SubmitButton
                   type="submit"
                   small={true}
-                  onClick={handleSubmit(handleImageUpload)}
+                  // onClick={handleSubmit(handleImageUpload)}
                 >
                   Submit
                 </SubmitButton>

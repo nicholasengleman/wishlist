@@ -7,7 +7,7 @@ import { useUser } from '@auth0/nextjs-auth0';
 import { toggleEditAvatarModal } from 'redux/actions/modals';
 
 import ZoomInput from './StyledZoomInput';
-import imageUpload from 'utils/imageUpload';
+import imageUpdate from 'utils/updateImage';
 import useGetUser from 'hooks/useGetUser';
 import Modal from 'components/Modal';
 import { Row } from 'components/Flex';
@@ -21,30 +21,31 @@ const EditAvatar = () => {
   const uploadImageEl = useRef();
   const avatarEl = useRef();
   const zoomEl = useRef();
-  const { avatarOriginalId, avatarImg } = useGetUser();
-  console.log(avatarImg);
+  const { avatarOriginal, avatarImg } = useGetUser();
 
   useEffect(async () => {
-    if (avatarOriginalId) {
+    if (avatarOriginal) {
       const data = await axios.post('/api/image-info', {
-        data: avatarOriginalId,
+        data: avatarOriginal,
       });
       if (data.status === 200) {
         setAvatar(data?.data?.result?.url);
+      } else {
+        console.log('Could not load avatar in change avatar modal.');
       }
     }
-  }, [avatarOriginalId]);
+  }, [avatarOriginal]);
 
   const onSubmit = async () => {
     const image = avatarEl.current.getImage();
-    imageUpload(user?.sub, image, avatarImg, 'avatarImg');
+    imageUpdate(user?.sub, image, 'avatarImg', avatarImg);
     dispatch(toggleEditAvatarModal());
   };
 
   const handleUploadNewImage = async () => {
     const file = uploadImageEl.current.files[0];
     setAvatar(URL.createObjectURL(file));
-    imageUpload(user?.sub, file, avatarOriginalId, 'avatarOriginal');
+    imageUpdate(user?.sub, file, avatarOriginal, 'avatarOriginal');
     setZoom(1);
   };
 
