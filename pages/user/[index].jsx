@@ -1,32 +1,22 @@
 import React, { Fragment } from 'react';
-import Styled from 'styled-components';
-import { useDispatch } from 'react-redux';
+import { useSelector } from 'react-redux';
 import { getSession } from '@auth0/nextjs-auth0';
-
-import { toggleCategoryModal } from 'redux/actions/modals';
 
 import ChangeAvatarModal from 'pages/user/modals/changeAvatar';
 import WishModal from 'pages/user/modals/Wish';
 import CategoryModal from 'pages/user/modals/Category';
 
-import { pageWidth } from 'globalStyles/mixins';
 import { initializeApollo } from 'lib/apolloClient';
 import GET_USER from 'queries/getUser';
 import useGetUser from 'hooks/useGetUser';
-import { FlexContainer, Row } from 'components/Flex';
-import { EditButton } from 'components/Buttons/EditButton';
+import { FlexContainer, Row, Column } from 'components/Flex';
 import ProfileHeader from 'pages/user/ProfileHeader';
 import CategoryHeader from 'pages/user/CategoryHeader';
 import Wish from 'pages/user/Wish';
-
-const WishContainer = Styled(FlexContainer)`
-  display: flex;
-  flex-direction: column;
-  ${pageWidth};
-`;
+import SectionList from 'pages/user/SectionList';
 
 const UserPage = () => {
-  const dispatch = useDispatch();
+  const { selectedSection } = useSelector((state) => state.sections);
   const wishData = useGetUser('wishData');
 
   return (
@@ -35,37 +25,41 @@ const UserPage = () => {
       <CategoryModal />
       <ChangeAvatarModal />
       <ProfileHeader />
-      <WishContainer>
-        <Row>
-          <EditButton
-            onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
-          >
-            Add Category
-          </EditButton>
-        </Row>
-
-        {Array.isArray(wishData) &&
-          wishData.map((category, catIndex) => (
-            <Fragment key={catIndex}>
-              <CategoryHeader
-                category={category}
-                catIndex={catIndex}
-                key={`${Math.random()}`}
-              />
-              <FlexContainer>
-                {category.wishes &&
-                  category.wishes.map((wish, wishIndex) => (
-                    <Wish
-                      wish={wish}
-                      wishIndex={wishIndex}
+      <Row container={true} alignItems="flex-start">
+        <Column width="20%">
+          <SectionList />
+        </Column>
+        <Column width="80%">
+          {Array.isArray(wishData) &&
+            wishData.map((category, catIndex) => {
+              if (
+                !selectedSection ||
+                (selectedSection && selectedSection === category.id)
+              ) {
+                return (
+                  <Fragment key={catIndex}>
+                    <CategoryHeader
+                      category={category}
                       catIndex={catIndex}
                       key={`${Math.random()}`}
                     />
-                  ))}
-              </FlexContainer>
-            </Fragment>
-          ))}
-      </WishContainer>
+                    <FlexContainer>
+                      {category.wishes &&
+                        category.wishes.map((wish, wishIndex) => (
+                          <Wish
+                            wish={wish}
+                            wishIndex={wishIndex}
+                            catIndex={catIndex}
+                            key={`${Math.random()}`}
+                          />
+                        ))}
+                    </FlexContainer>
+                  </Fragment>
+                );
+              }
+            })}
+        </Column>
+      </Row>
     </>
   );
 };

@@ -80,10 +80,6 @@ export const GlobalStyles = createGlobalStyle`
     }
   }
 
-  body {
-    background-color: #EDEEF4;
-  }
-
   a {
     text-decoration: none;
     color: inherit;

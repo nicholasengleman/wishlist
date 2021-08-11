@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
+import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleSettingsModal } from '/redux/actions/modals';
 import useGetUser from 'hooks/useGetUser';
@@ -32,10 +33,9 @@ const StyledDiv = Styled.div`
 
 const EditProfileModal = () => {
   const dispatch = useDispatch();
-  const { status } = useSelector((state) => state.modals.settingsModal);
-
   const { register, handleSubmit } = useForm();
   const userData = useGetUser();
+  const { user } = useUser();
 
   const onSubmit = (data) => {
     updateUser(user?.sub, data);
