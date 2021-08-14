@@ -29,7 +29,7 @@ const StyledModal = Styled.div`
 `;
 
 const StyledContent = Styled.div`
-  padding: 100px 50px 50px 50px;
+  padding: 50px;
   height: calc(100% - 70px);
 `;
 
@@ -37,13 +37,19 @@ const StyledFooter = Styled.footer`
   background: ${(props) => props.theme.modalFooterBg};
   width: 100%;
   display: flex;
-  justify-content: flex-end;
-  gap: 20px;
+  justify-content: space-between;
   padding: 15px 30px;
   height: 70px;
 `;
 
-const Modal = ({ children, modalName, onClose, onSubmit, onCloseCb }) => {
+const Modal = ({
+  children,
+  modalName,
+  onClose,
+  onSubmit,
+  onCloseCb,
+  onDelete,
+}) => {
   const dispatch = useDispatch();
   const { status } = useSelector((state) => state.modals[modalName]);
 
@@ -64,20 +70,39 @@ const Modal = ({ children, modalName, onClose, onSubmit, onCloseCb }) => {
     if (onSubmit) {
       onSubmit();
     }
-    if (onCloseCb) {
-      onCloseCb();
+    handleClose();
+  };
+
+  const handleDelete = () => {
+    if (onDelete) {
+      onDelete();
     }
+    handleClose();
   };
 
   return (
     <ModalOverlay onClick={() => handleClose()}>
+      {/* <DeleteModal
+        onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
+        onConfirm={() => onDelete()}
+        status={modalStatus}
+      /> */}
       <StyledModal onClick={(e) => e.stopPropagation()}>
         <StyledContent>{children}</StyledContent>
         <StyledFooter>
-          <CancelButton small={true} onClick={() => handleClose()}>
-            Cancel
-          </CancelButton>
-          <SubmitButton onClick={() => handleSubmit()}>Save</SubmitButton>
+          <div>
+            {onDelete && (
+              <CancelButton small={true} onClick={() => handleDelete()}>
+                Delete
+              </CancelButton>
+            )}
+          </div>
+          <div style={{ display: 'flex', gap: '20px' }}>
+            <CancelButton small={true} onClick={() => handleClose()}>
+              Cancel
+            </CancelButton>
+            <SubmitButton onClick={() => handleSubmit()}>Save</SubmitButton>
+          </div>
         </StyledFooter>
       </StyledModal>
     </ModalOverlay>

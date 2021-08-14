@@ -16,19 +16,13 @@ const CategoryName = styled.div`
   font-weight: 600;
 `;
 
-const CategoryHeader = ({ category, catIndex }) => {
+const CategoryHeader = ({ category, catId }) => {
   const dispatch = useDispatch();
 
   return (
     <StyledCategory key={`${Math.random()}`}>
       <Row alignItems="center" marginSize={1}>
         <CategoryName>{category.name}</CategoryName>
-        <i
-          className="far fa-edit"
-          onClick={() =>
-            dispatch(toggleCategoryModal({ mode: 'edit', catIndex }))
-          }
-        />
       </Row>
       <Row>
         <EditButton
@@ -36,7 +30,7 @@ const CategoryHeader = ({ category, catIndex }) => {
             dispatch(
               toggleWishModal({
                 mode: 'add',
-                catIndex,
+                catId,
                 wishIndex: category.wishes.length,
               }),
             )

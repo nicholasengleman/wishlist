@@ -7,8 +7,9 @@ const og = new opengraph({
 
 const openGraphIo = (req, res) => {
   const siteUrl = req.body.data;
+  console.log(siteUrl);
 
-  og.getSiteInfo(encodeURIComponent(siteUrl), function (err, siteInfo) {
+  og.getSiteInfo(siteUrl, function (err, siteInfo) {
     if (err) {
       console.log('[ERROR GETTING OPEN GRAPH DATA: ]', err);
     }

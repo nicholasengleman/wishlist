@@ -40,7 +40,7 @@ const UserPage = () => {
                   <Fragment key={catIndex}>
                     <CategoryHeader
                       category={category}
-                      catIndex={catIndex}
+                      catId={category.id}
                       key={`${Math.random()}`}
                     />
                     <FlexContainer>
@@ -49,7 +49,7 @@ const UserPage = () => {
                           <Wish
                             wish={wish}
                             wishIndex={wishIndex}
-                            catIndex={catIndex}
+                            catId={category.id}
                             key={`${Math.random()}`}
                           />
                         ))}

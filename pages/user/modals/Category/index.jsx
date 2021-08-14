@@ -10,27 +10,27 @@ import useGetUser from 'hooks/useGetUser';
 import updateUser from 'utils/updateUser';
 
 import Modal from 'components/Modal';
-import DeleteModal from 'components/modalDelete';
-import { NavButton } from 'components/Buttons/NavButton';
 import { Row } from 'components/Flex';
 import { Input, Label } from 'components/Inputs';
-import { SubmitButton } from 'components/Buttons/SubmitButton';
 
 const CategoryModal = () => {
   const dispatch = useDispatch();
+  const { user } = useUser();
   const { register, handleSubmit, reset } = useForm();
-  const { mode, catIndex } = useSelector((state) => state.modals.categoryModal);
+  const { mode, catId } = useSelector((state) => state.modals.categoryModal);
   const [catData, setCatData] = useState(null);
+  const [catIndex, setCatIndex] = useState(null);
   const userData = useGetUser('wishData');
 
   useEffect(() => {
     if (mode === 'edit') {
-      if (!catData && userData) {
-        setCatData(userData);
-        s;
-      }
+      setCatData(userData);
     }
   }, [mode, catData, userData]);
+
+  useEffect(() => {
+    setCatIndex(userData.findIndex((el) => el.id === catId));
+  }, [userData, catId]);
 
   const onSubmit = ({ category }) => {
     let newData = _.cloneDeep(userData);
@@ -58,37 +58,23 @@ const CategoryModal = () => {
     }
 
     updateUser(user?.sub, { wishData: newData });
-    dispatch(toggleCategoryModal());
   };
 
-  const onDelete = () => {
+  const handleDelete = () => {
     const newData = _.cloneDeep(catData);
     newData.splice(catIndex, 1);
-
     updateUser(user?.sub, { wishData: newData });
-    // setModalStatus({ ...modalStatus, modalDelete: false });
-    dispatch(toggleCategoryModal());
   };
 
   return (
     <>
-      {/* <DeleteModal
-        onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
-        onConfirm={() => onDelete()}
-        status={modalStatus}
-      /> */}
       <Modal
         modalName="categoryModal"
+        onSubmit={handleSubmit(onSubmit)}
+        onDelete={() => handleDelete()}
         onClose={toggleCategoryModal()}
         onCloseCb={() => reset()}
       >
-        <Row justifyContent="flex-end" marginSize={3}>
-          {catData && (
-            <NavButton small={true} onClick={() => onDelete()}>
-              Delete
-            </NavButton>
-          )}
-        </Row>
         <Row marginSize={4} justifyContent="center">
           <form>
             <Label htmlFor="name">Category Name</Label>
@@ -96,18 +82,10 @@ const CategoryModal = () => {
               name="name"
               id="name"
               type="text"
-              defaultValue={
-                catData && catData[catIndex] && catData[catIndex].name
-              }
+              defaultValue={catData && catData[catIndex]?.name}
               {...register('category')}
             />
           </form>
-        </Row>
-
-        <Row>
-          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
-            Submit
-          </SubmitButton>
         </Row>
       </Modal>
     </>

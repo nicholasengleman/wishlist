@@ -3,7 +3,6 @@ import { useDispatch } from 'react-redux';
 import Styled from 'styled-components';
 import { toggleWishModal } from 'redux/actions/modals';
 import Card from 'components/Card';
-import Image from 'components/Image';
 import Box from 'components/Box';
 import { Row } from 'components/Flex';
 import Donors from 'pages/user/Donors';
@@ -57,7 +56,7 @@ const Wish = ({ wish, wishIndex, catIndex }) => {
           dispatch(toggleWishModal({ mode: 'edit', catIndex, wishIndex }))
         }
       />
-      <Image imageUrl={wish.image} type="product" />
+      {/* <Image imageUrl={wish.image} type="product" /> */}
       <Box padding="10px 15px">
         <WishTitle>{wish.name}</WishTitle>
         <Row alignItems="center" marginSize="1">

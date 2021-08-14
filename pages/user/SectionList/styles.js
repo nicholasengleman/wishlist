@@ -3,9 +3,10 @@ import Styled from 'styled-components';
 export default Styled.div`
     h3 {
         font-size: 16px;
-        letter-spacing: 2px;
+        letter-spacing: 3px;
         color: #BA3F1D;
         margin: 0 0 5px 30px;
+        font-family: 'Roboto', sans-serif;
     }
 
     .btn-add {
@@ -17,6 +18,7 @@ export default Styled.div`
         width: min-content;
         margin: 20px 0 0 15px;
         cursor: pointer;
+        font-family: 'Roboto', sans-serif;
     }
 
     .section-btn {
@@ -31,6 +33,12 @@ export default Styled.div`
         transition: all 0.1s;
         width: 200px;
         position: relative;
+        font-family: 'Roboto', sans-serif;
+        margin-bottom: 5px;
+
+        &.selected {
+           background: #00C2FF;
+        }
 
         &:hover {
             background: #00C2FF;

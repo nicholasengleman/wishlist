@@ -7,6 +7,7 @@ export const Row = styled.div`
   margin-bottom: 1rem;
   margin-bottom: ${({ marginSize }) => margin[marginSize]};
   display: flex;
+  gap: 1rem;
   align-items: ${({ alignItems }) => (alignItems ? alignItems : 'center')};
   justify-content: ${({ justifyContent }) => justifyContent};
   width: ${({ width }) => (width ? width : '100%')};
@@ -16,7 +17,6 @@ export const Row = styled.div`
 export const Column = styled.div`
   flex-direction: column;
   display: flex;
-  margin: 0 0.5rem;
   width: ${({ width }) => (width ? width : '100%')};
 `;
 

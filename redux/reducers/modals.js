@@ -27,7 +27,7 @@ export default function modals(
         categoryModal: {
           status: !state.categoryModal.status,
           mode: action?.payload?.mode,
-          catIndex: action?.payload?.catIndex,
+          catId: action?.payload?.catId,
         },
       };
     case TOGGLE_WISH_MODAL:
@@ -37,7 +37,7 @@ export default function modals(
           status: !state.wishModal.status,
           mode: action?.payload?.mode,
           wishIndex: action?.payload?.wishIndex,
-          catIndex: action?.payload?.catIndex,
+          catId: action?.payload?.catId,
         },
       };
     case TOGGLE_SETTINGS_MODAL:

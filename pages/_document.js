@@ -13,12 +13,16 @@ export default class MyDocument extends Document {
 
   render() {
     return (
-      <Html lang="en-CA">
+      <Html lang="en-US">
         <Head>
           <script
             src="https://kit.fontawesome.com/bbc2e8f300.js"
             crossOrigin="anonymous"
           ></script>
+          <style>
+            @import
+            url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
+          </style>
         </Head>
         <body>
           <Main />

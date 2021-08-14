@@ -22,7 +22,7 @@ async function updateUser(userId, newData) {
       refetchQueries: [{ query: GET_USER, variables: { id: userId } }],
     })
     .catch((err) => {
-      console.error(`Error uploading image id to Hasura: ${err}`);
+      console.error(`Error updating user data in Hasura: ${err}`);
     });
 }
 

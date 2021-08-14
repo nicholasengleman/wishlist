@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Image from 'next/image';
 import axios from 'axios';
 import _ from 'lodash';
 import { useSelector, useDispatch } from 'react-redux';
@@ -9,8 +10,6 @@ import useGetUser from 'hooks/useGetUser';
 import { toggleWishModal } from 'redux/actions/modals';
 import updateUser from 'utils/updateUser';
 import Modal from 'components/Modal';
-import Image from 'components/Image';
-import DeleteModal from 'components/modalDelete';
 import { Row, Column } from 'components/Flex';
 import { Input, Textarea, Form, Label } from 'components/Inputs';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
@@ -25,11 +24,16 @@ const WishModal = () => {
   const [wishData, setWishData] = useState({});
   const [prefillData, setPrefillData] = useState({});
   const [modalStatus, setModalStatus] = useState({});
+  const [catIndex, setCatIndex] = useState(null);
 
   const data = useGetUser('wishData');
-  const { mode, catIndex, wishIndex } = useSelector(
+  const { mode, catId, wishIndex } = useSelector(
     (state) => state.modals.wishModal,
   );
+
+  useEffect(() => {
+    setCatIndex(data.findIndex((el) => el.id === catId));
+  }, [data, catId]);
 
   const onSubmit = async (updatedWish) => {
     const newData = _.cloneDeep(data);
@@ -42,7 +46,7 @@ const WishModal = () => {
       });
       wishWithUpdatedImage = {
         ...updatedWish,
-        image,
+        image: image.data.public_id,
       };
     }
 
@@ -63,7 +67,6 @@ const WishModal = () => {
     }
 
     updateUser(user?.sub, { wishData: newData });
-    dispatch(toggleWishModal());
   };
 
   const onPrefillSubmit = ({ url }) => {
@@ -99,34 +102,19 @@ const WishModal = () => {
     if (mode === 'edit') {
       setWishData(data[catIndex].wishes[wishIndex]);
     }
-    // eslint-disable-next-line
   }, []);
 
   return (
     <>
-      {/* <DeleteModal
-        onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
-        onConfirm={() => onDelete()}
-        status={modalStatus}
-      /> */}
       <Modal
         modalName="wishModal"
+        onSubmit={handleSubmit(onSubmit)}
         onClose={toggleWishModal()}
         onCloseCb={() => reset()}
+        onDelete={() => setModalStatus({ ...modalStatus, modalDelete: true })}
       >
-        <Row justifyContent="flex-end" marginSize={4}>
-          <SubmitButton
-            small={true}
-            onClick={() =>
-              setModalStatus({ ...modalStatus, modalDelete: true })
-            }
-          >
-            Delete Wish
-          </SubmitButton>
-        </Row>
-
         <Row marginSize={4}>
-          <Form className="prefill">
+          <Form className="prefill" onSubmit={handleSubmit2(onPrefillSubmit)}>
             <Row>
               <Input
                 name="url"
@@ -137,25 +125,22 @@ const WishModal = () => {
               />
             </Row>
 
-            <SubmitButton
-              center={true}
-              onClick={handleSubmit2(onPrefillSubmit)}
-            >
-              Get Info
-            </SubmitButton>
+            <SubmitButton center={true}>Get Info</SubmitButton>
           </Form>
         </Row>
 
         <Row marginSize={4}>
-          <form onSubmit={handleSubmit(onSubmit)}>
-            <Row>
-              <Column>
-                <Image
-                  imageUrl={prefillData.image || wishData.image}
-                  type="product"
-                />
-              </Column>
-              <Column>
+          <form style={{ width: '100%' }}>
+            <Row style={{ gap: '4rem' }}>
+              <img
+                style={{ maxWidth: '30%' }}
+                src={
+                  prefillData.image ||
+                  wishData.image ||
+                  'https://via.placeholder.com/300'
+                }
+              />
+              <Column style={{ width: '60%' }}>
                 <Row>
                   <Column>
                     <Label htmlFor="name">Goal Name</Label>
@@ -163,7 +148,7 @@ const WishModal = () => {
                       name="name"
                       id="name"
                       type="text"
-                      defaultValue={prefillData.name || wishData.name}
+                      defaultValue={prefillData.name || wishData.name || ''}
                       {...register('name')}
                     />
                   </Column>
@@ -208,11 +193,6 @@ const WishModal = () => {
               </Column>
             </Row>
           </form>
-        </Row>
-        <Row>
-          <SubmitButton center={true} onClick={handleSubmit(onSubmit)}>
-            Submit
-          </SubmitButton>
         </Row>
       </Modal>
     </>
