@@ -45,10 +45,10 @@ const UserPage = () => {
                     />
                     <FlexContainer>
                       {category.wishes &&
-                        category.wishes.map((wish, wishIndex) => (
+                        category.wishes.map((wish) => (
                           <Wish
                             wish={wish}
-                            wishIndex={wishIndex}
+                            wishId={wish.id}
                             catId={category.id}
                             key={`${Math.random()}`}
                           />

@@ -1,11 +1,6 @@
 module.exports = {
-  webpack: (config, { isServer }) => {
-    if (!isServer) {
-      config.resolve.fallback.fs = false;
-    }
-    return config;
-  },
-  images: {
-    domains: ['via.placeholder.com'],
-  },
-};
+    compiler: {
+      // ssr and displayName are configured by default
+      styledComponents: true,
+    },
+  }

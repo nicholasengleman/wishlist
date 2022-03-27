@@ -36,7 +36,7 @@ export default function modals(
         wishModal: {
           status: !state.wishModal.status,
           mode: action?.payload?.mode,
-          wishIndex: action?.payload?.wishIndex,
+          wishId: action?.payload?.wishId,
           catId: action?.payload?.catId,
         },
       };

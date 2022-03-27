@@ -7,7 +7,6 @@ const og = new opengraph({
 
 const openGraphIo = (req, res) => {
   const siteUrl = req.body.data;
-  console.log(siteUrl);
 
   og.getSiteInfo(siteUrl, function (err, siteInfo) {
     if (err) {

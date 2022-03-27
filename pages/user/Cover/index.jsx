@@ -1,11 +1,11 @@
-import React, { useState, useRef, useEffect } from 'react';
-import { Image, Placeholder, Transformation } from 'cloudinary-react';
+import React, { useState, useRef } from 'react';
 import Styled from 'styled-components';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import useGetUser from 'hooks/useGetUser';
 import updateUser from '/utils/updateUser';
 import EditCoverButtons from './children/EditCoverButtons';
+import CloudinaryImage from 'components/CloudinaryImage';
 
 let dragImg;
 
@@ -112,18 +112,13 @@ const Cover = ({ editable }) => {
       </RepositionInstructions>
       <div className="coverImg-container">
         {coverImg && (
-          <Image
-            cloudName="dazynasdm"
-            publicId={coverImg}
-            loading="lazy"
+          <CloudinaryImage
+            id={coverImg}
             ref={imageRef}
             style={{
               objectPosition: `center ${currentDrag}px`,
             }}
-          >
-            <Transformation quality="auto" fetchFormat="auto" />
-            <Placeholder type="blur" />
-          </Image>
+          />
         )}
       </div>
       {editable && (

@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Image, Placeholder, Transformation } from 'cloudinary-react';
+import CloudinaryImage from 'components/CloudinaryImage';
 
 const AvatarSizes = ['35px', '45px', '225px'];
 
@@ -32,10 +32,7 @@ const Avatar = ({ publicId, size = 1 }) => {
   if (publicId) {
     return (
       <BaseAvatar size={size}>
-        <Image cloudName="dazynasdm" publicId={publicId} loading="lazy">
-          <Transformation quality="auto" fetchFormat="auto" />
-          <Placeholder type="blur" />
-        </Image>
+        <CloudinaryImage id={publicId} />
       </BaseAvatar>
     );
   }

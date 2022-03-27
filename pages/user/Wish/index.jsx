@@ -8,6 +8,7 @@ import { Row } from 'components/Flex';
 import Donors from 'pages/user/Donors';
 import DonationBar from 'pages/user/DonateBtn';
 import Donations from 'pages/user/Donations';
+import CloudinaryImage from 'components/CloudinaryImage';
 
 const StyledWish = Styled(Card)`
   border-top-left-radius: 15px;
@@ -45,7 +46,7 @@ const WishTitle = Styled.div`
   margin-bottom: 1rem;
 `;
 
-const Wish = ({ wish, wishIndex, catIndex }) => {
+const Wish = ({ wish, wishId, catId }) => {
   const dispatch = useDispatch();
 
   return (
@@ -53,10 +54,10 @@ const Wish = ({ wish, wishIndex, catIndex }) => {
       <i
         className="far fa-edit"
         onClick={() =>
-          dispatch(toggleWishModal({ mode: 'edit', catIndex, wishIndex }))
+          dispatch(toggleWishModal({ mode: 'edit', catId, wishId }))
         }
       />
-      {/* <Image imageUrl={wish.image} type="product" /> */}
+      <CloudinaryImage id={wish.image} />
       <Box padding="10px 15px">
         <WishTitle>{wish.name}</WishTitle>
         <Row alignItems="center" marginSize="1">

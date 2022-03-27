@@ -1,7 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
-import { Row, Column } from 'components/Flex';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
 import { CancelButton } from 'components/Buttons/CancelButton';
 
