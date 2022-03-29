@@ -61,8 +61,6 @@ const WishModal = () => {
       newImage = image.data.public_id;
     }
 
-    console.log(newImage);
-
     if (mode === 'edit') {
       newAllData.forEach((category, c) => {
         if (category.id === catId) {

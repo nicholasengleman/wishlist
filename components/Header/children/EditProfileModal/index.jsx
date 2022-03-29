@@ -1,7 +1,6 @@
 import React from 'react';
 import Styled from 'styled-components';
 import { useForm } from 'react-hook-form';
-import { useDispatch } from 'react-redux';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import { toggleSettingsModal } from '/redux/actions/modals';
@@ -32,14 +31,12 @@ const StyledDiv = Styled.div`
 `;
 
 const EditProfileModal = () => {
-  const dispatch = useDispatch();
   const { register, handleSubmit } = useForm();
   const userData = useGetUser();
   const { user } = useUser();
 
   const onSubmit = (data) => {
     updateUser(user?.sub, data);
-    dispatch(toggleSettingsModal());
   };
 
   return (

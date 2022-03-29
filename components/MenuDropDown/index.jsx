@@ -55,6 +55,7 @@ const StyledMenuItem = styled.li`
     background: none;
     width: 100%;
     display: flex;
+    align-items: center;
     border-radius: ${(props) => props.theme.borderRadius};
     padding: 10px;
     cursor: pointer;

@@ -11,7 +11,6 @@ const SectionList = () => {
   const dispatch = useDispatch();
   const { selectedSection } = useSelector((state) => state.sections);
   const wishData = useGetUser('wishData');
-  console.log(wishData);
 
   return (
     <StyledSectionList>

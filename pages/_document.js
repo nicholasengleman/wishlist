@@ -16,13 +16,15 @@ export default class MyDocument extends Document {
       <Html lang="en-US">
         <Head>
           <script
-            src="https://kit.fontawesome.com/bbc2e8f300.js"
-            crossOrigin="anonymous"
+            src="https://kit.fontawesome.com/3b8d54c56e.js"
+            crossorigin="anonymous"
           ></script>
-          <style>
-            @import
-            url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap');
-          </style>
+          <link rel="preconnect" href="https://fonts.googleapis.com" />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link
+            href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
+            rel="stylesheet"
+          />
         </Head>
         <body>
           <Main />

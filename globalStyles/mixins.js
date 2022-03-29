@@ -11,3 +11,7 @@ export const pageWidth = () => `
         padding: 0 50px;
     }
 `;
+
+export const font = () => `
+  font-family: 'Poppins', sans-serif;
+  `;

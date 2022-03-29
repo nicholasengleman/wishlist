@@ -39,7 +39,6 @@ const EditAvatar = () => {
   const onSubmit = async () => {
     const image = avatarEl.current.getImage();
     imageUpdate(user?.sub, image, 'avatarImg', avatarImg);
-    dispatch(toggleEditAvatarModal());
   };
 
   const handleUploadNewImage = async () => {

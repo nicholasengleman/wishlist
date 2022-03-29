@@ -10,6 +10,8 @@ import { Row, Column } from 'components/Flex';
 import ProfileLink from 'components/ProfileLink';
 import { AlarmButton, MenuButton, HomeButton } from 'components/IconButtons';
 import EditProfileModal from 'components/Header/children/EditProfileModal';
+import { Paragraph } from 'components/Text';
+
 import {
   MenuContainer,
   MenuHeader,
@@ -55,11 +57,11 @@ const Header = ({ session }) => {
                   <MenuList>
                     <MenuItem onClick={() => dispatch(toggleSettingsModal())}>
                       <i className="fas fa-sign-out-alt" />
-                      <p>Edit Profile</p>
+                      <Paragraph>Edit Profile</Paragraph>
                     </MenuItem>
                     <MenuItem href="/api/auth/logout">
                       <i className="fas fa-sign-out-alt" />
-                      <p>Logout</p>
+                      <Paragraph>Logout</Paragraph>
                     </MenuItem>
                   </MenuList>
                 </MenuContainer>

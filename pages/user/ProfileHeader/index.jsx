@@ -3,8 +3,7 @@ import Styled from 'styled-components';
 import { useUser } from '@auth0/nextjs-auth0';
 
 import { pageWidth } from 'globalStyles/mixins';
-import device from 'globalStyles/breakpoints';
-import { Column } from 'components/Flex';
+import { Column, Row } from 'components/Flex';
 import { H1, Paragraph } from 'components/Text';
 import Avatar from 'components/Avatar';
 import useGetUser from 'hooks/useGetUser';
@@ -17,14 +16,19 @@ const HeaderContainer = Styled.div`
 `;
 
 const ProfileInfo = Styled.div`
-   width: 300px;
    z-index: 2;
    position: relative;
+   width: calc(100% - 150px);
+
    .bio {
     position: absolute;
     top: 150px;
     left: 350px;
-    width: 200px;
+    width: 100%;
+   }
+
+   i {
+     margin-right: 5px;
    }
 `;
 
@@ -40,11 +44,41 @@ const ProfileHeader = () => {
         <Avatar editable={true} size="2" publicId={avatarPublicId} />
         <div className="bio">
           <H1>{name}</H1>
-          <Paragraph>{hobbies}</Paragraph>
-          <Paragraph>{location}</Paragraph>
-          <Paragraph>{bio}</Paragraph>
-          <Paragraph>{twitter}</Paragraph>
-          <Paragraph>{instagram}</Paragraph>
+          {bio && (
+            <Paragraph color="#667279" marginSize={1}>
+              {bio}
+            </Paragraph>
+          )}
+          <Row alignItems="flex-start" gap="3rem">
+            <Column width="200px">
+              {hobbies && (
+                <Paragraph color="#FFADAD">
+                  <i class="fa-solid fa-fire"></i>
+                  {hobbies}
+                </Paragraph>
+              )}
+              {location && (
+                <Paragraph color="#FFADAD">
+                  <i class="fa-solid fa-earth-americas"></i>
+                  {location}
+                </Paragraph>
+              )}
+            </Column>
+            <Column width="200px">
+              {twitter && (
+                <Paragraph color="#FFADAD">
+                  <i class="fa-brands fa-twitter-square"></i>
+                  {twitter}
+                </Paragraph>
+              )}
+              {instagram && (
+                <Paragraph color="#FFADAD">
+                  <i class="fa-brands fa-instagram"></i>
+                  {instagram}
+                </Paragraph>
+              )}
+            </Column>
+          </Row>
         </div>
       </ProfileInfo>
     </HeaderContainer>

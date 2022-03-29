@@ -85,5 +85,8 @@ export const GlobalStyles = createGlobalStyle`
     color: inherit;
   }
 
+  * {
+      font-family: 'Poppins', sans-serif;
+  }
 
 `;
