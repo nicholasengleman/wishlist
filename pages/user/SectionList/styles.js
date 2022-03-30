@@ -1,14 +1,12 @@
 import Styled from 'styled-components';
 
 export default Styled.div`
-    h3 {
-        font-size: 16px;
-        letter-spacing: 3px;
-        color: #BA3F1D;
-        margin: 0 0 5px 30px;
-    }
 
-    .btn-add {
+.c-section-list {
+    position: relative;
+
+.btn-add,
+    .btn-show-all {
         border: none;
         width: none;
         font-size: 10px;
@@ -19,10 +17,17 @@ export default Styled.div`
         border-radius: 5px;
     }
 
+    .btn-show-all {
+        position: absolute;
+        top: -40px;
+        left: 0;
+    }
+
     .section {
         display: flex;
         margin-bottom: 10px;
         align-items: center;
+
 
         &:hover {
             i {
@@ -38,14 +43,14 @@ export default Styled.div`
         border: none;
         cursor: pointer;
         width: 190px;
-        height: 35px;
+        height: 40px;
         background: linear-gradient(90deg,rgba(159,21,93,1) 28%,rgb(171 89 132) 100%,rgba(255,255,255,0) 100%);
         color: #fff;
-        font-size: 12px;
-        font-weight: 600;
+        font-size: 14px;
         position: relative;
         margin-right: 20px;
-        letter-spacing: 2px;
+        letter-spacing: 1.5px;
+        font-weight: 600;
 
         &:hover,
         &.selected {
@@ -68,6 +73,7 @@ export default Styled.div`
            cursor: pointer;
        }
     }
+}
 
 
 `;

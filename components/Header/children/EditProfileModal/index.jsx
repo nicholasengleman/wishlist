@@ -27,7 +27,6 @@ const StyledDiv = Styled.div`
     overflow: scroll;
     padding-top: 100px;
   }
-
 `;
 
 const EditProfileModal = () => {
