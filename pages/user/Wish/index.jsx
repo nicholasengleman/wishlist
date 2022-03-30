@@ -52,6 +52,7 @@ const Wish = ({ wish, wishId, catId }) => {
   return (
     <StyledWish>
       <i
+        aria-hidden
         className="far fa-edit"
         onClick={() =>
           dispatch(toggleWishModal({ mode: 'edit', catId, wishId }))

@@ -24,44 +24,44 @@ const Icon = Styled.button`
 
 export const AlarmButton = () => (
   <Icon>
-    <i className="far fa-bell" />
+    <i aria-hidden className="far fa-bell" />
   </Icon>
 );
 
 export const MenuButton = () => (
   <Icon>
-    <i className="fas fa-angle-down" />
+    <i aria-hidden className="fas fa-angle-down" />
   </Icon>
 );
 
 export const CloseButton = ({ click }) => (
   <Icon>
-    <i className="far fa-times-circle" onClick={click} />
+    <i aria-hidden className="far fa-times-circle" onClick={click} />
   </Icon>
 );
 
 export const HomeButton = () => (
   <Link href="/">
     <Icon>
-      <i className="fas fa-home"></i>
+      <i aria-hidden className="fas fa-home"></i>
     </Icon>
   </Link>
 );
 
 export const EditButton = (props) => (
   <Icon {...props}>
-    <i className="far fa-edit"></i>
+    <i aria-hidden className="far fa-edit"></i>
   </Icon>
 );
 
 export const UploadPhotoButton = (props) => (
   <Icon {...props}>
-    <i className="fas fa-camera-retro"></i>
+    <i aria-hidden className="fas fa-camera-retro"></i>
   </Icon>
 );
 
 export const MoveButton = (props) => (
   <Icon {...props}>
-    <i className="fas fa-expand-arrows-alt"></i>
+    <i aria-hidden className="fas fa-expand-arrows-alt"></i>
   </Icon>
 );

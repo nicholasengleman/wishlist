@@ -56,11 +56,11 @@ const Header = ({ session }) => {
                   </MenuHeader>
                   <MenuList>
                     <MenuItem onClick={() => dispatch(toggleSettingsModal())}>
-                      <i className="fas fa-sign-out-alt" />
+                      <i aria-hidden className="fas fa-sign-out-alt" />
                       <Paragraph>Edit Profile</Paragraph>
                     </MenuItem>
                     <MenuItem href="/api/auth/logout">
-                      <i className="fas fa-sign-out-alt" />
+                      <i aria-hidden className="fas fa-sign-out-alt" />
                       <Paragraph>Logout</Paragraph>
                     </MenuItem>
                   </MenuList>

@@ -18,17 +18,17 @@ const HeaderContainer = Styled.div`
 const ProfileInfo = Styled.div`
    z-index: 2;
    position: relative;
-   width: calc(100% - 150px);
+   width: 300px;
 
    .bio {
     position: absolute;
     top: 150px;
     left: 350px;
-    width: 100%;
-   }
+    width: 500px;
 
-   i {
-     margin-right: 5px;
+     i {
+      margin-right: 5px;
+      }
    }
 `;
 
@@ -53,13 +53,13 @@ const ProfileHeader = () => {
             <Column width="200px">
               {hobbies && (
                 <Paragraph color="#FFADAD">
-                  <i class="fa-solid fa-fire"></i>
+                  <i aria-hidden className="fa-solid fa-fire"></i>
                   {hobbies}
                 </Paragraph>
               )}
               {location && (
                 <Paragraph color="#FFADAD">
-                  <i class="fa-solid fa-earth-americas"></i>
+                  <i aria-hidden className="fa-solid fa-earth-americas"></i>
                   {location}
                 </Paragraph>
               )}
@@ -67,13 +67,13 @@ const ProfileHeader = () => {
             <Column width="200px">
               {twitter && (
                 <Paragraph color="#FFADAD">
-                  <i class="fa-brands fa-twitter-square"></i>
+                  <i aria-hidden className="fa-brands fa-twitter-square"></i>
                   {twitter}
                 </Paragraph>
               )}
               {instagram && (
                 <Paragraph color="#FFADAD">
-                  <i class="fa-brands fa-instagram"></i>
+                  <i aria-hidden className="fa-brands fa-instagram"></i>
                   {instagram}
                 </Paragraph>
               )}

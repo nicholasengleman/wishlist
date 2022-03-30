@@ -6,68 +6,68 @@ export default Styled.div`
         letter-spacing: 3px;
         color: #BA3F1D;
         margin: 0 0 5px 30px;
-        font-family: 'Roboto', sans-serif;
     }
 
     .btn-add {
         border: none;
         width: none;
         font-size: 10px;
-        color: #D81E5B;
+        color: #BC1A6E;
         font-weight: 700;
-        width: min-content;
-        margin: 20px 0 0 15px;
         cursor: pointer;
-        font-family: 'Roboto', sans-serif;
+        padding: 5px 15px;
+        border-radius: 5px;
     }
 
-    .section-btn {
-        background: none;
+    .section {
         display: flex;
-        justify-content: space-between;
+        margin-bottom: 10px;
         align-items: center;
-        border-radius: 8px;
-        padding: 0 20px;
-        border: none;
-        cursor: pointer;
-        transition: all 0.1s;
-        width: 200px;
-        position: relative;
-        font-family: 'Roboto', sans-serif;
-        margin-bottom: 5px;
-
-        &.selected {
-           background: #00C2FF;
-        }
 
         &:hover {
-            background: #00C2FF;
             i {
                 opacity: 1;
             }
         }
 
-        .name {
-         font-size: 20px;
-        color: black;
-        font-weight: 700;
-        letter-spacing: 0.2px;
-        font-weight: 700;
+    .section-btn {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        border-radius: 10px;
+        border: none;
+        cursor: pointer;
+        width: 190px;
+        height: 35px;
+        background: linear-gradient(90deg,rgba(159,21,93,1) 28%,rgb(171 89 132) 100%,rgba(255,255,255,0) 100%);
+        color: #fff;
+        font-size: 12px;
+        font-weight: 600;
+        position: relative;
+        margin-right: 20px;
+        letter-spacing: 2px;
+
+        &:hover,
+        &.selected {
+          background: #CC2D4A;
         }
 
         .goal-number {
-           font-size: 14px;
-           letter-spacing: 0.2px;
-             color: #BA3F1D;
-        }
-
-       i {
-           transition: all 0.1s;
+           font-size: 10px;
            position: absolute;
-           right: -30px;
-           top: 8px;
-           font-size: 12px;
+           right: 20px;
+           font-weight: 400;
+        }
+    }
+
+          i {
+           transition: all 0.1s;
+           font-size: 14px;
+           color: #BC1A6E;
            opacity: 0;
+           cursor: pointer;
        }
     }
+
+
 `;

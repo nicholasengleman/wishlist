@@ -14,35 +14,32 @@ const SectionList = () => {
 
   return (
     <StyledSectionList>
-      <h3>Wishlists</h3>
-      <Column>
-        {wishData.map((section, i) => (
+      {wishData.map((section, i) => (
+        <div className="section" key={i}>
           <button
-            key={i}
             className={`section-btn ${
               selectedSection === section.id ? 'selected' : ''
             }`}
             onClick={() => dispatch(setSelectedSection(section.id))}
           >
-            <span className="name">{section.name}</span>
+            {section.name}
             <span className="goal-number">{section.wishes.length}</span>
-            <i
-              className="far fa-edit"
-              onClick={() =>
-                dispatch(
-                  toggleCategoryModal({ mode: 'edit', catId: section.id }),
-                )
-              }
-            ></i>
           </button>
-        ))}
-        <button
-          className="btn-add"
-          onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
-        >
-          ADD+
-        </button>
-      </Column>
+          <i
+            aria-hidden
+            className="fa-solid fa-pencil"
+            onClick={() =>
+              dispatch(toggleCategoryModal({ mode: 'edit', catId: section.id }))
+            }
+          ></i>
+        </div>
+      ))}
+      <button
+        className="btn-add"
+        onClick={() => dispatch(toggleCategoryModal({ mode: 'add' }))}
+      >
+        ADD
+      </button>
     </StyledSectionList>
   );
 };

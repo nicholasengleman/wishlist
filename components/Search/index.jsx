@@ -42,7 +42,7 @@ export default function SearchBox() {
 
   return (
     <FormWithIcon status={inputState}>
-      <i className="fas fa-search" />
+      <i aria-hidden className="fas fa-search" />
       <SearchInput
         type="search"
         status={inputState}

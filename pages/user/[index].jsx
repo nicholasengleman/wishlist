@@ -19,17 +19,17 @@ const UserPage = () => {
   const { selectedSection } = useSelector((state) => state.sections);
   const wishData = useGetUser('wishData');
 
+  console.log(wishData);
+
   return (
     <>
       <WishModal />
       <CategoryModal />
       <ChangeAvatarModal />
       <ProfileHeader />
-      <Row container={true} alignItems="flex-start">
-        <Column width="20%">
-          <SectionList />
-        </Column>
-        <Column width="80%">
+      <Row container={true} alignItems="flex-start" gap="3rem">
+        <SectionList />
+        <Column>
           {Array.isArray(wishData) &&
             wishData.map((category, catIndex) => {
               if (
