@@ -20,14 +20,14 @@ const AvatarContainer = Styled.div`
    }
 `;
 
-const Avatar = ({ size, editable = false }) => {
+const Avatar = ({ size, editable = false, className }) => {
   const dispatch = useDispatch();
   const avatarImgId = useGetUser('avatarImg');
 
   if (editable) {
     return (
       <>
-        <AvatarContainer>
+        <AvatarContainer className={className}>
           <ProfileImg publicId={avatarImgId} size={size} />
           <EditButton onClick={() => dispatch(toggleEditAvatarModal())} />
         </AvatarContainer>
@@ -35,7 +35,9 @@ const Avatar = ({ size, editable = false }) => {
     );
   }
 
-  return <ProfileImg publicId={avatarImgId} />;
+  return (
+    <ProfileImg publicId={avatarImgId} className={className} size={size} />
+  );
 };
 
 export default Avatar;

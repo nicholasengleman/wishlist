@@ -5,10 +5,6 @@ import { toggleCategoryModal, toggleWishModal } from 'redux/actions/modals';
 import { Row } from 'components/Flex';
 import { EditButton } from 'components/Buttons/EditButton';
 
-const StyledCategory = styled.div`
-  margin-bottom: 1rem;
-`;
-
 const CategoryName = styled.div`
   font-size: 2rem;
   margin-right: 10px;
@@ -20,26 +16,22 @@ const CategoryHeader = ({ category, catId }) => {
   const dispatch = useDispatch();
 
   return (
-    <StyledCategory key={`${Math.random()}`}>
-      <Row alignItems="center" marginSize={1}>
-        <CategoryName>{category.name}</CategoryName>
-      </Row>
-      <Row>
-        <EditButton
-          onClick={() =>
-            dispatch(
-              toggleWishModal({
-                mode: 'add',
-                catId,
-                wishIndex: category.wishes.length,
-              }),
-            )
-          }
-        >
-          Add Wish
-        </EditButton>
-      </Row>
-    </StyledCategory>
+    <Row alignItems="center" justifyContent="space-between" marginSize={1}>
+      <CategoryName>{category.name}</CategoryName>
+      <EditButton
+        onClick={() =>
+          dispatch(
+            toggleWishModal({
+              mode: 'add',
+              catId,
+              wishIndex: category.wishes.length,
+            }),
+          )
+        }
+      >
+        Add Wish
+      </EditButton>
+    </Row>
   );
 };
 

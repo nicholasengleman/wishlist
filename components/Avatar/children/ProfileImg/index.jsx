@@ -2,7 +2,7 @@ import React from 'react';
 import styled from 'styled-components';
 import CloudinaryImage from 'components/CloudinaryImage';
 
-const AvatarSizes = ['35px', '45px', '225px'];
+const AvatarSizes = ['30px', '45px', '225px'];
 
 const BaseAvatar = styled.div`
   height: ${(props) => AvatarSizes[props.size]};
@@ -28,10 +28,10 @@ const BaseAvatar = styled.div`
   }
 `;
 
-const Avatar = ({ publicId, size = 1 }) => {
+const Avatar = ({ publicId, size = 1, className }) => {
   if (publicId) {
     return (
-      <BaseAvatar size={size}>
+      <BaseAvatar size={size} className={className}>
         <CloudinaryImage id={publicId} />
       </BaseAvatar>
     );

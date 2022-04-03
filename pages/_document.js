@@ -17,10 +17,10 @@ export default class MyDocument extends Document {
         <Head>
           <script
             src="https://kit.fontawesome.com/3b8d54c56e.js"
-            crossorigin="anonymous"
+            crossOrigin="anonymous"
           ></script>
           <link rel="preconnect" href="https://fonts.googleapis.com" />
-          <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+          <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin />
           <link
             href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap"
             rel="stylesheet"

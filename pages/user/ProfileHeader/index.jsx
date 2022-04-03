@@ -12,7 +12,7 @@ import Cover from 'pages/user/Cover';
 const HeaderContainer = Styled.div`
    ${pageWidth};
     position: relative;
-    margin-bottom: 150px;
+    margin-bottom: 100px;
 `;
 
 const ProfileInfo = Styled.div`
