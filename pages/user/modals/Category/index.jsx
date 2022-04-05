@@ -50,7 +50,7 @@ const CategoryModal = () => {
   }, [mode, catData, userData]);
 
   useEffect(() => {
-    setCatIndex(userData.findIndex((el) => el.id === catId));
+    setCatIndex(userData?.findIndex((el) => el.id === catId));
   }, [userData, catId]);
 
   const onSubmit = ({ category }) => {

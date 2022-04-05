@@ -1,11 +1,26 @@
 import React from 'react';
-import Styled from 'styled-components';
+import Styled, { keyframes, createGlobalStyle } from 'styled-components';
 import { useDispatch, useSelector } from 'react-redux';
 import { SubmitButton } from 'components/Buttons/SubmitButton';
 import { CancelButton } from 'components/Buttons/CancelButton';
 
+const fadeIn = keyframes`
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }`;
+
+const GlobalStyle = createGlobalStyle`
+  body {
+    position: ${(props) => (props.modalOpen ? 'fixed' : 'static')};
+  }`;
+
 const ModalOverlay = Styled.div`
-   background-color: rgba(0, 0, 0, 0.7);
     position: fixed;
     top: 0;
     left: 0;
@@ -21,10 +36,11 @@ const StyledModal = Styled.div`
     width: 80%;
     height: 80%;
     background-color: white;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4);
+    box-shadow: 0 4px 50px 10px rgba(0, 0, 0, 0.25);
     border-radius: 20px;
     overflow: hidden;
     position: relative;
+    animation: ${fadeIn} 0.1s ease-out;
 `;
 
 const StyledContent = Styled.div`
@@ -80,31 +96,34 @@ const Modal = ({
   };
 
   return (
-    <ModalOverlay onClick={() => handleClose()}>
-      {/* <DeleteModal
+    <>
+      <GlobalStyle modalOpen={status} />
+      <ModalOverlay onClick={() => handleClose()}>
+        {/* <DeleteModal
         onCancel={() => setModalStatus({ ...modalStatus, modalDelete: false })}
         onConfirm={() => onDelete()}
         status={modalStatus}
       /> */}
-      <StyledModal onClick={(e) => e.stopPropagation()}>
-        <StyledContent>{children}</StyledContent>
-        <StyledFooter>
-          <div>
-            {onDelete && (
-              <CancelButton small={true} onClick={() => handleDelete()}>
-                Delete
+        <StyledModal onClick={(e) => e.stopPropagation()}>
+          <StyledContent>{children}</StyledContent>
+          <StyledFooter>
+            <div>
+              {onDelete && (
+                <CancelButton small={true} onClick={() => handleDelete()}>
+                  Delete
+                </CancelButton>
+              )}
+            </div>
+            <div style={{ display: 'flex', gap: '20px' }}>
+              <CancelButton small={true} onClick={() => handleClose()}>
+                Cancel
               </CancelButton>
-            )}
-          </div>
-          <div style={{ display: 'flex', gap: '20px' }}>
-            <CancelButton small={true} onClick={() => handleClose()}>
-              Cancel
-            </CancelButton>
-            <SubmitButton onClick={() => handleSubmit()}>Save</SubmitButton>
-          </div>
-        </StyledFooter>
-      </StyledModal>
-    </ModalOverlay>
+              <SubmitButton onClick={() => handleSubmit()}>Save</SubmitButton>
+            </div>
+          </StyledFooter>
+        </StyledModal>
+      </ModalOverlay>
+    </>
   );
 };
 

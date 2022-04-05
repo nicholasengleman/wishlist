@@ -20,7 +20,7 @@ const SectionList = () => {
         >
           Show All
         </button>
-        {wishData.map((section, i) => (
+        {wishData && wishData?.map((section, i) => (
           <div className="section" key={i}>
             <button
               className={`section-btn ${

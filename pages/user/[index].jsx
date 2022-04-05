@@ -30,8 +30,7 @@ const UserPage = () => {
       <Row container={true} alignItems="flex-start" gap="3rem">
         <SectionList />
         <Column margin="-10px 0 0 0">
-          {Array.isArray(wishData) &&
-            wishData.map((category, catIndex) => {
+          {wishData && wishData?.map((category, catIndex) => {
               if (
                 !selectedSection ||
                 (selectedSection && selectedSection === category.id)
